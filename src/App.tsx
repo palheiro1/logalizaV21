@@ -99,7 +99,7 @@ export default function App() {
                             <Twemoji text="❓" />
                         </button>
                         <h1 className="text-4xl font-bold uppercase tracking-wide text-center my-1 flex-auto">
-                            LO<span className="text-lightblue-600">GALI</span>ZA
+                            LO<span style={{color:'red'}}>G</span>ALI<span style={{color:'red'}}>Z</span>A
                         </h1>
                         <button className="ml-3 text-xl" type="button" onClick={() => setStatsOpen(true)}>
                             <Twemoji text="📈" />
