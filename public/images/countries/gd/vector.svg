@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- (c) ammap.com | SVG map of Grenada - High -->
+
+<svg
+   version="1.1"
+   id="svg837"
+   sodipodi:docname="vector.svg"
+   width="1024"
+   height="1024"
+   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:amcharts="http://amcharts.com/ammap">
+  <sodipodi:namedview
+     id="namedview839"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.43564818"
+     inkscape:cx="-115.91923"
+     inkscape:cy="457.93833"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg837" />
+  <defs
+     id="defs826">
+    <style
+       type="text/css"
+       id="style824">
+			.land
+			{
+				fill: #CCCCCC;
+				fill-opacity: 1;
+				stroke:white;
+				stroke-opacity: 1;
+				stroke-width:0.5;
+			}
+		</style>
+    <amcharts:ammap
+       projection="mercator"
+       leftLongitude="-61.805900"
+       topLatitude="12.536700"
+       rightLongitude="-61.374699"
+       bottomLatitude="11.982905" />
+    <!-- All areas are listed in the line below. You can use this list in your script. -->
+    <!--{id:"GD-06"},{id:"GD-05"},{id:"GD-04"},{id:"GD-03"},{id:"GD-02"},{id:"GD-01"},{id:"GD-10"}-->
+  </defs>
+  <g
+     id="g835"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(0.92885683,0,0,0.92885683,167.26824,18.135319)">
+    <path
+       id="GD-06"
+       title="Saint Patrick"
+       class="land"
+       d="m 369.37,697.77 -3.52,-29.21 -16.47,-34.12 12.31,-11.78 1.28,-6.22 -42.54,-26.84 -44.87,-6.06 -41.18,7.37 -20.99,25.61 25.6,19.35 19.4,28.12 6.47,41.35 h 48.49 l 55.14,4.97 z m 39.03,-237.15 -4.4,-11.87 9.2,-9.66 -13.52,-7.69 -8.8,4.91 -4.56,11.54 -11.11,15.06 -1.6,4.26 9.68,6.22 9.19,7.28 4.8,2.29 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="GD-05"
+       title="Saint Mark"
+       class="land"
+       d="m 264.86,705.34 -6.47,-41.35 -19.4,-28.12 -25.6,-19.35 -64.88,79.2 37.13,9.62 37.18,18.19 29.1,23.15 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="GD-04"
+       title="Saint John"
+       class="land"
+       d="m 251.92,746.68 -29.1,-23.15 -37.18,-18.19 -37.13,-9.62 -28.49,34.78 -1.28,34.85 -40.79,78.85 68.89,0.04 58.2,-1.65 -3.23,-21.5 22.63,-28.11 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="GD-03"
+       title="Saint George"
+       class="land"
+       d="m 188.23,1059.76 2.96,-18.97 8,-15.04 12.55,-11.28 -11.55,-8.22 -14.55,-23.14 v -34.72 l 12.94,-44.63 25.86,-8.27 -9.7,-13.22 -9.7,-39.68 -58.2,1.65 -68.89,-0.04 -10.56,44.74 5.2,27.48 9.68,23.14 5.68,23.55 -6.96,29.36 -12.48,12.18 -68.13,43.99 29.43,8.1 36.54,1.88 33.35,-7.03 20.32,-17.91 15.51,9.57 16.71,7.6 17.68,5.48 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="GD-02"
+       title="Saint David"
+       class="land"
+       d="m 326.67,926.72 -35.95,-27.92 -30.71,-13.23 -35.57,9.92 -25.86,8.27 -12.94,44.63 v 34.72 l 14.55,23.14 11.55,8.22 16.8,-8.26 v 14.96 l 84.21,-44.32 10.88,-17.99 0.64,-16.44 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="GD-01"
+       title="Saint Andrew"
+       class="land"
+       d="m 368.49,710.31 -55.14,-4.97 h -48.49 l -12.94,41.34 -27.48,46.3 -22.63,28.11 3.23,21.5 9.7,39.68 9.7,13.22 35.57,-9.92 30.71,13.23 35.95,27.92 5.75,-11.86 10.24,-4.74 4.96,-6.21 -11.04,-32.88 -0.64,-15.71 13.12,-30.75 8.63,-13.91 4.72,-14.07 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="GD-10"
+       title="Carriacou and Petite Martinique"
+       class="land"
+       d="m 799.62,19.17 -28.95,4.83 3.04,10.16 8.56,6.39 9.2,2.46 z M 712.77,0 682.46,26.54 661.11,74.3 l -25.43,34.73 -42.47,-12.94 -11.59,19.49 -2.88,8.03 20.63,-0.98 6.08,0.98 -6.72,12.28 -13.19,31.7 -6.8,12.28 33.43,-12.77 32.79,-16.96 33.18,-9.33 34.63,10.32 1.28,-41.77 8,-39.81 3.36,-36.62 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.77953;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>
