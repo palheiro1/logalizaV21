@@ -63,23 +63,40 @@ export function useTodays(dayString: string): [
     return 1 / (Math.cos(radianAngle) * Math.sqrt(2));
   }, [randomAngle]);
 
-  const randomImageNumber = getRandomImageNumber(dayString);
+  const randomImageNumber = getRandomImageNumber();
+  console.log(randomImageNumber);
 
   return [todays, addGuess, randomImageNumber, randomAngle, imageScale];
 }
 
-function getRandomImageNumber(dayString: string): number {
-  let randomImageNumber = randomNumber[dayString];
 
-  const showNewGame = getShowNewGame();
-  if (showNewGame || !randomImageNumber) {
-    randomImageNumber = getNewRandomImageNumber();
-  }
+function randomWithSeed(seed: number) {
+  // Gerador de números pseudoaleatórios baseado na semente (congruente simples)
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+function getDaySeed() {
+  // Obtenha a data atual
+  const today = new Date();
+  // Cria uma semente baseada no ano, mês e dia (ignorando horas, minutos e segundos)
+  const seed =     today.getFullYear() * 10000000000 +   // Ano
+  (today.getMonth() + 1) * 100000000 +  // Mês
+  today.getDate() * 1000000 +           // Dia
+  today.getHours() * 10000 +            // Hora
+  today.getMinutes() * 100 +            // Minuto
+  today.getSeconds();     
+  return seed;
+}
+
+function getRandomImageNumber() {
+  // Obtenha a semente para o dia atual
+  const seed = getDaySeed();
+  // Gere um número pseudoaleatório entre 0 e 1 com a semente
+  const random = randomWithSeed(seed);
+  // Escale o número aleatório para estar entre 1 e 6
   
-  if (randomImageNumber == 5) {
-    randomImageNumber = 7;
-  }
-  return randomImageNumber;
+  return Math.floor(random * 6) + 1;
 }
 
 function getCountry(dayString: string) {
