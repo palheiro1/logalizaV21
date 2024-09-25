@@ -25,6 +25,7 @@ import { getDayString, useTodays } from "../hooks/useTodays";
 import { CountryInput } from "./CountryInput";
 import { Guesses } from "./Guesses";
 import { Share } from "./Share";
+import listagemLigazons from "../domain/listagemLigazons";
 
 const ENABLE_TWITCH_LINK = false;
 const MAX_TRY_COUNT = 4;
@@ -244,19 +245,30 @@ export function Game({ settingsData, updateSettings }: GameProps) {
               hideImageMode={hideImageMode}
               rotationMode={rotationMode}
             />
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex justify-center mt-4">
               <a
-                className="underline text-center block mt-4 whitespace-nowrap"
+                className="underline text-center mx-8"
                 href={`https://estreleira.gal/mapacomarcas`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Twemoji
-                  text={t("Mapa das Comarcas")}
+                  text={t("🗺️ Mapa das Comarcas")}
                   options={{ className: "inline-block" }}
                 >{}</Twemoji>
               </a>
-
+   
+              <a
+                className="underline text-center mx-8"
+                href={listagemLigazons[normalizedCountryName][randomImageNumber]}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Twemoji
+                  text={t("🤔O que é esta imagem?")}
+                  options={{ className: "inline-block" }}
+                >{}</Twemoji>
+              </a>
             </div>
           </>
         ) : (
