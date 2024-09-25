@@ -256,6 +256,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
                   options={{ className: "inline-block" }}
                 >{}</Twemoji>
               </a>
+
             </div>
           </>
         ) : (
