@@ -400,7 +400,7 @@ type ListagemLigazonsType = {
     trasancos: {
         1: "https://estreleira.gal/trasancos",
         2: "https://www.falamedesansadurnino.org/imaxe/fervenza-do-rio-castro/",
-        3: "http://www.crtvg.es/tvg/a-carta/unha-de-polbo-a-mugardesa",
+        3: "https://gl.wikipedia.org/wiki/Polbo_%C3%A1_mugardesa",
         4: "https://gl.wikipedia.org/wiki/Castelo_de_Moeche",
         5: "https://gl.wikipedia.org/wiki/San_Sadurni%C3%B1o",
         6: "https://www.nosdiario.gal/articulo/memoria/revoltas-do-pan-naron/20180208132056065874.html"

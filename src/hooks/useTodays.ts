@@ -82,10 +82,7 @@ function getDaySeed() {
   // Cria uma semente baseada no ano, mês e dia (ignorando horas, minutos e segundos)
   const seed =     today.getFullYear() * 10000000000 +   // Ano
   (today.getMonth() + 1) * 100000000 +  // Mês
-  today.getDate() * 1000000 +           // Dia
-  today.getHours() * 10000 +            // Hora
-  today.getMinutes() * 100 +            // Minuto
-  today.getSeconds();     
+  today.getDate() * 1000000        // Dia
   return seed;
 }
 
