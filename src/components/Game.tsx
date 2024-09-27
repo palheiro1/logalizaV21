@@ -54,6 +54,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
     [country, i18n.resolvedLanguage]
   );
   const normalizedCountryName = sanitizeCountryName(countryName);
+  console.log(normalizedCountryName)
 
   let imageFilename = null;
   const start = new Date("2023-01-13");
@@ -158,6 +159,8 @@ export function Game({ settingsData, updateSettings }: GameProps) {
       }
     };
   }, [todays, i18n.resolvedLanguage]);
+
+
 
   return (
     <div className="flex-grow flex flex-col mx-2">
