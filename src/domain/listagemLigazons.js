@@ -11,11 +11,11 @@ type ListagemLigazonsType = {
       3: "https://praza.gal/movementos-sociais/cando-habia-pitas-do-monte-nos-ancares-e-fraga-as-cazaba",
       4: "https://gl.wikipedia.org/wiki/Palloza",
       5: "https://gl.wikipedia.org/wiki/San_Rom%C3%A1n_de_Cervantes,_Cervantes",
-      6: "https://buracadasgrellas.es/historia/uncategorized/o-caurel-aportou-guerrilleiros-para-combater-os-franceses-1808-1814/"
+      6: "https://www.becerrea.net/portal/becerrea-rememorou-este-fin-de-semana-heroica-resistencia-na-ponte-de-cruzul"
     },
     arcua: {
       1: "https://estreleira.gal/arcua",
-      2: "http://www.adelaleiro.com/gestion/catalogo/docs/R%C3%8DO%20ULLA.pdf",
+      2: "https://gl.m.wikipedia.org/wiki/R%C3%ADo_Ulla",
       3: "https://gl.wikipedia.org/wiki/Queixo_de_Arz%C3%BAa-Ulloa",
       4: "http://patrimoniogalego.net/index.php/32663/2013/01/capela-da-madalena-3/",
       5: "https://gl.wikipedia.org/wiki/Boimorto",
@@ -101,14 +101,6 @@ type ListagemLigazonsType = {
       5: "https://gl.wikipedia.org/wiki/Bobor%C3%A1s",
       6: "https://gl.wikipedia.org/wiki/Masacre_de_Oseira"
     },
-    celanova: {
-      1: "https://estreleira.gal/celanova",
-      2: "https://www.nosdiario.gal/articulo/cultura/castromao-asentamento-coelerni/20210615200710123563.html",
-      3: "https://turismo.celanova.gal/gl/cultura",
-      4: "https://iscagz.org/contra-a-privatizacion-do-mosteiro-de-celanova/",
-      5: "https://gl.wikipedia.org/wiki/Vilanova_dos_Infantes,_Celanova",
-      6: "https://gl.wikipedia.org/wiki/%C3%81urea_Rodr%C3%ADguez",
-    },
     chantada: {
         1: "https://estreleira.gal/chantada",
         2: "https://gl.wikipedia.org/wiki/R%C3%ADo_Asma",
@@ -128,7 +120,7 @@ type ListagemLigazonsType = {
       corunha: {
         1: "https://estreleira.gal/corunha",
         2: "https://gl.wikipedia.org/wiki/R%C3%ADo_Mero",
-        3: "https://gl.wikipedia.org/wiki/Noite_de_san_Xo%C3%A1n",
+        3: "https://www.visitcoruna.com/turismo/gl/que-facer-na-coruna/gastronomia/festivais-e-actividades-gastronomicas/festival/san-xoan-festa-de-interese-turistico-internacional/contenido/1453790765996?argIdioma=gl",
         4: "http://patrimoniogalego.net/index.php/2883/2011/07/acueduto-do-paseo-das-pontes/",
         5: "https://gl.wikipedia.org/wiki/Carral",
         6: "https://praza.gal/cultura/anna-turbau-lcando-cheguei-galicia-era-unha-batalla-permanente-non-era-para-nada-un-pobo-pasivor",
@@ -371,7 +363,7 @@ type ListagemLigazonsType = {
         3: "https://biodiversidade.eu/especie/santolina-melidensis-rodr-oubina-aamp-s-ortiz-rodr-oubina-aamp-s-ortiz/?lang=gl&translate=true",
         4: "https://gl.wikipedia.org/wiki/Castelo_de_Pambre",
         5: "https://gl.wikipedia.org/wiki/Monterroso",
-        6: "https://alisbethdesign.com/portfolio-item/v-agrocuir/"
+        6: "https://www.nosdiario.gal/articulo/social/manifestacion-historica-palas-rei-macrocelulosa-altri/20240526130132198701.html"
       },
       valdeorras: {
         1: "https://estreleira.gal/valdeorras",
@@ -379,7 +371,7 @@ type ListagemLigazonsType = {
         3: "https://www.campogalego.gal/cando-comezou-facerse-vino-en-valdeorras/",
         4: "http://centros.edu.xunta.es/ceipcondesadefenosa/bibliocondesa/proxectos/edificios_pdi/pontesanfernando.html",
         5: "https://gl.wikipedia.org/wiki/Rubi%C3%A1",
-        6: "https://www.nosdiario.gal/articulo/memoria/federacion-guerrillas-leon-galiza/20211108134142132019.html"
+        6: "https://www.elsaltodiario.com/feminismos/mulleres-base-resistencia-guerrilleira-valdeorras"
       },
       valedoibias: {
         1: "https://estreleira.gal/valedoibias",
@@ -412,6 +404,7 @@ type ListagemLigazonsType = {
         4: "https://gl.wikipedia.org/wiki/Castelo_de_Moeche",
         5: "https://gl.wikipedia.org/wiki/San_Sadurni%C3%B1o",
         6: "https://www.nosdiario.gal/articulo/memoria/revoltas-do-pan-naron/20180208132056065874.html"
+
     }
 };
 

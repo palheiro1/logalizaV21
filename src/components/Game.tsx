@@ -27,6 +27,7 @@ import { Guesses } from "./Guesses";
 import { Share } from "./Share";
 import listagemLigazons from "../domain/listagemLigazons";
 
+
 const ENABLE_TWITCH_LINK = false;
 const MAX_TRY_COUNT = 4;
 
@@ -131,6 +132,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
 
       if (newGuess.distance === 0) {
         toast.success(t("welldone"), { delay: 2000 });
+        
       }
     },
     [addGuess, country, currentGuess, i18n.resolvedLanguage, t]
@@ -241,6 +243,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
       <div className="my-2">
         {gameEnded && country ? (
           <>
+
             <Share
               guesses={guesses}
               dayString={dayString}
@@ -251,7 +254,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
             <div className="flex justify-center mt-4">
               <a
                 className="underline text-center mx-8"
-                href={`https://estreleira.gal/mapacomarcas`}
+                href={`https://ibb.co/py0qRPT`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -60,7 +60,7 @@ export function Share({
       })
       .join("\n");
 
-    return [title, guessString, "https://logaliza.estreleira.gal/"].join("\n");
+    return [title, guessString, "https://logaliza-v21.vercel.app/"].join("\n");
   }, [dayString, guesses, hideImageMode, rotationMode, theme]);
 
   return (
