@@ -263,7 +263,7 @@ const listagemLigazons: ListagemLigazonsType = {
   },
   salnes: {
       1: "https://estreleira.gal/salnes",
-      2: "https://pandulleiros.blogspot.com/2014/09/salvemos-o-areoso.html?m=1”,
+      2: "https://pandulleiros.blogspot.com/2014/09/salvemos-o-areoso.html?m=1",
       3: "https://cxusto.blogspot.com/2013/10/cambados-vii-un-lugar-fermoso-festas.html?m=0",
       4: "https://www.osalnes.com/gl/descubre/visitas/arquitectura-civil-pazos/telleira-de-seixinos.html",
       5: "https://gl.wikipedia.org/wiki/Ribadumia",
@@ -271,7 +271,8 @@ const listagemLigazons: ListagemLigazonsType = {
   },
   compostela: {
       1: "https://estreleira.gal/compostela",
-      2: “https://www.galizalivre.com/2019/05/21/a-galeguidade-e-os-seus-cumios/”,        3: "http://agal-gz.org/blogues/index.php/gent/2010/02/12/texto-da-comissom-d-ecultura-sobre-o-entruido",
+      2: "https://www.galizalivre.com/2019/05/21/a-galeguidade-e-os-seus-cumios/",
+      3: "http://agal-gz.org/blogues/index.php/gent/2010/02/12/texto-da-comissom-d-ecultura-sobre-o-entruido",
       4: "https://www.gciencia.com/destinos/as-pontes-sobre-o-ulla-en-gundian-arte-por-duplicado-para-salvar-unha-xeoloxia-singular/",
       5: "https://gl.wikipedia.org/wiki/A_Ponte_Maceira,_Portor,_Negreira",
       6: "https://gl.wikipedia.org/wiki/Banquete_de_Conxo"
