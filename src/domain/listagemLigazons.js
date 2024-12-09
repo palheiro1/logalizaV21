@@ -23,7 +23,7 @@ const listagemLigazons: ListagemLigazonsType = {
   },
   arnoia: {
     1: "https://estreleira.gal/arnoia",
-    2: "https://blog.turismo.gal/destinos-gl/de-paseo-por-allariz-parque-etnografico-do-rio-arnoia/",
+    2: "https://www.allariz.gal/turismo/rio-arnoia/",
     3: "https://felosdemaceda.com/",
     4: "https://balneariosdegalicia.gal/os-balnearios/balneario-de-banos-de-molgas/",
     5: "https://gl.wikipedia.org/wiki/Ni%C3%B1odaguia,_Xunqueira_de_Espadanedo",
