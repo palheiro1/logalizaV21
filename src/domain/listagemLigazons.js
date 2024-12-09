@@ -25,7 +25,7 @@ const listagemLigazons: ListagemLigazonsType = {
     1: "https://estreleira.gal/arnoia",
     2: "https://www.allariz.gal/turismo/rio-arnoia/",
     3: "https://felosdemaceda.com/",
-    4: "https://balneariosdegalicia.gal/os-balnearios/balneario-de-banos-de-molgas/",
+    4: "https://patrimoniogalego.net/index.php/25594/2012/09/balneario-de-banos-de-molgas/",
     5: "https://gl.wikipedia.org/wiki/Ni%C3%B1odaguia,_Xunqueira_de_Espadanedo",
     6: "https://praza.gal/movementos-sociais/25-anos-da-revolta-de-allariz"
   },
