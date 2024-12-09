@@ -39,7 +39,7 @@ const listagemLigazons: ListagemLigazonsType = {
   },
   baixominho: {
     1: "https://estreleira.gal/baixominho",
-    2: "https://www.turismoaguarda.es/gl/estuario-del-mino//",
+    2: "https://faia.gl/o-esteiro-do-mino-a-rede-natura-galego-portuguesa-3/",
     3: "https://gl.wikipedia.org/wiki/Festa_do_Monte",
     4: "https://www.mosteirodeoia.com/gl/",
     5: "https://gl.wikipedia.org/wiki/Oia",
