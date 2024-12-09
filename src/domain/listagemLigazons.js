@@ -40,7 +40,7 @@ const listagemLigazons: ListagemLigazonsType = {
   baixominho: {
     1: "https://estreleira.gal/baixominho",
     2: "https://faia.gl/o-esteiro-do-mino-a-rede-natura-galego-portuguesa-3/",
-    3: "https://gl.wikipedia.org/wiki/Festa_do_Monte",
+    3: "https://www.nosdiario.gal/articulo/lingua/festas-monte-guarda-espanol-enxebres/20130801131207017793.html",
     4: "https://www.mosteirodeoia.com/gl/",
     5: "https://gl.wikipedia.org/wiki/Oia",
     6: "https://gl.wikipedia.org/wiki/M%C3%A1rtires_de_Sobredo"
