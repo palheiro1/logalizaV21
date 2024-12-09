@@ -55,7 +55,7 @@ const listagemLigazons: ListagemLigazonsType = {
   },
   bergantinhos: {
     1: "https://estreleira.gal/bergantinhos",
-    2: "https://gl.wikipedia.org/wiki/Praia_dos_Cristais",
+    2: "https://www.gciencia.com/perspectivas/rouban-vidrios-na-praia-dos-cristais-cando-se-acaben-non-se-poderan-reponer/",
     3: "https://www.concellomalpica.com/turismo/gl/festas/festas-do-mar/",
     4: "https://www.concellomalpica.com/turismo/gl/a-vila/porto/",
     5: "https://gl.wikipedia.org/wiki/Bu%C3%B1o,_Malpica_de_Berganti%C3%B1os",
