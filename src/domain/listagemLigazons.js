@@ -33,7 +33,7 @@ const listagemLigazons: ListagemLigazonsType = {
     1: "https://estreleira.gal/baixalimia",
     2: "https://gl.wikipedia.org/wiki/Baixa_Limia_-_Serra_do_Xur%C3%A9s",
     3: "https://orgullogalego.gal/vaca-cachena/",
-    4: "http://www.aquisquerquennis.es/gl/o-campamento-romano-un-pouco-de-historia/",
+    4: "https://gl.m.wikipedia.org/wiki/Aquis_Querquennis",
     5: "https://gl.wikipedia.org/wiki/Entrimo",
     6: "https://milhistorias.eu/asolagados-e-os-dias-afogados-nos-encoros-de-belesar-e-lindoso/"
   },
