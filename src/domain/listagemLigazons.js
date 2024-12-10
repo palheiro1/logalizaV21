@@ -123,7 +123,7 @@ const listagemLigazons: ListagemLigazonsType = {
       3: "https://www.terraetempo.gal/articulo/cultura/un-san-xoan-corunes-cada-vez-menos-galego/20120709000000021926.html",
       4: "http://patrimoniogalego.net/index.php/2883/2011/07/acueduto-do-paseo-das-pontes/",
       5: "https://gl.wikipedia.org/wiki/Carral",
-      6: "https://praza.gal/cultura/anna-turbau-lcando-cheguei-galicia-era-unha-batalla-permanente-non-era-para-nada-un-pobo-pasivo",
+      6: "https://praza.gal/cultura/anna-turbau-lcando-cheguei-galicia-era-unha-batalla-permanente-non-era-para-nada-un-pobo-pasivor",
     },
     costadamorte: {
       1: "https://estreleira.gal/costadamorte",
