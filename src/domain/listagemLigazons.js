@@ -49,7 +49,7 @@ const listagemLigazons: ListagemLigazonsType = {
     1: "https://estreleira.gal/barbanca",
     2: "https://gl.wikipedia.org/wiki/Praia_das_Furnas",
     3: "https://www.gciencia.com/gastro/a-xouba-de-rianxo-delicatessen-de-antiga-tradicion/",
-    4: "https://omarfeitotradicion.gal/castelodalua",
+    4: "https://www.nosdiario.gal/articulo/memoria/castelo-da-lua-fortaleza-marineira-erguida-rianxo/20231028132602180939.html",
     5: "https://gl.wikipedia.org/wiki/A_Pobra_do_Carami%C3%B1al",
     6: "https://www.nosdiario.gal/articulo/memoria/nebra-labregas-abusos-do-estado/20211011211247130421.html"
   },
