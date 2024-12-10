@@ -18,7 +18,7 @@ const listagemLigazons: ListagemLigazonsType = {
     2: "https://gl.m.wikipedia.org/wiki/R%C3%ADo_Ulla",
     3: "https://gl.wikipedia.org/wiki/Queixo_de_Arz%C3%BAa-Ulloa",
     4: "http://patrimoniogalego.net/index.php/32663/2013/01/capela-da-madalena-3/",
-    5: "https://portaldaspalabras.gal/lexico/mira-que-din/feismo/",
+    5: "https://gl.m.wikipedia.org/wiki/Boimorto",
     6: "https://www.nosdiario.gal/articulo/social/loita-vecinal-consigue-enterrar-proxecto-da-mina-touro-pino/20200128205902090352.html"
   },
   arnoia: {
