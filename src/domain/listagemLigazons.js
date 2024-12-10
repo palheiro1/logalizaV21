@@ -297,7 +297,7 @@ const listagemLigazons: ListagemLigazonsType = {
       1: "https://estreleira.gal/taveiros",
       2: "https://gl.wikipedia.org/wiki/R%C3%ADo_Ulla",
       3: "https://rapadasbestas.gal/?lang=gl",
-      4: "https://turismoriasbaixas.com/gl/recursopan1?content=280380093",
+      4: "https://forcarei.gal/observatorio-astronomico/",
       5: "https://gl.wikipedia.org/wiki/A_Estrada",
       6: "https://bvg.udc.es/ficha_autor.jsp?id=ManGarc%ED&alias=Ken+Keirades&solapa=biografia"
     },
