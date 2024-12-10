@@ -120,7 +120,7 @@ const listagemLigazons: ListagemLigazonsType = {
     corunha: {
       1: "https://estreleira.gal/corunha",
       2: "https://gl.wikipedia.org/wiki/R%C3%ADo_Mero",
-      3: "https://www.visitcoruna.com/turismo/gl/que-facer-na-coruna/gastronomia/festivais-e-actividades-gastronomicas/festival/san-xoan-festa-de-interese-turistico-internacional/contenido/1453790765996?argIdioma=gl",
+      3: "https://www.terraetempo.gal/articulo/cultura/un-san-xoan-corunes-cada-vez-menos-galego/20120709000000021926.html",
       4: "http://patrimoniogalego.net/index.php/2883/2011/07/acueduto-do-paseo-das-pontes/",
       5: "https://gl.wikipedia.org/wiki/Carral",
       6: "https://praza.gal/cultura/anna-turbau-lcando-cheguei-galicia-era-unha-batalla-permanente-non-era-para-nada-un-pobo-pasivor",
