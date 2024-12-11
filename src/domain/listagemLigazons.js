@@ -189,7 +189,7 @@ const listagemLigazons: ListagemLigazonsType = {
       5: "https://gl.wikipedia.org/wiki/Betanzos",
       6: "https://praza.gal/opinion/foucelhas-memoria-de-umha-resistencia",
     },
-    monterrei: {
+    monterei: {
       1: "https://estreleira.gal/monterei",
       2: "https://gl.wikipedia.org/wiki/R%C3%ADo_T%C3%A1mega",
       3: "https://gl.wikipedia.org/wiki/Entroido_de_Laza",
