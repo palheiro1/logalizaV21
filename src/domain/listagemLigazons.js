@@ -168,7 +168,7 @@ const listagemLigazons: ListagemLigazonsType = {
     lugo: {
       1: "https://estreleira.gal/lugo",
       2: "http://historiadegalicia.gal/2021/02/as-escavacions-do-castro-de-viladonga-cumpren-medio-seculo-estreando-nova-imaxe/",
-      3: "https://www.nosdiario.gal/articulo/reportaxes/fuxan-os-ventos/20220304125659138499.html",
+      3: "https://gl.m.wikipedia.org/wiki/Fuxan_os_Ventos",
       4: "https://museos-xunta-gal.translate.goog/gl/san-paio-narla?_x_tr_sl=es&_x_tr_tl=gl&_x_tr_hl=gl&_x_tr_pto=sc",
       5: "https://gl.wikipedia.org/wiki/Gunt%C3%ADn",
       6: "https://www.nosdiario.gal/articulo/social/galiza-cota-empresarial/20171129182716063777.html",
