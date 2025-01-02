@@ -49,7 +49,7 @@ export const galicianCountryNamesChanga: Record<string, comarcaChanga> = {
   TLE: { nomeI18n: "Terra de Lemos", nomeArquivo: "terradelemos" },
   TME: { nomeI18n: "Terra de Melide", nomeArquivo: "terrademelide" },
   TMO: { nomeI18n: "Terra de Montes", nomeArquivo: "terrademontes" },
-  TNA: { nomeI18n: "Terra de Návia-eu", nomeArquivo: "terranavia-eu-" },
+  TNA: { nomeI18n: "Terra de Návia-eu", nomeArquivo: "terranavia-eu" },
   TTR: { nomeI18n: "Terra de Trives", nomeArquivo: "terradetrives" },
   ULH: { nomeI18n: "Ulhoa", nomeArquivo: "ulhoa" },
   VDO: { nomeI18n: "Valdeorras", nomeArquivo: "valdeorras" },

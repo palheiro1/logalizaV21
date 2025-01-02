@@ -14,13 +14,16 @@ import { SettingsData } from "../hooks/useSettings";
 
 const START_DATE = DateTime.fromISO("2022-01-21");
 
-interface ShareProps {
+export interface ShareProps {
   guesses: Guess[];
   dayString: string;
   settingsData: SettingsData;
   hideImageMode: boolean;
   rotationMode: boolean;
+  guessedShield: boolean; // New prop to indicate if the user has guessed the shield
 }
+
+
 
 export function Share({
   guesses,
@@ -28,6 +31,7 @@ export function Share({
   settingsData,
   hideImageMode,
   rotationMode,
+  guessedShield, // New prop
 }: ShareProps) {
   const { t } = useTranslation();
   const { theme } = settingsData;
@@ -49,8 +53,10 @@ export function Share({
     const bestPercent = `(${computeProximityPercent(
       bestDistance
     ).toString()}%)`;
+  
+    // Ajuste: Remover shieldEmoji do título
     const title = `#LoGaliza!, adivinha umha comarca cada dia #${dayCount} ${guessCount}/4 ${bestPercent}${difficultyModifierEmoji}`;
-
+  
     const guessString = guesses
       .map((guess) => {
         const percent = computeProximityPercent(guess.distance);
@@ -59,9 +65,18 @@ export function Share({
         return `${squares}${direction}`;
       })
       .join("\n");
-
-    return [title, guessString, "https://logaliza-v21.vercel.app/"].join("\n");
-  }, [dayString, guesses, hideImageMode, rotationMode, theme]);
+  
+    // Ajuste: Colocar shieldEmoji em uma linha separada antes do link
+    return [
+      title,
+      guessString,
+      guessedShield ? "🛡" : "", // Adicionar o emoji do escudo apenas se guessedShield for true
+      "https://logaliza-v21.vercel.app/"
+    ]
+      .filter(Boolean) // Remove entradas vazias (como o emoji do escudo, se não for verdadeiro)
+      .join("\n");
+  }, [dayString, guesses, hideImageMode, rotationMode, theme, guessedShield]);
+  
 
   return (
     <CopyToClipboard
