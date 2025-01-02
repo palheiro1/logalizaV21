@@ -24,7 +24,6 @@ export interface ShareProps {
 }
 
 
-
 export function Share({
   guesses,
   dayString,

@@ -72,7 +72,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
         spread: 70,
         origin: { y: 0.6 },
       });
-      setGuessedShield(true);
+
     }
   }, [gameEnded, guesses]);
 
