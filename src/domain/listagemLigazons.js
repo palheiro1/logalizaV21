@@ -18,14 +18,14 @@ const listagemLigazons: ListagemLigazonsType = {
     2: "https://gl.m.wikipedia.org/wiki/R%C3%ADo_Ulla",
     3: "https://gl.wikipedia.org/wiki/Queixo_de_Arz%C3%BAa-Ulloa",
     4: "http://patrimoniogalego.net/index.php/32663/2013/01/capela-da-madalena-3/",
-    5: "https://gl.wikipedia.org/wiki/Boimorto",
+    5: "https://gl.m.wikipedia.org/wiki/Boimorto",
     6: "https://www.nosdiario.gal/articulo/social/loita-vecinal-consigue-enterrar-proxecto-da-mina-touro-pino/20200128205902090352.html"
   },
   arnoia: {
     1: "https://estreleira.gal/arnoia",
-    2: "https://blog.turismo.gal/destinos-gl/de-paseo-por-allariz-parque-etnografico-do-rio-arnoia/",
+    2: "https://www.allariz.gal/turismo/rio-arnoia/",
     3: "https://felosdemaceda.com/",
-    4: "https://balneariosdegalicia.gal/os-balnearios/balneario-de-banos-de-molgas/",
+    4: "https://patrimoniogalego.net/index.php/25594/2012/09/balneario-de-banos-de-molgas/",
     5: "https://gl.wikipedia.org/wiki/Ni%C3%B1odaguia,_Xunqueira_de_Espadanedo",
     6: "https://praza.gal/movementos-sociais/25-anos-da-revolta-de-allariz"
   },
@@ -33,14 +33,14 @@ const listagemLigazons: ListagemLigazonsType = {
     1: "https://estreleira.gal/baixalimia",
     2: "https://gl.wikipedia.org/wiki/Baixa_Limia_-_Serra_do_Xur%C3%A9s",
     3: "https://orgullogalego.gal/vaca-cachena/",
-    4: "http://www.aquisquerquennis.es/gl/o-campamento-romano-un-pouco-de-historia/",
+    4: "https://gl.m.wikipedia.org/wiki/Aquis_Querquennis",
     5: "https://gl.wikipedia.org/wiki/Entrimo",
     6: "https://milhistorias.eu/asolagados-e-os-dias-afogados-nos-encoros-de-belesar-e-lindoso/"
   },
   baixominho: {
     1: "https://estreleira.gal/baixominho",
-    2: "https://www.turismoaguarda.es/gl/estuario-del-mino//",
-    3: "https://gl.wikipedia.org/wiki/Festa_do_Monte",
+    2: "https://faia.gl/o-esteiro-do-mino-a-rede-natura-galego-portuguesa-3/",
+    3: "https://www.nosdiario.gal/articulo/lingua/festas-monte-guarda-espanol-enxebres/20130801131207017793.html",
     4: "https://www.mosteirodeoia.com/gl/",
     5: "https://gl.wikipedia.org/wiki/Oia",
     6: "https://gl.wikipedia.org/wiki/M%C3%A1rtires_de_Sobredo"
@@ -49,13 +49,13 @@ const listagemLigazons: ListagemLigazonsType = {
     1: "https://estreleira.gal/barbanca",
     2: "https://gl.wikipedia.org/wiki/Praia_das_Furnas",
     3: "https://www.gciencia.com/gastro/a-xouba-de-rianxo-delicatessen-de-antiga-tradicion/",
-    4: "https://omarfeitotradicion.gal/castelodalua",
+    4: "https://www.nosdiario.gal/articulo/memoria/castelo-da-lua-fortaleza-marineira-erguida-rianxo/20231028132602180939.html",
     5: "https://gl.wikipedia.org/wiki/A_Pobra_do_Carami%C3%B1al",
     6: "https://www.nosdiario.gal/articulo/memoria/nebra-labregas-abusos-do-estado/20211011211247130421.html"
   },
   bergantinhos: {
     1: "https://estreleira.gal/bergantinhos",
-    2: "https://gl.wikipedia.org/wiki/Praia_dos_Cristais",
+    2: "https://www.gciencia.com/perspectivas/rouban-vidrios-na-praia-dos-cristais-cando-se-acaben-non-se-poderan-reponer/",
     3: "https://www.concellomalpica.com/turismo/gl/festas/festas-do-mar/",
     4: "https://www.concellomalpica.com/turismo/gl/a-vila/porto/",
     5: "https://gl.wikipedia.org/wiki/Bu%C3%B1o,_Malpica_de_Berganti%C3%B1os",
@@ -120,7 +120,7 @@ const listagemLigazons: ListagemLigazonsType = {
     corunha: {
       1: "https://estreleira.gal/corunha",
       2: "https://gl.wikipedia.org/wiki/R%C3%ADo_Mero",
-      3: "https://www.visitcoruna.com/turismo/gl/que-facer-na-coruna/gastronomia/festivais-e-actividades-gastronomicas/festival/san-xoan-festa-de-interese-turistico-internacional/contenido/1453790765996?argIdioma=gl",
+      3: "https://www.terraetempo.gal/articulo/cultura/un-san-xoan-corunes-cada-vez-menos-galego/20120709000000021926.html",
       4: "http://patrimoniogalego.net/index.php/2883/2011/07/acueduto-do-paseo-das-pontes/",
       5: "https://gl.wikipedia.org/wiki/Carral",
       6: "https://praza.gal/cultura/anna-turbau-lcando-cheguei-galicia-era-unha-batalla-permanente-non-era-para-nada-un-pobo-pasivor",
@@ -168,7 +168,7 @@ const listagemLigazons: ListagemLigazonsType = {
     lugo: {
       1: "https://estreleira.gal/lugo",
       2: "http://historiadegalicia.gal/2021/02/as-escavacions-do-castro-de-viladonga-cumpren-medio-seculo-estreando-nova-imaxe/",
-      3: "https://www.nosdiario.gal/articulo/reportaxes/fuxan-os-ventos/20220304125659138499.html",
+      3: "https://gl.m.wikipedia.org/wiki/Fuxan_os_Ventos",
       4: "https://museos-xunta-gal.translate.goog/gl/san-paio-narla?_x_tr_sl=es&_x_tr_tl=gl&_x_tr_hl=gl&_x_tr_pto=sc",
       5: "https://gl.wikipedia.org/wiki/Gunt%C3%ADn",
       6: "https://www.nosdiario.gal/articulo/social/galiza-cota-empresarial/20171129182716063777.html",
@@ -189,7 +189,7 @@ const listagemLigazons: ListagemLigazonsType = {
       5: "https://gl.wikipedia.org/wiki/Betanzos",
       6: "https://praza.gal/opinion/foucelhas-memoria-de-umha-resistencia",
     },
-    monterrei: {
+    monterei: {
       1: "https://estreleira.gal/monterei",
       2: "https://gl.wikipedia.org/wiki/R%C3%ADo_T%C3%A1mega",
       3: "https://gl.wikipedia.org/wiki/Entroido_de_Laza",
@@ -297,7 +297,7 @@ const listagemLigazons: ListagemLigazonsType = {
       1: "https://estreleira.gal/taveiros",
       2: "https://gl.wikipedia.org/wiki/R%C3%ADo_Ulla",
       3: "https://rapadasbestas.gal/?lang=gl",
-      4: "https://turismoriasbaixas.com/gl/recursopan1?content=280380093",
+      4: "https://forcarei.gal/observatorio-astronomico/",
       5: "https://gl.wikipedia.org/wiki/A_Estrada",
       6: "https://bvg.udc.es/ficha_autor.jsp?id=ManGarc%ED&alias=Ken+Keirades&solapa=biografia"
     },
