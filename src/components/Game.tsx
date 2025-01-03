@@ -59,7 +59,10 @@ export function Game({ settingsData, updateSettings }: GameProps) {
 
   const [guessedShield, setGuessedShield] = useState(false);
   const [showNewPhase, setShowNewPhase] = useState(false);
-  const [hasParticipatedInNewPhase, setHasParticipatedInNewPhase] = useState(false);
+  const [hasParticipatedInNewPhase, setHasParticipatedInNewPhase] = useState(() => {
+    const storedValue = localStorage.getItem(`hasParticipatedInNewPhase-${dayString}`);
+    return storedValue ? JSON.parse(storedValue) : false;
+  });
 
   const gameEnded =
     guesses.length === MAX_TRY_COUNT ||
@@ -72,9 +75,12 @@ export function Game({ settingsData, updateSettings }: GameProps) {
         spread: 70,
         origin: { y: 0.6 },
       });
-
     }
   }, [gameEnded, guesses]);
+
+  useEffect(() => {
+    localStorage.setItem(`hasParticipatedInNewPhase-${dayString}`, JSON.stringify(hasParticipatedInNewPhase));
+  }, [hasParticipatedInNewPhase, dayString]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -111,7 +117,6 @@ export function Game({ settingsData, updateSettings }: GameProps) {
 
       if (newGuess.distance === 0) {
         toast.success(t("welldone"), { delay: 2000 });
-        setGuessedShield(true);
       }
     },
     [addGuess, country, currentGuess, i18n.resolvedLanguage, t]
@@ -144,6 +149,11 @@ export function Game({ settingsData, updateSettings }: GameProps) {
   const handlePhaseEnd = () => {
     setShowNewPhase(false);
     setHasParticipatedInNewPhase(true);
+  };
+
+  const handleCorrectGuess = () => {
+    setGuessedShield(true);
+    toast.success(t("Parabéns, hoje ganhache o bónus!"));
   };
 
   return (
@@ -268,10 +278,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
         country && (
           <NewPhase 
             correctCountry={country.code} 
-            onCorrectGuess={() => {
-              toast.success(t("Parabéns, hoje ganhache o bónus!"));
-              setGuessedShield(true);
-            }} 
+            onCorrectGuess={handleCorrectGuess} 
             onPhaseEnd={handlePhaseEnd}
           />
         )
