@@ -48,7 +48,7 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
     setSelectedOption(option);
     setIsDisabled(true); // Disable buttons after the first choice
     if (option === correctCountry) {
-      setMessage(t("Bravo!"));
+      setMessage(t("Brava!"));
       onCorrectGuess();
     } else {
       setMessage(t("Nom era esse escudo!"));
