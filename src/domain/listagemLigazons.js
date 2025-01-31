@@ -195,7 +195,7 @@ const listagemLigazons: ListagemLigazonsType = {
       3: "https://gl.wikipedia.org/wiki/Entroido_de_Laza",
       4: "https://gl.wikipedia.org/wiki/Castelo_de_Monterrei",
       5: "https://gl.wikipedia.org/wiki/Vilardev%C3%B3s",
-      6: "http://www.verin.gal/index.php?option=com_content&view=article&id=4420:2018-02-20-10-38-41&catid=1:latest-news&Itemid=61"
+      6: "https://academia.gal/-/o-misale-auriense-530-anos-do-primeiro-libro-impreso-en-galicia"
   },
   morraco: {
       1: "https://estreleira.gal/morraco",
