@@ -61,15 +61,15 @@ export function Share({
       })
       .join("\n");
   
-    return [
-      title,
-      guessString,
-      guessedShield ? "🛡" : "",
-      guessedMap ? "🗺️" : "", // NEW: add map emoji if guessedMap is true
-      "https://logaliza-v21.vercel.app/"
-    ]
+    const iconsPart = [guessedShield ? "🛡" : "", guessedMap ? "🗺️" : ""]
       .filter(Boolean)
       .join(" ");
+      
+    const gameLink = "https://logaliza-v21.vercel.app/";
+    
+    const iconsLine = iconsPart ? `${iconsPart}\n${gameLink}` : gameLink;
+
+    return title + "\n" + guessString + "\n" + iconsLine;
   }, [dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap]);
 
   return (
