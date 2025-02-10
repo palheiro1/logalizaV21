@@ -116,10 +116,6 @@ export default function App() {
                         <button className="ml-3 text-xl" type="button" onClick={() => setStatsOpen(true)}>
                             <Twemoji text="📈" />
                         </button>
-                        {/* Botão para abrir o painel de configurações */}
-                        <button className="ml-3 text-xl" type="button" onClick={() => setSettingsOpen(true)}>
-                            <Twemoji text="⚙️" />
-                        </button>
                     </header>
                     {/* Componente do jogo */}
                     <Game settingsData={settingsData} updateSettings={updateSettings} />
