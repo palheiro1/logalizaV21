@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { galicianCountryNamesChanga } from "../domain/comarcas.name.co";
 
-interface NewPhaseProps {
+interface MapPhaseProps {
   correctCountry: string;
-  onCorrectGuess: () => void;
   onPhaseEnd: () => void;
+  onMapCorrect: () => void; // NEW prop
 }
 
-const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onPhaseEnd }) => {
-  const { t, i18n } = useTranslation();
+const MapPhase: React.FC<MapPhaseProps> = ({ correctCountry, onPhaseEnd, onMapCorrect }) => {
+  const { t } = useTranslation();
   const [options, setOptions] = useState<string[]>([]);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false); // New state to track if buttons are disabled
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     const generateOptions = () => {
@@ -28,8 +28,7 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
         }
       }
 
-      const optionsArray = Array.from(randomOptions);
-      setOptions(shuffleArray(optionsArray));
+      setOptions(shuffleArray(Array.from(randomOptions)));
     };
 
     generateOptions();
@@ -44,29 +43,30 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
   };
 
   const handleOptionClick = (option: string) => {
-    if (isDisabled) return; // Prevent further clicks if already disabled
+    if (isDisabled) return;
     setSelectedOption(option);
-    setIsDisabled(true); // Disable buttons after the first choice
+    setIsDisabled(true);
     if (option === correctCountry) {
+      onMapCorrect(); // NEW: update guessedMap in parent
       setMessage(t("Bravo!"));
-      onCorrectGuess(); // NEW: inform parent to set guessedShield to true
     } else {
-      setMessage(t("Nom era esse escudo!"));
+      setMessage(t("Nom era este mapa!"));
     }
-    // Removed setTimeout that enforced navigation back to main screen.
+    setTimeout(() => {
+      onPhaseEnd();
+    }, 3000);
   };
 
   const correctComarcaName = galicianCountryNamesChanga[correctCountry]?.nomeI18n || '';
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="text-xl font-bold mb-4">{t("Adivinha o escudo de")} {correctComarcaName}!</h2>
+      <h2 className="text-xl font-bold mb-4">{t("Adivinha o mapa de")} {correctComarcaName}!</h2>
       <div className="grid grid-cols-2 gap-4 max-w-2xl">
         {options.map((option) => {
           const comarca = galicianCountryNamesChanga[option];
           if (!comarca) return null;
-
-          const imagePath = `/images/comarcas/${option.toLowerCase()}/${comarca.nomeArquivo.toLowerCase()}7.jpg`;
+          const imagePath = `/images/comarcas/${option.toLowerCase()}/${comarca.nomeArquivo.toLowerCase()}1.jpg`;
 
           return (
             <div key={option} className="flex flex-col items-center">
@@ -79,7 +79,7 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
                       : 'ring-4 ring-red-500'
                     : ''
                 }`}
-                disabled={isDisabled} // Disable button if isDisabled is true
+                disabled={isDisabled}
               >
                 <img
                   src={imagePath}
@@ -88,9 +88,8 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
                   height={200}
                   className="w-full h-auto object-contain"
                   onError={(e) => {
-                    console.error('Image load error for:', imagePath);
                     const imgElement = e.target as HTMLImageElement;
-                    imgElement.style.display = 'none';
+                    imgElement.style.display = "none";
                   }}
                 />
               </button>
@@ -100,17 +99,8 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
         })}
       </div>
       {message && <div className="mt-4 text-lg font-bold">{message}</div>}
-      {selectedOption && (
-        // Display button only after an option is selected.
-        <button
-          className="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
-          onClick={onPhaseEnd}
-        >
-          {t("BÓNUS DO MAPA")}
-        </button>
-      )}
     </div>
   );
 };
 
-export default NewPhase;
+export default MapPhase;

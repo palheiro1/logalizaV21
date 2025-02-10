@@ -15,6 +15,7 @@ import { Twemoji } from "react-emoji-render";
 import { toast, Id, ToastContent } from "react-toastify";
 import * as geolib from "geolib";
 import { SettingsData } from "../hooks/useSettings";
+import MapPhase from "./MapPhase";
 
 const ENABLE_TWITCH_LINK = false;
 const MAX_TRY_COUNT = 4;
@@ -58,11 +59,23 @@ export function Game({ settingsData, updateSettings }: GameProps) {
   const [rotationMode, setRotationMode] = useMode("rotationMode", dayString, settingsData.rotationMode);
 
   const [guessedShield, setGuessedShield] = useState(false);
+  const [guessedMap, setGuessedMap] = useState(() => {
+    const stored = localStorage.getItem(`guessedMap-${dayString}`);
+    return stored ? JSON.parse(stored) : false;
+  });
+  
+  // Persist guessedMap in localStorage
+  useEffect(() => {
+    localStorage.setItem(`guessedMap-${dayString}`, JSON.stringify(guessedMap));
+  }, [guessedMap, dayString]);
+
   const [showNewPhase, setShowNewPhase] = useState(false);
   const [hasParticipatedInNewPhase, setHasParticipatedInNewPhase] = useState(() => {
     const storedValue = localStorage.getItem(`hasParticipatedInNewPhase-${dayString}`);
     return storedValue ? JSON.parse(storedValue) : false;
   });
+
+  const [showMapPhase, setShowMapPhase] = useState(false);
 
   const gameEnded =
     guesses.length === MAX_TRY_COUNT ||
@@ -146,9 +159,14 @@ export function Game({ settingsData, updateSettings }: GameProps) {
     };
   }, [todays, i18n.resolvedLanguage]);
 
-  const handlePhaseEnd = () => {
+  const handleMapPhaseTransition = () => {
     setShowNewPhase(false);
     setHasParticipatedInNewPhase(true);
+    setShowMapPhase(true);
+  };
+
+  const handleMapPhaseEnd = () => {
+    setShowMapPhase(false);
   };
 
   const handleCorrectGuess = () => {
@@ -156,9 +174,15 @@ export function Game({ settingsData, updateSettings }: GameProps) {
     toast.success(t("Parabéns, hoje ganhache o bónus!"));
   };
 
+  // NEW: Callback when map is correctly guessed
+  const handleMapCorrect = () => {
+    setGuessedMap(true);
+    toast.success(t("Parabéns, mapa correto!"));
+  };
+
   return (
     <div className="flex-grow flex flex-col mx-2">
-      {!showNewPhase ? (
+      { !showNewPhase && !showMapPhase ? (
         <>
           {hideImageMode && !gameEnded && (
             <button
@@ -218,7 +242,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
                     type="button"
                     onClick={() => setShowNewPhase(true)}
                   >
-                    {t("JOGAR BÓNUS")}
+                    {t("BÓNUS DO ESCUDO")}
                   </button>
                 )}
                 <Share
@@ -228,6 +252,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
                   hideImageMode={hideImageMode}
                   rotationMode={rotationMode}
                   guessedShield={guessedShield}
+                  guessedMap={guessedMap} // NEW prop passed to Share
                 />
                 <div className="flex justify-center mt-4">
                   <a
@@ -274,15 +299,23 @@ export function Game({ settingsData, updateSettings }: GameProps) {
             )}
           </div>
         </>
-      ) : (
+      ) : showNewPhase ? (
         country && (
           <NewPhase 
             correctCountry={country.code} 
             onCorrectGuess={handleCorrectGuess} 
-            onPhaseEnd={handlePhaseEnd}
+            onPhaseEnd={handleMapPhaseTransition}
           />
         )
-      )}
+      ) : showMapPhase ? (
+        country && (
+          <MapPhase 
+            correctCountry={country.code} 
+            onPhaseEnd={handleMapPhaseEnd}
+            onMapCorrect={handleMapCorrect} // NEW: Pass callback for correct map guess
+          />
+        )
+      ) : null }
     </div>
   );
 }

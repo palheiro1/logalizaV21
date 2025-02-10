@@ -20,9 +20,9 @@ export interface ShareProps {
   settingsData: SettingsData;
   hideImageMode: boolean;
   rotationMode: boolean;
-  guessedShield: boolean; // New prop to indicate if the user has guessed the shield
+  guessedShield: boolean; // Indicates if the user guessed the shield
+  guessedMap: boolean;    // NEW prop to indicate if the user guessed the map
 }
-
 
 export function Share({
   guesses,
@@ -30,7 +30,8 @@ export function Share({
   settingsData,
   hideImageMode,
   rotationMode,
-  guessedShield, // New prop
+  guessedShield,
+  guessedMap, // NEW prop
 }: ShareProps) {
   const { t } = useTranslation();
   const { theme } = settingsData;
@@ -40,20 +41,15 @@ export function Share({
     const bestDistance = Math.min(...guesses.map(({ distance }) => distance));
     const guessCount = win ? guesses.length : "X";
     const dayCount = Math.floor(
-      Interval.fromDateTimes(START_DATE, DateTime.fromISO(dayString)).length(
-        "day"
-      )
+      Interval.fromDateTimes(START_DATE, DateTime.fromISO(dayString)).length("day")
     );
     const difficultyModifierEmoji = hideImageMode
       ? " 🙈"
       : rotationMode
       ? " 🌀"
       : "";
-    const bestPercent = `(${computeProximityPercent(
-      bestDistance
-    ).toString()}%)`;
-  
-    // Ajuste: Remover shieldEmoji do título
+    const bestPercent = `(${computeProximityPercent(bestDistance).toString()}%)`;
+
     const title = `#LoGaliza!, adivinha umha comarca cada dia #${dayCount} ${guessCount}/4 ${bestPercent}${difficultyModifierEmoji}`;
   
     const guessString = guesses
@@ -65,25 +61,22 @@ export function Share({
       })
       .join("\n");
   
-    // Ajuste: Colocar shieldEmoji em uma linha separada antes do link
     return [
       title,
       guessString,
-      guessedShield ? "🛡" : "", // Adicionar o emoji do escudo apenas se guessedShield for true
+      guessedShield ? "🛡" : "",
+      guessedMap ? "🗺️" : "", // NEW: add map emoji if guessedMap is true
       "https://logaliza-v21.vercel.app/"
     ]
-      .filter(Boolean) // Remove entradas vazias (como o emoji do escudo, se não for verdadeiro)
-      .join("\n");
-  }, [dayString, guesses, hideImageMode, rotationMode, theme, guessedShield]);
-  
+      .filter(Boolean)
+      .join(" ");
+  }, [dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap]);
 
   return (
     <CopyToClipboard
       text={shareText}
       onCopy={() => toast(t("copy"))}
-      options={{
-        format: "text/plain",
-      }}
+      options={{ format: "text/plain" }}
     >
       <button className="rounded font-bold border-2 p-1 uppercase bg-green-600 hover:bg-green-500 active:bg-green-700 text-white w-full">
         {t("share")}
