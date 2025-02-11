@@ -91,9 +91,8 @@ function getRandomImageNumber() {
   const seed = getDaySeed();
   // Gere um número pseudoaleatório entre 0 e 1 com a semente
   const random = randomWithSeed(seed);
-  // Escale o número aleatório para estar entre 1 e 6
-  
-  return Math.floor(random * 6) + 1;
+  // Escale o número aleatório para estar entre 2 e 6
+  return Math.floor(random * 5) + 2;
 }
 
 function getCountry(dayString: string) {

@@ -103,7 +103,7 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
       {selectedOption && (
         // Display button only after an option is selected.
         <button
-          className="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
+          className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded mb-2 hover:bg-green-600"
           onClick={onPhaseEnd}
         >
           {t("BÓNUS DO MAPA")}
