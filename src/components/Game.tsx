@@ -266,17 +266,21 @@ export function Game({ settingsData, updateSettings }: GameProps) {
                       options={{ className: "inline-block" }}
                     >{}</Twemoji>
                   </a>
-                  <a
-                    className="underline text-center mx-8"
-                    href={listagemLigazons[normalizedCountryName][randomImageNumber]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Twemoji
-                      text={t("🤔O que é esta imagem?")}
-                      options={{ className: "inline-block" }}
-                    >{}</Twemoji>
-                  </a>
+                  {/* Add a check if the link exists before rendering */}
+                  {listagemLigazons[normalizedCountryName] && 
+                   listagemLigazons[normalizedCountryName][randomImageNumber] && (
+                    <a
+                      className="underline text-center mx-8"
+                      href={listagemLigazons[normalizedCountryName][randomImageNumber]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Twemoji
+                        text={t("🤔O que é esta imagem?")}
+                        options={{ className: "inline-block" }}
+                      >{}</Twemoji>
+                    </a>
+                  )}
                 </div>
               </>
             ) : (

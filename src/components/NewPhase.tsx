@@ -35,6 +35,7 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
     generateOptions();
   }, [correctCountry]);
 
+  // Shuffle the array to randomize options
   const shuffleArray = (array: string[]) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -43,6 +44,7 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
     return array;
   };
 
+  // Handle user option click
   const handleOptionClick = (option: string) => {
     if (isDisabled) return; // Prevent further clicks if already disabled
     setSelectedOption(option);
@@ -53,7 +55,6 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
     } else {
       setMessage(t("Nom era esse escudo!"));
     }
-    // Removed setTimeout that enforced navigation back to main screen.
   };
 
   const correctComarcaName = galicianCountryNamesChanga[correctCountry]?.nomeI18n || '';

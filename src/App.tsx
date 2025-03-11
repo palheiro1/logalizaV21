@@ -166,11 +166,12 @@ function setNewForcedCountryCode(fixedRandom?: number): void {
 
 // Define um novo número de imagem aleatória
 function setNewRandomImageNumber(fixedRandom?: number): void {
-
-    const random = Math.floor(((fixedRandom ?? Math.random()) * 100)) % 5 + 2;
+    let random = Math.floor(((fixedRandom ?? Math.random()) * 100)) % 7 + 1;
+    if (random === 5) {
+      random = 7;
+    }
     localStorage.setItem("randomImageNumber", random.toString());
 }
-
 
 // Obtém o código de país forçado
 export function getNewForcedCountryCode(): string {
@@ -180,7 +181,7 @@ export function getNewForcedCountryCode(): string {
 // Obtém o número de imagem aleatória
 export function getNewRandomImageNumber(): number {
     const num = localStorage.getItem("randomImageNumber");
-    return num != null ? +num : 2;
+    return num != null ? +num : 1;
 }
 
 // Verifica se deve mostrar um novo jogo

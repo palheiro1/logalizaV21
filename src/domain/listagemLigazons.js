@@ -101,6 +101,14 @@ const listagemLigazons: ListagemLigazonsType = {
     5: "https://gl.wikipedia.org/wiki/Bobor%C3%A1s",
     6: "https://gl.wikipedia.org/wiki/Masacre_de_Oseira"
   },
+  celanova: {
+    1: "https://gl.wikipedia.org/wiki/Comarca_da_Terra_de_Celanova",
+    2: "https://terracelanovaserraxures.com/castromao-territorio-da-tribo-coelerni/",
+    3: "https://turismo.celanova.gal/gl/cultura",
+    4: "https://iscagz.org/contra-a-privatizacion-do-mosteiro-de-celanova/",
+    5: "https://gl.wikipedia.org/wiki/Vilanova_dos_Infantes,_Celanova",
+    6: "https://gl.wikipedia.org/wiki/%C3%81urea_Rodr%C3%ADguez"
+  },
   chantada: {
       1: "https://estreleira.gal/chantada",
       2: "https://gl.wikipedia.org/wiki/R%C3%ADo_Asma",
