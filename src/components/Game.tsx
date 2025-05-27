@@ -198,7 +198,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
           )}
           <div className="flex my-1">
             <img
-              className={`pointer-events-none w-full h-auto m-auto transition-transform duration-700 ease-in dark:invert ${hideImageMode && !gameEnded ? "hidden" : ""}`}
+              className={`pointer-events-none w-full h-auto m-auto transition-transform duration-700 ease-in ${hideImageMode && !gameEnded ? "hidden" : ""}`}
               alt="country to guess"
               src={srcImage}
               onError={({ currentTarget }) => {
