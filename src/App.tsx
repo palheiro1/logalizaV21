@@ -14,6 +14,7 @@ import { InfosNl } from "./components/panels/InfosNl";
 import { InfosPl } from "./components/panels/InfosPl";
 import { Settings } from "./components/panels/Settings";
 import { Stats } from "./components/panels/Stats";
+import { SplashScreen } from "./components/SplashScreen";
 import { useSettings } from "./hooks/useSettings";
 import { getDayString, useTodays } from "./hooks/useTodays";
 import { galicianComarcas } from "./domain/comarcas.position";
@@ -37,6 +38,9 @@ export default function App() {
     const [infoOpen, setInfoOpen] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [statsOpen, setStatsOpen] = useState(false);
+
+    // Estado para controlar o splash screen
+    const [showSplash, setShowSplash] = useState(true);
 
     // Estado e função para atualizar as configurações
     const [settingsData, updateSettings] = useSettings();
@@ -80,82 +84,76 @@ export default function App() {
 
     return (
         <>
-            {/* Componente de notificação */}
-            <ToastContainer
-                hideProgressBar
-                position="top-center"
-                transition={Flip}
-                theme={settingsData.theme}
-                autoClose={2000}
-                bodyClassName="font-bold text-center"
-                toastClassName="flex justify-center m-2 max-w-full"
-                style={{ width: 500, maxWidth: "100%" }}
-            />
-            {/* Componente de informações */}
-            <InfosComponent isOpen={infoOpen} close={() => setInfoOpen(false)} settingsData={settingsData} />
-            {/* Componente de configurações */}
-            <Settings
-                isOpen={settingsOpen}
-                close={() => setSettingsOpen(false)}
-                settingsData={settingsData}
-                updateSettings={updateSettings}
-            />
-            {/* Componente de estatísticas */}
-            <Stats isOpen={statsOpen} close={() => setStatsOpen(false)} distanceUnit={settingsData.distanceUnit} />
-            <div className="flex justify-center flex-auto dark:bg-slate-900 dark:text-slate-50">
-                <div className="w-full max-w-lg flex flex-col">
-                    <header className="border-b-2 px-3 border-gray-200 flex">
-                        {/* Botão para abrir o painel de informações */}
-                        <button className="mr-3 text-xl" type="button" onClick={() => setInfoOpen(true)}>
-                            <Twemoji text="❓" />
-                        </button>
-                        <h1 className="text-4xl font-bold uppercase tracking-wide text-center my-1 flex-auto">
-                            LO<span style={{color:'red'}}>G</span>ALI<span style={{color:'red'}}>Z</span>A
-                        </h1>
-                        {/* Botão para abrir o painel de estatísticas */}
-                        <button className="ml-3 text-xl" type="button" onClick={() => setStatsOpen(true)}>
-                            <Twemoji text="📈" />
-                        </button>
-                    </header>
-                    {/* Componente do jogo */}
-                    <Game settingsData={settingsData} updateSettings={updateSettings} />
-                    <footer className="flex justify-center items-center mt-8 mb-4">
-                        <Twemoji text="❤️" className="flex items-center justify-center mr-1" /> Logaliza? -
-                        {country && supportLink[country.code] != null ? (
-                            <a
-                                className="underline pl-1"
-                                href={supportLink[country.code]}
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                <div className="w-max">{t(`support.${country.code}`)}</div>
-                            </a>
-                        ) : (
-                            <a
-                                className="underline pl-1"
-                                href="https://www.ko-fi.com/estreleira"
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                <div className="w-max">
-                                    <Twemoji text={"Financia um colante!"} options={{ className: "inline-block" }} />
-                                </div>
-                            </a>
-                        )}
-                    </footer>
-                </div>
-            </div>
+            {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
+            {!showSplash && (
+                <>
+                    {/* Componente de notificação */}
+                    <ToastContainer
+                        hideProgressBar
+                        position="top-center"
+                        transition={Flip}
+                        theme={settingsData.theme}
+                        autoClose={2000}
+                        bodyClassName="font-bold text-center"
+                        toastClassName="flex justify-center m-2 max-w-full"
+                        style={{ width: 500, maxWidth: "100%" }}
+                    />
+                    {/* Componente de informações */}
+                    <InfosComponent isOpen={infoOpen} close={() => setInfoOpen(false)} settingsData={settingsData} />
+                    {/* Componente de configurações */}
+                    <Settings
+                        isOpen={settingsOpen}
+                        close={() => setSettingsOpen(false)}
+                        settingsData={settingsData}
+                        updateSettings={updateSettings}
+                    />
+                    {/* Componente de estatísticas */}
+                    <Stats isOpen={statsOpen} close={() => setStatsOpen(false)} distanceUnit={settingsData.distanceUnit} />
+                    <div className="flex justify-center flex-auto dark:bg-slate-900 dark:text-slate-50">
+                        <div className="w-full max-w-lg flex flex-col">
+                            <header className="border-b-2 px-3 border-gray-200 flex">
+                                {/* Botão para abrir o painel de informações */}
+                                <button className="mr-3 text-xl" type="button" onClick={() => setInfoOpen(true)}>
+                                    <Twemoji text="❓" />
+                                </button>
+                                <h1 className="text-4xl font-bold uppercase tracking-wide text-center my-1 flex-auto">
+                                    LO<span style={{color:'red'}}>G</span>ALI<span style={{color:'red'}}>Z</span>A
+                                </h1>
+                                {/* Botão para abrir o painel de estatísticas */}
+                                <button className="ml-3 text-xl" type="button" onClick={() => setStatsOpen(true)}>
+                                    <Twemoji text="📈" />
+                                </button>
+                            </header>
+                            {/* Componente do jogo */}
+                            <Game settingsData={settingsData} updateSettings={updateSettings} />
+                            <footer className="flex justify-center items-center mt-8 mb-4">
+                                <Twemoji text="❤️" className="flex items-center justify-center mr-1" /> Logaliza? -
+                                {country && supportLink[country.code] != null ? (
+                                    <a
+                                        className="underline pl-1"
+                                        href={supportLink[country.code]}
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <div className="w-max">{t(`support.${country.code}`)}</div>
+                                    </a>
+                                ) : (
+                                    <a
+                                        className="underline pl-1"
+                                        href="https://www.ko-fi.com/estreleira"
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <div className="w-max">
+                                            <Twemoji text={"Financia um colante!"} options={{ className: "inline-block" }} />
+                                        </div>
+                                    </a>
+                                )}
+                            </footer>
+                        </div>
+                    </div>
+                </>
+            )}
         </>
     );
-}
-
-// Função para iniciar um novo jogo
-function newGame(): React.MouseEventHandler<HTMLButtonElement> | undefined {
-    localStorage.clear();
-    setNewForcedCountryCode();
-    setNewRandomImageNumber();
-    localStorage.setItem("newGameDate", new Date().toString());
-    // eslint-disable-next-line no-restricted-globals
-    location.reload();
-    return;
 }
 
 // Define um novo código de país forçado

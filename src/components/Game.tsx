@@ -17,7 +17,6 @@ import * as geolib from "geolib";
 import { SettingsData } from "../hooks/useSettings";
 import MapPhase from "./MapPhase";
 
-const ENABLE_TWITCH_LINK = false;
 const MAX_TRY_COUNT = 4;
 
 interface GameProps {
@@ -190,10 +189,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
               type="button"
               onClick={() => setHideImageMode(false)}
             >
-              <Twemoji
-                text={t("showCountry")}
-                options={{ className: "inline-block" }}
-              >{}</Twemoji>
+              <Twemoji text={t("showCountry") || ""} options={{ className: "inline-block" }} />
             </button>
           )}
           <div className="flex my-1">
@@ -220,10 +216,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
               type="button"
               onClick={() => setRotationMode(false)}
             >
-              <Twemoji
-                text={t("cancelRotation")}
-                options={{ className: "inline-block" }}
-              >{}</Twemoji>
+              <Twemoji text={t("cancelRotation") || ""} options={{ className: "inline-block" }} />
             </button>
           )}
           <Guesses
@@ -261,10 +254,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Twemoji
-                      text={t("🗺️ Mapa das Comarcas")}
-                      options={{ className: "inline-block" }}
-                    >{}</Twemoji>
+                    <Twemoji text={t("🗺️ Mapa das Comarcas") || ""} options={{ className: "inline-block" }} />
                   </a>
                   {/* Add a check if the link exists before rendering */}
                   {listagemLigazons[normalizedCountryName] && 
@@ -275,10 +265,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Twemoji
-                        text={t("🤔O que é esta imagem?")}
-                        options={{ className: "inline-block" }}
-                      >{}</Twemoji>
+                      <Twemoji text={t("🤔O que é esta imagem?") || ""} options={{ className: "inline-block" }} />
                     </a>
                   )}
                 </div>
