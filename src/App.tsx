@@ -14,7 +14,11 @@ import { InfosNl } from "./components/panels/InfosNl";
 import { InfosPl } from "./components/panels/InfosPl";
 import { Settings } from "./components/panels/Settings";
 import { Stats } from "./components/panels/Stats";
+import { LeaderboardPanel } from "./components/panels/LeaderboardPanel";
 import { SplashScreen } from "./components/SplashScreen";
+import { LoginModal } from "./components/auth/LoginModal";
+import { AuthButton } from "./components/auth/AuthButton";
+import { AuthProvider } from "./contexts/AuthContext";
 import { useSettings } from "./hooks/useSettings";
 import { getDayString, useTodays } from "./hooks/useTodays";
 import { galicianComarcas } from "./domain/comarcas.position";
@@ -38,6 +42,8 @@ export default function App() {
     const [infoOpen, setInfoOpen] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [statsOpen, setStatsOpen] = useState(false);
+    const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+    const [loginOpen, setLoginOpen] = useState(false);
 
     // Estado para controlar o splash screen
     const [showSplash, setShowSplash] = useState(true);
@@ -83,7 +89,7 @@ export default function App() {
     }
 
     return (
-        <>
+        <AuthProvider>
             {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
             {!showSplash && (
                 <>
@@ -109,6 +115,10 @@ export default function App() {
                     />
                     {/* Componente de estatísticas */}
                     <Stats isOpen={statsOpen} close={() => setStatsOpen(false)} distanceUnit={settingsData.distanceUnit} />
+                    {/* Componente de leaderboard */}
+                    <LeaderboardPanel isOpen={leaderboardOpen} close={() => setLeaderboardOpen(false)} />
+                    {/* Componente de login */}
+                    <LoginModal isOpen={loginOpen} close={() => setLoginOpen(false)} theme={settingsData.theme} />
                     <div className="flex justify-center flex-auto dark:bg-slate-900 dark:text-slate-50">
                         <div className="w-full max-w-lg flex flex-col">
                             <header className="border-b-2 px-3 border-gray-200 flex">
@@ -119,10 +129,18 @@ export default function App() {
                                 <h1 className="text-4xl font-bold uppercase tracking-wide text-center my-1 flex-auto">
                                     LO<span style={{color:'red'}}>G</span>ALI<span style={{color:'red'}}>Z</span>A
                                 </h1>
+                                {/* Botão para abrir o painel de leaderboard */}
+                                <button className="ml-3 text-xl" type="button" onClick={() => setLeaderboardOpen(true)}>
+                                    <Twemoji text="🏆" />
+                                </button>
                                 {/* Botão para abrir o painel de estatísticas */}
                                 <button className="ml-3 text-xl" type="button" onClick={() => setStatsOpen(true)}>
                                     <Twemoji text="📈" />
                                 </button>
+                                {/* Botão de autenticação */}
+                                <div className="ml-3">
+                                    <AuthButton onLoginClick={() => setLoginOpen(true)} />
+                                </div>
                             </header>
                             {/* Componente do jogo */}
                             <Game settingsData={settingsData} updateSettings={updateSettings} />
@@ -152,7 +170,7 @@ export default function App() {
                     </div>
                 </>
             )}
-        </>
+        </AuthProvider>
     );
 }
 

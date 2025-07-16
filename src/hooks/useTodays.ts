@@ -7,6 +7,19 @@ import { countriesI } from "../domain/countries.position";
 import { Guess, loadAllGuesses, saveGuesses } from "../domain/guess";
 import { areas, bigEnoughCountriesWithImage, countriesWithImage, smallCountryLimit } from './../environment';
 import { forcedCountries, randomNumber } from "./forcedLead";
+import { useAuth } from "../contexts/AuthContext";
+import { statsService } from "../services/statsService";
+import { getStatsData } from "../domain/stats";
+
+// Safe hook that handles auth context not being available
+function useSafeAuth() {
+  try {
+    return useAuth();
+  } catch (error) {
+    // Return null user if AuthProvider is not available
+    return { user: null };
+  }
+}
 
 const noRepeatStartDate = DateTime.fromFormat("2022-05-01", "yyyy-MM-dd");
 
@@ -26,13 +39,14 @@ export function useTodays(dayString: string): [
   number,
   number
 ] {
+  const { user } = useSafeAuth();
   const [todays, setTodays] = useState<{
     country?: Country;
     guesses: Guess[];
   }>({ guesses: [] });
 
   const addGuess = useCallback(
-    (newGuess: Guess) => {
+    async (newGuess: Guess) => {
       if (todays == null) {
         return;
       }
@@ -41,8 +55,24 @@ export function useTodays(dayString: string): [
 
       setTodays((prev) => ({ country: prev.country, guesses: newGuesses }));
       saveGuesses(dayString, newGuesses);
+
+      // Sync stats to Supabase when game is completed (won or max tries reached)
+      // Only if user is logged in
+      if (user) {
+        const isGameCompleted = newGuess.distance === 0 || newGuesses.length >= 4; // MAX_TRY_COUNT = 4
+        if (isGameCompleted) {
+          try {
+            console.log('useTodays: Game completed, syncing stats to Supabase...');
+            const currentStats = getStatsData();
+            await statsService.syncStatsToSupabase(user.id, currentStats);
+            console.log('useTodays: Stats synced successfully');
+          } catch (error) {
+            console.error('useTodays: Error syncing stats to Supabase:', error);
+          }
+        }
+      }
     },
-    [dayString, todays]
+    [dayString, todays, user]
   );
 
   useEffect(() => {

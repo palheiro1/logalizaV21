@@ -36,6 +36,18 @@ export const translations = {
         averageBestDistance: "Best Distances Average",
         guessDistribution: "Guess distribution:",
       },
+      auth: {
+        login: "Login",
+        signOut: "Sign Out",
+        loginToSaveProgress: "Login to save your progress",
+      },
+      leaderboard: {
+        title: "Leaderboard",
+        noData: "No leaderboard data available",
+        yourRank: "Your rank: #{rank}",
+        refresh: "Refresh",
+        refreshing: "Refreshing...",
+      },
       install: {
         title: "Worldle",
         descritpionTitle: "App Install:",
@@ -405,6 +417,18 @@ export const translations = {
         maxStreak: "Maior sequência",
         averageBestDistance: "Melhor média de distância",
         guessDistribution: "Distribuição de palpites:",
+      },
+      auth: {
+        login: "Entrar",
+        signOut: "Sair",
+        loginToSaveProgress: "Entre para salvar seu progresso",
+      },
+      leaderboard: {
+        title: "Classificaçom",
+        noData: "Nengum dado de classificaçom disponível",
+        yourRank: "Sua posiçom: #{rank}",
+        refresh: "Atualizar",
+        refreshing: "Atualizando...",
       },
       install: {
         title: "Worldle",

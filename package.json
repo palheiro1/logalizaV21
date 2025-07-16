@@ -5,6 +5,7 @@
   "homepage": "https://logaliza.estreleira.gal",
   "dependencies": {
     "@material-ui/core": "^4.12.3",
+    "@supabase/supabase-js": "^2.51.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -37,7 +38,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "react-scripts start"
-
   },
   "eslintConfig": {
     "extends": [
