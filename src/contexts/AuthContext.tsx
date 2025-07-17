@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { User, Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { statsService } from '../services/statsService'
@@ -30,50 +30,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('AuthContext: Auth state changed:', event, session?.user?.email)
-        setSession(session)
-        setUser(session?.user ?? null)
-        setLoading(false)
-
-        // Create user profile when user signs in (both new and existing users)
-        if (event === 'SIGNED_IN' && session?.user) {
-          // Check if user profile exists, create if not
-          try {
-            console.log('AuthContext: Checking if user profile exists...')
-            const profile = await statsService.getUserProfile(session.user.id)
-            console.log('AuthContext: Profile check result:', profile)
-            if (!profile) {
-              console.log('AuthContext: No profile found, creating new one...')
-              await createUserProfile(session.user)
-            } else {
-              console.log('AuthContext: Profile exists, syncing current local stats...')
-              // Sync current local stats to Supabase for existing users
-              const localStats = getStatsData()
-              console.log('AuthContext: Syncing local stats:', localStats)
-              await statsService.syncStatsToSupabase(session.user.id, localStats)
-            }
-          } catch (error) {
-            console.error('AuthContext: Error checking/creating user profile:', error)
-          }
-        }
-      }
-    )
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  const createUserProfile = async (user: User) => {
+  const createUserProfile = useCallback(async (user: User) => {
     console.log('AuthContext: Creating user profile for:', user.id, user.email)
     try {
       // Use email as username initially
@@ -93,7 +50,57 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       console.error('AuthContext: Error creating user profile:', error)
     }
-  }
+  }, [])
+
+  const handleUserSignIn = useCallback(async (user: User) => {
+    // Check if user profile exists, create if not
+    try {
+      console.log('AuthContext: Checking if user profile exists...')
+      const profile = await statsService.getUserProfile(user.id)
+      console.log('AuthContext: Profile check result:', profile)
+      if (!profile) {
+        console.log('AuthContext: No profile found, creating new one...')
+        await createUserProfile(user)
+      } else {
+        console.log('AuthContext: Profile exists, syncing current local stats...')
+        // Sync current local stats to Supabase for existing users
+        const localStats = getStatsData()
+        console.log('AuthContext: Syncing local stats:', localStats)
+        await statsService.syncStatsToSupabase(user.id, localStats)
+      }
+    } catch (error) {
+      console.error('AuthContext: Error checking/creating user profile:', error)
+    }
+  }, [createUserProfile])
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('AuthContext: Auth state changed:', event, session?.user?.email)
+        setSession(session)
+        setUser(session?.user ?? null)
+        setLoading(false)
+
+        // IMPORTANT: Do NOT make API calls here due to supabase-js deadlock bug
+        // Schedule profile creation for next tick to avoid deadlock
+        if (event === 'SIGNED_IN' && session?.user) {
+          setTimeout(() => {
+            handleUserSignIn(session.user)
+          }, 0)
+        }
+      }
+    )
+
+    return () => subscription.unsubscribe()
+  }, [handleUserSignIn])
 
   const signOut = async () => {
     await supabase.auth.signOut()
