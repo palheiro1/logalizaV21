@@ -63,6 +63,25 @@ export const statsService = {
     return data
   },
 
+  async updateUsername(userId: string, newUsername: string): Promise<UserProfile | null> {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .update({ 
+        username: newUsername,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', userId)
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Error updating username:', error)
+      return null
+    }
+
+    return data
+  },
+
   async syncStatsToSupabase(userId: string, stats: StatsData): Promise<UserStats | null> {
     console.log('statsService: Syncing stats for user:', userId)
     

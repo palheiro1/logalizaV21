@@ -121,25 +121,50 @@ export default function App() {
                     <LoginModal isOpen={loginOpen} close={() => setLoginOpen(false)} theme={settingsData.theme} />
                     <div className="flex justify-center flex-auto dark:bg-slate-900 dark:text-slate-50">
                         <div className="w-full max-w-lg flex flex-col">
-                            <header className="border-b-2 px-3 border-gray-200 flex">
-                                {/* Botão para abrir o painel de informações */}
-                                <button className="mr-3 text-xl" type="button" onClick={() => setInfoOpen(true)}>
-                                    <Twemoji text="❓" />
-                                </button>
-                                <h1 className="text-4xl font-bold uppercase tracking-wide text-center my-1 flex-auto">
-                                    LO<span style={{color:'red'}}>G</span>ALI<span style={{color:'red'}}>Z</span>A
-                                </h1>
-                                {/* Botão para abrir o painel de leaderboard */}
-                                <button className="ml-3 text-xl" type="button" onClick={() => setLeaderboardOpen(true)}>
-                                    <Twemoji text="🏆" />
-                                </button>
-                                {/* Botão para abrir o painel de estatísticas */}
-                                <button className="ml-3 text-xl" type="button" onClick={() => setStatsOpen(true)}>
-                                    <Twemoji text="📈" />
-                                </button>
-                                {/* Botão de autenticação */}
-                                <div className="ml-3">
-                                    <AuthButton onLoginClick={() => setLoginOpen(true)} />
+                            {/* Professional header with improved design */}
+                            <header className="border-b-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm">
+                                <div className="px-4 py-3 flex items-center justify-between">
+                                    {/* Left side: Auth button */}
+                                    <div className="flex items-center">
+                                        <div>
+                                            <AuthButton onLoginClick={() => setLoginOpen(true)} />
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Center: Logo */}
+                                    <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-wide text-center flex-1">
+                                        LO<span style={{color:'#ef4444'}}>G</span>ALI<span style={{color:'#ef4444'}}>Z</span>A
+                                    </h1>
+                                    
+                                    {/* Right side: Action buttons */}
+                                    <div className="flex items-center space-x-1">
+                                        <button 
+                                            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200 group" 
+                                            type="button" 
+                                            onClick={() => setInfoOpen(true)}
+                                            title="Informações"
+                                        >
+                                            <Twemoji text="❓" className="text-lg group-hover:scale-110 transition-transform duration-200" />
+                                        </button>
+                                        
+                                        <button 
+                                            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200 group relative" 
+                                            type="button" 
+                                            onClick={() => setLeaderboardOpen(true)}
+                                            title="Leaderboard"
+                                        >
+                                            <Twemoji text="🏆" className="text-lg group-hover:scale-110 transition-transform duration-200" />
+                                        </button>
+                                        
+                                        <button 
+                                            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200 group" 
+                                            type="button" 
+                                            onClick={() => setStatsOpen(true)}
+                                            title="Estatísticas"
+                                        >
+                                            <Twemoji text="📈" className="text-lg group-hover:scale-110 transition-transform duration-200" />
+                                        </button>
+                                    </div>
                                 </div>
                             </header>
                             {/* Componente do jogo */}

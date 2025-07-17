@@ -14,24 +14,26 @@ export const AuthButton: React.FC<AuthButtonProps> = ({ onLoginClick }) => {
   if (user) {
     return (
       <button
-        className="flex items-center text-xl hover:opacity-75 transition-opacity"
+        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200 group relative"
         type="button"
         onClick={signOut}
         title={t('auth.signOut')}
       >
-        <Twemoji text="👤" />
+        <Twemoji text="👤" className="text-lg group-hover:scale-110 transition-transform duration-200" />
+        {/* Optional: Add a small indicator for logged in state */}
+        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-slate-800"></div>
       </button>
     )
   }
 
   return (
     <button
-      className="flex items-center text-xl hover:opacity-75 transition-opacity"
+      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200 group"
       type="button"
       onClick={onLoginClick}
       title={t('auth.login')}
     >
-      <Twemoji text="🔐" />
+      <Twemoji text="🔐" className="text-lg group-hover:scale-110 transition-transform duration-200" />
     </button>
   )
 }

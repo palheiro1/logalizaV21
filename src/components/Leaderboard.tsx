@@ -87,23 +87,14 @@ export const Leaderboard: React.FC = () => {
 
   return (
     <div className="space-y-2">
-      <div className="text-center mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-          {t('leaderboard.title')}
-        </h3>
-        {user && userRank && (
+      {/* User rank info - only show if logged in and has rank */}
+      {user && userRank && (
+        <div className="text-center mb-4">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {t('leaderboard.yourRank', { rank: userRank })}
           </p>
-        )}
-        <button
-          onClick={handleRefresh}
-          disabled={loading}
-          className="mt-2 px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 disabled:opacity-50"
-        >
-          {loading ? t('leaderboard.refreshing') : t('leaderboard.refresh')}
-        </button>
-      </div>
+        </div>
+      )}
       
       <div className="max-h-96 overflow-y-auto space-y-2">
         {leaderboard.map((entry) => (
@@ -113,6 +104,17 @@ export const Leaderboard: React.FC = () => {
             isCurrentUser={user?.email === entry.username}
           />
         ))}
+      </div>
+      
+      {/* Subtle refresh option at bottom */}
+      <div className="text-center pt-2 border-t border-gray-200 dark:border-gray-700">
+        <button
+          onClick={handleRefresh}
+          disabled={loading}
+          className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 disabled:opacity-50 transition-colors"
+        >
+          {loading ? t('leaderboard.refreshing') : t('leaderboard.refresh')}
+        </button>
       </div>
     </div>
   )

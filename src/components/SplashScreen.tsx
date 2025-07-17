@@ -36,30 +36,35 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white dark:bg-gray-900 p-4">
-      <div className="flex-1 flex items-center justify-center max-w-full">
-        <img
-          src={showManifesto ? "/manifesto25J.jpg" : "/estreleira25J.jpg"}
-          alt={showManifesto ? "Manifesto" : "Advertisement"}
-          className="max-w-full max-h-full object-contain"
-        />
-      </div>
-      
-      <div className="flex gap-4 mt-4 mb-8">
-        {!showManifesto && (
-          <button
-            onClick={handleInfoClick}
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200"
-          >
-            + INFO
-          </button>
-        )}
+      {/* Container with mobile-like proportions on desktop */}
+      <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto h-full">
+        {/* Image container with fixed aspect ratio */}
+        <div className="flex-1 flex items-center justify-center w-full max-h-[70vh] mb-6">
+          <img
+            src={showManifesto ? "/manifesto25J.jpg" : "/estreleira25J.jpg"}
+            alt={showManifesto ? "Manifesto" : "Advertisement"}
+            className="w-full h-auto max-h-full object-contain rounded-lg shadow-lg"
+          />
+        </div>
         
-        <button
-          onClick={handleGoToApp}
-          className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors duration-200"
-        >
-          IR AO LOGALIZA
-        </button>
+        {/* Buttons container */}
+        <div className="flex flex-col sm:flex-row gap-4 w-full px-4">
+          {!showManifesto && (
+            <button
+              onClick={handleInfoClick}
+              className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+            >
+              + INFO
+            </button>
+          )}
+          
+          <button
+            onClick={handleGoToApp}
+            className="w-full sm:w-auto px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+          >
+            IR AO LOGALIZA
+          </button>
+        </div>
       </div>
     </div>
   );
