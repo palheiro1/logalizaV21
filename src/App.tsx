@@ -3,6 +3,7 @@ import { Twemoji } from "react-emoji-render";
 import { useTranslation } from "react-i18next";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Analytics } from "@vercel/analytics/react";
 import { Game } from "./components/Game";
 import { Infos } from "./components/panels/Infos";
 import { InfosCo } from "./components/panels/InfosCo";
@@ -195,6 +196,7 @@ export default function App() {
                     </div>
                 </>
             )}
+            <Analytics />
         </AuthProvider>
     );
 }
