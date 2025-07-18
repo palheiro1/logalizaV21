@@ -42,27 +42,6 @@ export const Leaderboard: React.FC = () => {
     fetchLeaderboard()
   }, [user])
 
-  const handleRefresh = async () => {
-    try {
-      setLoading(true)
-      console.log('Leaderboard: Manual refresh...')
-      const data = await statsService.getLeaderboard(100)
-      console.log('Leaderboard: Refresh data received:', data)
-      setLeaderboard(data)
-      
-      if (user) {
-        const rank = await statsService.getUserRank(user.id)
-        console.log('Leaderboard: Refresh user rank:', rank)
-        setUserRank(rank)
-      }
-    } catch (error) {
-      console.error('Leaderboard: Error refreshing leaderboard:', error)
-      setLeaderboard([])
-    } finally {
-      setLoading(false)
-    }
-  }
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -75,12 +54,6 @@ export const Leaderboard: React.FC = () => {
     return (
       <div className="text-center text-gray-600 dark:text-gray-400 py-8">
         <p>{t('leaderboard.noData')}</p>
-        <button
-          onClick={handleRefresh}
-          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          {t('leaderboard.refresh')}
-        </button>
       </div>
     )
   }
@@ -96,7 +69,7 @@ export const Leaderboard: React.FC = () => {
         </div>
       )}
       
-      <div className="max-h-96 overflow-y-auto space-y-2">
+      <div className="overflow-y-auto space-y-2">
         {leaderboard.map((entry) => (
           <LeaderboardEntryComponent
             key={entry.username}
@@ -104,17 +77,6 @@ export const Leaderboard: React.FC = () => {
             isCurrentUser={user?.email === entry.username}
           />
         ))}
-      </div>
-      
-      {/* Subtle refresh option at bottom */}
-      <div className="text-center pt-2 border-t border-gray-200 dark:border-gray-700">
-        <button
-          onClick={handleRefresh}
-          disabled={loading}
-          className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 disabled:opacity-50 transition-colors"
-        >
-          {loading ? t('leaderboard.refreshing') : t('leaderboard.refresh')}
-        </button>
       </div>
     </div>
   )
