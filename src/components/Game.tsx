@@ -4,7 +4,7 @@ import { getCountryName, sanitizeCountryName, getCountryFilename } from "../doma
 import { countries, srcImageFolder } from "../environment";
 import { useMode } from "../hooks/useMode";
 import { useNewsNotifications } from "../hooks/useNewsNotifications";
-import { getDayString, useTodays } from "../hooks/useTodays";
+import { getDayString, useTodays, simulateNextPictures } from "../hooks/useTodays";
 import { CountryInput } from "./CountryInput";
 import { Guesses } from "./Guesses";
 import { Share } from "./Share";
@@ -75,6 +75,25 @@ export function Game({ settingsData, updateSettings }: GameProps) {
   });
 
   const [showMapPhase, setShowMapPhase] = useState(false);
+
+  // Debug: log next 100 pictures (day, country, and image path)
+  useEffect(() => {
+    try {
+      const next = simulateNextPictures(dayString, 100);
+      const list = next.map((x) => {
+        const base = getCountryFilename(i18n.resolvedLanguage, x.country);
+        const code = x.country.code.toLowerCase();
+        const filename = `${base}${x.imageNumber}.jpg`;
+        const path = `images/${srcImageFolder}/${code}/${filename}`;
+        return { day: x.dayString, country: x.country.code, imageNumber: x.imageNumber, path };
+      });
+      console.log("Next 100 pictures:", list);
+    } catch (e) {
+      console.warn("Could not simulate next pictures:", e);
+    }
+    // run once on mount for current dayString context
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const gameEnded =
     guesses.length === MAX_TRY_COUNT ||

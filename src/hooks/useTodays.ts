@@ -1,12 +1,12 @@
 import { DateTime } from "luxon";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import seedrandom from "seedrandom";
-import { getNewForcedCountryCode, getNewRandomImageNumber, getShowNewGame } from "../App";
+import { getNewForcedCountryCode, getShowNewGame } from "../App";
 import { Country } from "../domain/countries";
 import { countriesI } from "../domain/countries.position";
 import { Guess, loadAllGuesses, saveGuesses } from "../domain/guess";
 import { areas, bigEnoughCountriesWithImage, countriesWithImage, smallCountryLimit } from './../environment';
-import { forcedCountries, randomNumber } from "./forcedLead";
+import { forcedCountries } from "./forcedLead";
 import { useAuth } from "../contexts/AuthContext";
 import { statsService } from "../services/statsService";
 import { getStatsData } from "../domain/stats";
@@ -21,7 +21,7 @@ function useSafeAuth() {
   }
 }
 
-const noRepeatStartDate = DateTime.fromFormat("2022-05-01", "yyyy-MM-dd");
+// noRepeatStartDate is obsolete with global pool selection
 
 export function getDayString(shiftDayCount?: number) {
   return DateTime.now()
@@ -77,8 +77,8 @@ export function useTodays(dayString: string): [
 
   useEffect(() => {
     const guesses = loadAllGuesses()[dayString] ?? [];
-    const country = getCountry(dayString);
-
+    const selection = getGlobalPictureForDay(dayString);
+    const country = selection.country;
     setTodays({ country, guesses });
   }, [dayString]);
 
@@ -93,7 +93,11 @@ export function useTodays(dayString: string): [
     return 1 / (Math.cos(radianAngle) * Math.sqrt(2));
   }, [randomAngle]);
 
-  const randomImageNumber = getRandomImageNumber();
+  // Determine image number from global non-repeating pool
+  const randomImageNumber = useMemo(() => {
+    const sel = getGlobalPictureForDay(dayString);
+    return sel.imageNumber;
+  }, [dayString]);
   console.log(randomImageNumber);
 
   return [todays, addGuess, randomImageNumber, randomAngle, imageScale];
@@ -116,86 +120,88 @@ function getDaySeed() {
   return seed;
 }
 
-function getRandomImageNumber() {
-  // Obtenha a semente para o dia atual
-  const seed = getDaySeed();
-  // Gere um número pseudoaleatório entre 0 e 1 com a semente
-  const random = randomWithSeed(seed);
-  // Escale o número aleatório para estar entre 2 e 6
-  return Math.floor(random * 5) + 2;
-}
+// Removed old seeded random image selector (now using global pool)
 
-function getCountry(dayString: string) {
-  const currentDayDate = DateTime.fromFormat(dayString, "yyyy-MM-dd");
-  let pickingDate = DateTime.fromFormat("2022-03-21", "yyyy-MM-dd");
-  let smallCountryCooldown = 0;
-  let pickedCountry: Country | null = null;
+// Image numbers available for primary game
+const AVAILABLE_IMAGE_NUMBERS = [2, 3, 4, 5, 6];
 
-  const lastPickDates: Record<string, DateTime> = {};
-
-  do {
-    smallCountryCooldown--;
-
-    const pickingDateString = pickingDate.toFormat("yyyy-MM-dd");
-    let forcedCountryCode = forcedCountries[dayString];
-
-    const showNewGame = getShowNewGame();
-    if (showNewGame || !forcedCountryCode) {
-      forcedCountryCode = getNewForcedCountryCode();
-    }
-
-    const forcedCountry =
-      forcedCountryCode != null
-        ? countriesWithImage.find(
-          (country: countriesI) => country.code === forcedCountryCode
-          )
-        : undefined;
-
-    const countrySelection =
-      smallCountryCooldown < 0
-        ? countriesWithImage
-        : bigEnoughCountriesWithImage;
-
-    if (forcedCountry != null) {
-      pickedCountry = forcedCountry;
-    } else {
-      let countryIndex = Math.floor(
-        seedrandom.alea(pickingDateString)() * countrySelection.length
-      );
-      pickedCountry = countrySelection[countryIndex];
-
-      if (pickingDate >= noRepeatStartDate) {
-        while (isARepeat(pickedCountry, lastPickDates, pickingDate)) {
-          countryIndex = (countryIndex + 1) % countrySelection.length;
-          pickedCountry = countrySelection[countryIndex];
-        }
-      }
-    }
-
-    if (areas[pickedCountry!.code] < smallCountryLimit) {
-      smallCountryCooldown = 7;
-    }
-
-
-    lastPickDates[pickedCountry!.code] = pickingDate;
-    pickingDate = pickingDate.plus({ day: 1 });
-  } while (pickingDate <= currentDayDate);
-
-  return pickedCountry!;
-}
-
-function isARepeat(
-  pickedCountry: Country | null,
-  lastPickDates: Record<string, DateTime>,
-  pickingDate: DateTime
-) {
-  if (pickedCountry == null || lastPickDates[pickedCountry.code] == null) {
-    return false;
+function shuffleArray<T>(arr: T[], seed: string): T[] {
+  const a = [...arr];
+  const rng = seedrandom.alea(seed);
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-  const daysSinceLastPick = pickingDate.diff(
-    lastPickDates[pickedCountry.code],
-    "day"
-  ).days;
-
-  return daysSinceLastPick < 100;
+  return a;
 }
+// Global pool start date key
+function getGlobalStartKey() { return `globalPoolStart`; }
+
+function diffDays(a: string, b: string): number {
+  const da = DateTime.fromFormat(a, "yyyy-MM-dd");
+  const db = DateTime.fromFormat(b, "yyyy-MM-dd");
+  return Math.trunc(db.diff(da, "days").days);
+}
+
+function mod(n: number, m: number) { return ((n % m) + m) % m; }
+
+type PoolEntry = { code: string; imageNumber: number };
+
+function buildGlobalPool(): PoolEntry[] {
+  const entries: PoolEntry[] = [];
+  for (const c of countriesWithImage as unknown as Array<{ code: string }>) {
+    for (const img of AVAILABLE_IMAGE_NUMBERS) {
+      entries.push({ code: c.code, imageNumber: img });
+    }
+  }
+  return entries;
+}
+
+function getOrSetGlobalStart(dayString: string): string {
+  try {
+    const existing = localStorage.getItem(getGlobalStartKey());
+    if (existing) return existing;
+    localStorage.setItem(getGlobalStartKey(), dayString);
+  } catch (e) {
+    // ignore storage write errors
+  }
+  return dayString;
+}
+
+function getCycleOrder(poolSize: number, cycle: number, start: string): number[] {
+  const base = Array.from({ length: poolSize }, (_, i) => i);
+  const seed = `${start}-cycle-${cycle}`;
+  return shuffleArray(base, seed);
+}
+
+function getGlobalPictureForDay(dayString: string): { country: Country; imageNumber: number } {
+  const pool = buildGlobalPool();
+  const start = getOrSetGlobalStart(dayString);
+  const days = diffDays(start, dayString);
+  const poolSize = pool.length;
+  const cycle = Math.floor(days / poolSize);
+  const idxInCycle = mod(days, poolSize);
+  const order = getCycleOrder(poolSize, cycle, start);
+  const entry = pool[order[idxInCycle]];
+  const country = (countriesWithImage as unknown as Country[]).find(c => c.code === entry.code) as Country;
+  return { country, imageNumber: entry.imageNumber };
+}
+
+// Exported utility: simulate next pictures for upcoming days without mutating storage
+export function simulateNextPictures(startDayString: string, count: number): Array<{
+  dayString: string;
+  country: Country;
+  imageNumber: number;
+}> {
+  const results: Array<{ dayString: string; country: Country; imageNumber: number }> = [];
+  const start = DateTime.fromFormat(startDayString, "yyyy-MM-dd");
+  for (let offset = 0; offset < count; offset++) {
+    const d = start.plus({ days: offset });
+    const ds = d.toFormat("yyyy-MM-dd");
+    const sel = getGlobalPictureForDay(ds);
+    results.push({ dayString: ds, country: sel.country, imageNumber: sel.imageNumber });
+  }
+  return results;
+}
+
+// Removed old getCountry and repeat-avoidance logic; now selection is from global pool
