@@ -1,12 +1,9 @@
 import { DateTime } from "luxon";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import seedrandom from "seedrandom";
-import { getNewForcedCountryCode, getShowNewGame } from "../App";
 import { Country } from "../domain/countries";
-import { countriesI } from "../domain/countries.position";
 import { Guess, loadAllGuesses, saveGuesses } from "../domain/guess";
-import { areas, bigEnoughCountriesWithImage, countriesWithImage, smallCountryLimit } from './../environment';
-import { forcedCountries } from "./forcedLead";
+import { countriesWithImage } from './../environment';
 import { useAuth } from "../contexts/AuthContext";
 import { statsService } from "../services/statsService";
 import { getStatsData } from "../domain/stats";
@@ -24,7 +21,7 @@ function useSafeAuth() {
 // noRepeatStartDate is obsolete with global pool selection
 
 export function getDayString(shiftDayCount?: number) {
-  return DateTime.now()
+  return DateTime.utc()
     .plus({ days: shiftDayCount ?? 0 })
     .toFormat("yyyy-MM-dd");
 }
@@ -134,8 +131,9 @@ function shuffleArray<T>(arr: T[], seed: string): T[] {
   }
   return a;
 }
-// Global pool start date key
-function getGlobalStartKey() { return `globalPoolStart`; }
+// Deterministic global pool configuration
+const GLOBAL_POOL_START = "2022-03-21"; // fixed epoch to align all clients
+const GLOBAL_POOL_SEED = "logaliza-v21-global";
 
 function diffDays(a: string, b: string): number {
   const da = DateTime.fromFormat(a, "yyyy-MM-dd");
@@ -157,31 +155,19 @@ function buildGlobalPool(): PoolEntry[] {
   return entries;
 }
 
-function getOrSetGlobalStart(dayString: string): string {
-  try {
-    const existing = localStorage.getItem(getGlobalStartKey());
-    if (existing) return existing;
-    localStorage.setItem(getGlobalStartKey(), dayString);
-  } catch (e) {
-    // ignore storage write errors
-  }
-  return dayString;
-}
-
-function getCycleOrder(poolSize: number, cycle: number, start: string): number[] {
+function getCycleOrder(poolSize: number, cycle: number): number[] {
   const base = Array.from({ length: poolSize }, (_, i) => i);
-  const seed = `${start}-cycle-${cycle}`;
+  const seed = `${GLOBAL_POOL_SEED}-cycle-${cycle}`;
   return shuffleArray(base, seed);
 }
 
 function getGlobalPictureForDay(dayString: string): { country: Country; imageNumber: number } {
   const pool = buildGlobalPool();
-  const start = getOrSetGlobalStart(dayString);
-  const days = diffDays(start, dayString);
+  const days = diffDays(GLOBAL_POOL_START, dayString);
   const poolSize = pool.length;
   const cycle = Math.floor(days / poolSize);
   const idxInCycle = mod(days, poolSize);
-  const order = getCycleOrder(poolSize, cycle, start);
+  const order = getCycleOrder(poolSize, cycle);
   const entry = pool[order[idxInCycle]];
   const country = (countriesWithImage as unknown as Country[]).find(c => c.code === entry.code) as Country;
   return { country, imageNumber: entry.imageNumber };
