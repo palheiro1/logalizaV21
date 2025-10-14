@@ -1,6 +1,6 @@
 # LoGaliza!
 
-Joga e aprende geografia galega aqui: https://logaliza-v21.vercel.app/ !
+Joga e aprende geografia galega aqui: https://logaliza.vercel.app/ !
 
 ## Contribuiçons & PR
 

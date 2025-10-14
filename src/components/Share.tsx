@@ -65,7 +65,7 @@ export function Share({
       .filter(Boolean)
       .join(" ");
       
-    const gameLink = "https://logaliza-v21.vercel.app/";
+    const gameLink = "https://logaliza.vercel.app/";
     
     const iconsLine = iconsPart ? `${iconsPart}\n${gameLink}` : gameLink;
 

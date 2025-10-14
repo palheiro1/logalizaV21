@@ -41,7 +41,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
           email,
           password,
           options: {
-            emailRedirectTo: 'https://logaliza-v21.vercel.app/'
+            emailRedirectTo: 'https://logaliza.vercel.app/'
           }
         })
         console.log('LoginModal: Sign up result:', { data, error })
@@ -63,7 +63,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://logaliza-v21.vercel.app/'
+          redirectTo: 'https://logaliza.vercel.app/'
         }
       })
       console.log('LoginModal: Google OAuth result:', { data, error })
