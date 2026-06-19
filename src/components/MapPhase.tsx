@@ -56,7 +56,9 @@ const MapPhase: React.FC<MapPhaseProps> = ({ correctCountry, dayString, onPhaseE
         {options.map((option) => {
           const comarca = galicianCountryNamesChanga[option];
           if (!comarca) return null;
-          const imagePath = `/images/comarcas/${option.toLowerCase()}/${comarca.nomeArquivo.toLowerCase()}1.jpg`;
+          const imageFilename =
+            option === "CAR" ? "carvalinho1.jpg" : `${comarca.nomeArquivo.toLowerCase()}1.jpg`;
+          const imagePath = `/images/comarcas/${option.toLowerCase()}/${imageFilename}`;
 
           return (
             <div key={option} className="flex flex-col items-center">

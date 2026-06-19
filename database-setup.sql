@@ -144,6 +144,7 @@ DECLARE
   bonus_score_result INTEGER := 0;
   final_shield_bonus BOOLEAN := FALSE;
   final_map_bonus BOOLEAN := FALSE;
+  existing_needs_main_backfill BOOLEAN := FALSE;
   existing_result daily_results;
   saved_result daily_results;
 BEGIN
@@ -176,32 +177,6 @@ BEGIN
     RAISE EXCEPTION 'submitted_guesses contains invalid guesses' USING ERRCODE = '22023';
   END IF;
 
-  SELECT *
-  INTO existing_result
-  FROM daily_results
-  WHERE user_id = requesting_user
-    AND game_date = target_game_date;
-
-  IF FOUND THEN
-    final_shield_bonus := existing_result.shield_bonus OR (existing_result.won AND COALESCE(submitted_shield_bonus, FALSE));
-    final_map_bonus := existing_result.map_bonus OR (existing_result.won AND COALESCE(submitted_map_bonus, FALSE));
-    bonus_score_result :=
-      CASE WHEN final_shield_bonus THEN 20 ELSE 0 END +
-      CASE WHEN final_map_bonus THEN 20 ELSE 0 END;
-
-    UPDATE daily_results
-    SET
-      shield_bonus = final_shield_bonus,
-      map_bonus = final_map_bonus,
-      bonus_score = bonus_score_result,
-      total_score = existing_result.main_score + bonus_score_result,
-      updated_at = NOW()
-    WHERE id = existing_result.id
-    RETURNING * INTO saved_result;
-
-    RETURN saved_result;
-  END IF;
-
   SELECT MIN(guess.ordinality)::INTEGER
   INTO win_try
   FROM jsonb_array_elements(submitted_guesses) WITH ORDINALITY AS guess(value, ordinality)
@@ -226,6 +201,74 @@ BEGIN
       WHEN 4 THEN 25
       ELSE 0
     END;
+  END IF;
+
+  SELECT *
+  INTO existing_result
+  FROM daily_results
+  WHERE user_id = requesting_user
+    AND game_date = target_game_date;
+
+  IF FOUND THEN
+    existing_needs_main_backfill :=
+      NOT COALESCE(existing_result.completed, FALSE)
+      OR existing_result.tries_count IS NULL
+      OR existing_result.best_distance IS NULL
+      OR (
+        NOT COALESCE(existing_result.won, FALSE)
+        AND win_try IS NOT NULL
+        AND COALESCE(existing_result.best_distance, 999999999)::NUMERIC = 0
+      )
+      OR (
+        COALESCE(existing_result.won, FALSE)
+        AND COALESCE(existing_result.main_score, 0) = 0
+        AND win_try IS NOT NULL
+      );
+
+    final_shield_bonus :=
+      COALESCE(existing_result.shield_bonus, FALSE)
+      OR ((CASE WHEN existing_needs_main_backfill THEN win_try IS NOT NULL ELSE existing_result.won END) AND COALESCE(submitted_shield_bonus, FALSE));
+    final_map_bonus :=
+      COALESCE(existing_result.map_bonus, FALSE)
+      OR ((CASE WHEN existing_needs_main_backfill THEN win_try IS NOT NULL ELSE existing_result.won END) AND COALESCE(submitted_map_bonus, FALSE));
+    bonus_score_result :=
+      CASE WHEN final_shield_bonus THEN 20 ELSE 0 END +
+      CASE WHEN final_map_bonus THEN 20 ELSE 0 END;
+
+    IF existing_needs_main_backfill THEN
+      UPDATE daily_results
+      SET
+        guesses = submitted_guesses,
+        completed = completed_result,
+        won = win_try IS NOT NULL,
+        tries_count = CASE WHEN win_try IS NOT NULL THEN win_try ELSE guess_count END,
+        best_distance = best_distance_result,
+        shield_bonus = final_shield_bonus,
+        map_bonus = final_map_bonus,
+        main_score = main_score_result,
+        bonus_score = bonus_score_result,
+        total_score = main_score_result + bonus_score_result,
+        updated_at = NOW()
+      WHERE id = existing_result.id
+      RETURNING * INTO saved_result;
+
+      RETURN saved_result;
+    END IF;
+
+    UPDATE daily_results
+    SET
+      shield_bonus = final_shield_bonus,
+      map_bonus = final_map_bonus,
+      bonus_score = bonus_score_result,
+      total_score = existing_result.main_score + bonus_score_result,
+      updated_at = NOW()
+    WHERE id = existing_result.id
+    RETURNING * INTO saved_result;
+
+    RETURN saved_result;
+  END IF;
+
+  IF win_try IS NOT NULL THEN
     final_shield_bonus := COALESCE(submitted_shield_bonus, FALSE);
     final_map_bonus := COALESCE(submitted_map_bonus, FALSE);
     bonus_score_result :=

@@ -87,9 +87,18 @@ describe("statsService championship methods", () => {
       },
       error: null,
     });
-    const select = jest.fn(() => ({ single }));
-    const upsert = jest.fn(() => ({ select }));
-    (supabase.from as jest.Mock).mockReturnValue({ upsert });
+    const maybeSingle = jest.fn().mockResolvedValue({
+      data: null,
+      error: null,
+    });
+    const eqGameDate = jest.fn(() => ({ maybeSingle }));
+    const eqUserId = jest.fn(() => ({ eq: eqGameDate }));
+    const selectExisting = jest.fn(() => ({ eq: eqUserId }));
+    const selectUpsert = jest.fn(() => ({ single }));
+    const upsert = jest.fn(() => ({ select: selectUpsert }));
+    (supabase.from as jest.Mock)
+      .mockReturnValueOnce({ select: selectExisting })
+      .mockReturnValueOnce({ upsert });
 
     const result = await statsService.syncDailyResultToSupabase(
       "user-1",
@@ -100,6 +109,9 @@ describe("statsService championship methods", () => {
     );
 
     expect(supabase.from).toHaveBeenCalledWith("daily_results");
+    expect(selectExisting).toHaveBeenCalledWith("shield_bonus,map_bonus");
+    expect(eqUserId).toHaveBeenCalledWith("user_id", "user-1");
+    expect(eqGameDate).toHaveBeenCalledWith("game_date", "2026-06-19");
     expect(upsert).toHaveBeenCalledWith(
       expect.objectContaining({
         user_id: "user-1",
@@ -120,6 +132,70 @@ describe("statsService championship methods", () => {
       user_id: "user-1",
       total_score: 120,
     });
+  });
+
+  it("preserves existing bonus flags in the legacy daily result upsert", async () => {
+    (supabase.rpc as jest.Mock).mockResolvedValue({
+      data: null,
+      error: {
+        code: "PGRST202",
+        message:
+          "Could not find the function public.submit_daily_result in the schema cache",
+      },
+    });
+    const maybeSingle = jest.fn().mockResolvedValue({
+      data: {
+        shield_bonus: true,
+        map_bonus: true,
+      },
+      error: null,
+    });
+    const eqGameDate = jest.fn(() => ({ maybeSingle }));
+    const eqUserId = jest.fn(() => ({ eq: eqGameDate }));
+    const selectExisting = jest.fn(() => ({ eq: eqUserId }));
+    const single = jest.fn().mockResolvedValue({
+      data: {
+        id: "result-1",
+        user_id: "user-1",
+        game_date: "2026-06-19",
+        guesses: [hit()],
+        completed: true,
+        won: true,
+        tries_count: 1,
+        best_distance: 0,
+        shield_bonus: true,
+        map_bonus: true,
+        main_score: 100,
+        bonus_score: 40,
+        total_score: 140,
+        created_at: "2026-06-19T00:00:00.000Z",
+        updated_at: "2026-06-19T00:00:00.000Z",
+      },
+      error: null,
+    });
+    const selectUpsert = jest.fn(() => ({ single }));
+    const upsert = jest.fn(() => ({ select: selectUpsert }));
+    (supabase.from as jest.Mock)
+      .mockReturnValueOnce({ select: selectExisting })
+      .mockReturnValueOnce({ upsert });
+
+    await statsService.syncDailyResultToSupabase(
+      "user-1",
+      "2026-06-19",
+      [hit()],
+      false,
+      false
+    );
+
+    expect(upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        shield_bonus: true,
+        map_bonus: true,
+        bonus_score: 40,
+        total_score: 140,
+      }),
+      { onConflict: "user_id,game_date" }
+    );
   });
 
   it("calls the monthly leaderboard RPC with the month start", async () => {

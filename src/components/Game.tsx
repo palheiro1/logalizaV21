@@ -27,6 +27,13 @@ interface GameProps {
   onLoginClick?: () => void;
 }
 
+type BonusAttemptResult = "correct" | "wrong";
+
+function getStoredBonusAttemptResult(key: string): BonusAttemptResult | null {
+  const stored = localStorage.getItem(key);
+  return stored === "correct" || stored === "wrong" ? stored : null;
+}
+
 export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
@@ -74,6 +81,11 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     const stored = localStorage.getItem(`guessedMap-${dayString}`);
     return stored ? JSON.parse(stored) : false;
   });
+  const shieldAttemptStorageKey = `shieldAttemptResult-${dayString}`;
+  const [shieldAttemptResult, setShieldAttemptResult] =
+    useState<BonusAttemptResult | null>(() =>
+      getStoredBonusAttemptResult(shieldAttemptStorageKey)
+    );
 
   const [monthlyLeaderboard, setMonthlyLeaderboard] = useState<MonthlyLeaderboardEntry[]>([]);
   const [championshipLoading, setChampionshipLoading] = useState(false);
@@ -88,6 +100,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     setGuessedShield(stored ? JSON.parse(stored) : false);
     const storedMap = localStorage.getItem(`guessedMap-${dayString}`);
     setGuessedMap(storedMap ? JSON.parse(storedMap) : false);
+    setShieldAttemptResult(getStoredBonusAttemptResult(`shieldAttemptResult-${dayString}`));
   }, [dayString]);
 
   useEffect(() => {
@@ -98,6 +111,20 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   useEffect(() => {
     localStorage.setItem(`guessedMap-${dayString}`, JSON.stringify(guessedMap));
   }, [guessedMap, dayString]);
+
+  useEffect(() => {
+    if (shieldAttemptResult) {
+      localStorage.setItem(shieldAttemptStorageKey, shieldAttemptResult);
+    } else {
+      localStorage.removeItem(shieldAttemptStorageKey);
+    }
+  }, [shieldAttemptResult, shieldAttemptStorageKey]);
+
+  useEffect(() => {
+    if (guessedShield && shieldAttemptResult !== "correct") {
+      setShieldAttemptResult("correct");
+    }
+  }, [guessedShield, shieldAttemptResult]);
 
   const [showNewPhase, setShowNewPhase] = useState(false);
   const [hasParticipatedInNewPhase, setHasParticipatedInNewPhase] = useState(() => {
@@ -126,6 +153,8 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     () => calculateDailyScore(guesses, guessedShield, guessedMap),
     [guesses, guessedShield, guessedMap]
   );
+  const shieldBonusAttempted =
+    shieldAttemptResult != null || (hasParticipatedInNewPhase && guessedShield);
 
   useEffect(() => {
     let cancelled = false;
@@ -173,6 +202,12 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
         const syncedResult = await syncPromise;
         if (syncedResult) {
           lastChampionshipSyncKey.current = syncKey;
+          if (!cancelled && syncedResult.shield_bonus && !guessedShield) {
+            setGuessedShield(true);
+          }
+          if (!cancelled && syncedResult.map_bonus && !guessedMap) {
+            setGuessedMap(true);
+          }
         }
 
         if (cancelled) {
@@ -310,6 +345,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   const handleShieldGuess = (correct: boolean) => {
     setHasParticipatedInNewPhase(true);
+    setShieldAttemptResult(correct ? "correct" : "wrong");
     if (correct) {
       setGuessedShield(true);
       toast.success(t("Parabéns, hoje ganhache o bónus!"));
@@ -381,10 +417,10 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                   leaderboard={monthlyLeaderboard}
                   currentUserId={userId}
                   loading={championshipLoading}
-                  canPlayShieldBonus={dailyScore.won && !hasParticipatedInNewPhase}
+                  canPlayShieldBonus={dailyScore.won && !shieldBonusAttempted}
                   canPlayMapBonus={
                     dailyScore.won &&
-                    hasParticipatedInNewPhase &&
+                    shieldBonusAttempted &&
                     !hasParticipatedInMapPhase
                   }
                   onPlayShieldBonus={() => setShowNewPhase(true)}

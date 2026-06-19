@@ -1,7 +1,7 @@
 import { supabase } from '../lib/supabase'
 import { StatsData } from '../domain/stats'
 import { Guess } from '../domain/guess'
-import { calculateDailyScore } from '../domain/scoring'
+import { calculateDailyScore, MAP_BONUS_POINTS, SHIELD_BONUS_POINTS } from '../domain/scoring'
 import { DateTime } from 'luxon'
 import { DEFAULT_AVATAR_COLOR, DEFAULT_AVATAR_EMOJI } from '../domain/avatar'
 import { Json } from '../types/database'
@@ -97,6 +97,23 @@ async function syncDailyResultWithLegacyUpsert(
   guessedMap: boolean,
   score: ReturnType<typeof calculateDailyScore>
 ): Promise<DailyResult | null> {
+  const { data: existingResult, error: existingError } = await supabase
+    .from('daily_results')
+    .select('shield_bonus,map_bonus')
+    .eq('user_id', userId)
+    .eq('game_date', gameDate)
+    .maybeSingle()
+
+  if (existingError && existingError.code !== 'PGRST116') {
+    console.error('Error loading existing daily result before legacy upsert:', existingError)
+  }
+
+  const shieldBonus = Boolean(existingResult?.shield_bonus) || (score.won && guessedShield)
+  const mapBonus = Boolean(existingResult?.map_bonus) || (score.won && guessedMap)
+  const bonusScore =
+    (shieldBonus ? SHIELD_BONUS_POINTS : 0) +
+    (mapBonus ? MAP_BONUS_POINTS : 0)
+
   const dailyResult = {
     user_id: userId,
     game_date: gameDate,
@@ -105,11 +122,11 @@ async function syncDailyResultWithLegacyUpsert(
     won: score.won,
     tries_count: score.triesCount,
     best_distance: score.bestDistance,
-    shield_bonus: score.won && guessedShield,
-    map_bonus: score.won && guessedMap,
+    shield_bonus: shieldBonus,
+    map_bonus: mapBonus,
     main_score: score.mainScore,
-    bonus_score: score.bonusScore,
-    total_score: score.totalScore,
+    bonus_score: bonusScore,
+    total_score: score.mainScore + bonusScore,
     updated_at: new Date().toISOString()
   }
 
