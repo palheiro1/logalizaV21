@@ -22,6 +22,7 @@ export interface UserStats {
 }
 
 export interface LeaderboardEntry {
+  user_id: string
   username: string
   max_streak: number
   current_streak: number
@@ -225,6 +226,7 @@ export const statsService = {
           }
           
           return {
+            user_id: stat.user_id,
             username: profile.username,
             max_streak: stat.max_streak,
             current_streak: stat.current_streak,
@@ -235,9 +237,10 @@ export const statsService = {
         })
         .filter((entry): entry is LeaderboardEntry => entry !== null)
         .sort((a, b) => {
-          // Sort by max_streak desc, then current_streak desc, then played desc
+          // Sort by max_streak desc, then current_streak desc, then win_ratio desc, then played desc
           if (a.max_streak !== b.max_streak) return b.max_streak - a.max_streak
           if (a.current_streak !== b.current_streak) return b.current_streak - a.current_streak
+          if (a.win_ratio !== b.win_ratio) return b.win_ratio - a.win_ratio
           return b.played - a.played
         })
         .slice(0, limit)

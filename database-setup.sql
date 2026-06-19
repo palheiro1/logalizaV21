@@ -80,12 +80,17 @@ RETURNS INTEGER AS $$
 DECLARE
   user_rank INTEGER;
 BEGIN
+  WITH latest_stats AS (
+    SELECT DISTINCT ON (user_id) *
+    FROM user_stats
+    ORDER BY user_id, updated_at DESC
+  )
   SELECT rank INTO user_rank
   FROM (
     SELECT 
       us.user_id,
-      ROW_NUMBER() OVER (ORDER BY us.max_streak DESC, us.current_streak DESC, us.played DESC) as rank
-    FROM user_stats us
+      ROW_NUMBER() OVER (ORDER BY us.max_streak DESC, us.current_streak DESC, us.win_ratio DESC, us.played DESC) as rank
+    FROM latest_stats us
     JOIN user_profiles up ON us.user_id = up.id
   ) ranked_users
   WHERE ranked_users.user_id = get_user_rank.user_id;

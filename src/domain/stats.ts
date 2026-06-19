@@ -14,7 +14,8 @@ export function getStatsData(): StatsData {
   const allGuesses = loadAllGuesses();
 
   const allGuessesEntries = Object.entries(allGuesses);
-  const played = allGuessesEntries.length;
+  const sortedGuessesEntries = allGuessesEntries.sort(([a], [b]) => a.localeCompare(b))
+  const played = sortedGuessesEntries.length;
 
   const guessDistribution = {
     1: 0,
@@ -27,8 +28,9 @@ export function getStatsData(): StatsData {
   let maxStreak = 0;
   let previousDate: DateTime | undefined;
   let bestDistanceSum = 0;
-  for (const [dayString, guesses] of allGuessesEntries) {
-    bestDistanceSum += Math.min(...guesses.map((guess) => guess.distance));
+  for (const [dayString, guesses] of sortedGuessesEntries) {
+    const minDistance = guesses.length > 0 ? Math.min(...guesses.map((guess) => guess.distance)) : 0;
+    bestDistanceSum += minDistance;
     const currentDate = DateTime.fromFormat(dayString, "yyyy-MM-dd");
     const winIndex = guesses.findIndex((guess) => guess.distance === 0);
     const won = winIndex >= 0;

@@ -72,9 +72,9 @@ export const Leaderboard: React.FC = () => {
       <div className="overflow-y-auto space-y-2">
         {leaderboard.map((entry) => (
           <LeaderboardEntryComponent
-            key={entry.username}
+            key={entry.user_id}
             entry={entry}
-            isCurrentUser={user?.email === entry.username}
+            isCurrentUser={user?.id === entry.user_id}
           />
         ))}
       </div>
