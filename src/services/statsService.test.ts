@@ -17,7 +17,7 @@ const hit = (): Guess => ({
 
 describe("statsService championship methods", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("submits a completed daily result through the official RPC", async () => {
@@ -55,6 +55,70 @@ describe("statsService championship methods", () => {
       submitted_guesses: [hit()],
       submitted_shield_bonus: true,
       submitted_map_bonus: true,
+    });
+  });
+
+  it("falls back to the legacy daily result upsert when the official RPC is missing", async () => {
+    (supabase.rpc as jest.Mock).mockResolvedValue({
+      data: null,
+      error: {
+        code: "PGRST202",
+        message:
+          "Could not find the function public.submit_daily_result in the schema cache",
+      },
+    });
+    const single = jest.fn().mockResolvedValue({
+      data: {
+        id: "result-1",
+        user_id: "user-1",
+        game_date: "2026-06-19",
+        guesses: [hit()],
+        completed: true,
+        won: true,
+        tries_count: 1,
+        best_distance: 0,
+        shield_bonus: true,
+        map_bonus: false,
+        main_score: 100,
+        bonus_score: 20,
+        total_score: 120,
+        created_at: "2026-06-19T00:00:00.000Z",
+        updated_at: "2026-06-19T00:00:00.000Z",
+      },
+      error: null,
+    });
+    const select = jest.fn(() => ({ single }));
+    const upsert = jest.fn(() => ({ select }));
+    (supabase.from as jest.Mock).mockReturnValue({ upsert });
+
+    const result = await statsService.syncDailyResultToSupabase(
+      "user-1",
+      "2026-06-19",
+      [hit()],
+      true,
+      false
+    );
+
+    expect(supabase.from).toHaveBeenCalledWith("daily_results");
+    expect(upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        user_id: "user-1",
+        game_date: "2026-06-19",
+        completed: true,
+        won: true,
+        tries_count: 1,
+        best_distance: 0,
+        shield_bonus: true,
+        map_bonus: false,
+        main_score: 100,
+        bonus_score: 20,
+        total_score: 120,
+      }),
+      { onConflict: "user_id,game_date" }
+    );
+    expect(result).toMatchObject({
+      user_id: "user-1",
+      total_score: 120,
     });
   });
 

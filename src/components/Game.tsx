@@ -30,6 +30,7 @@ interface GameProps {
 export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
+  const userId = user?.id;
   const dayString = useMemo(() => getDayString(settingsData.shiftDayCount), [settingsData.shiftDayCount]);
 
   useNewsNotifications(dayString);
@@ -53,8 +54,13 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
       ".jpg";
   }
 
-  const srcImage = `images/${srcImageFolder}/${country?.code.toLowerCase()}/${imageFilename ?? "mapa.png"}`;
-  const mapImage = `images/${srcImageFolder}/${country?.code.toLowerCase()}/${"mapa.png"}`;
+  const countryImageFolder = country
+    ? `images/${srcImageFolder}/${country.code.toLowerCase()}`
+    : null;
+  const srcImage = countryImageFolder
+    ? `${countryImageFolder}/${imageFilename ?? "mapa.png"}`
+    : null;
+  const mapImage = countryImageFolder ? `${countryImageFolder}/mapa.png` : null;
 
   const [currentGuess, setCurrentGuess] = useState("");
   const [hideImageMode, setHideImageMode] = useMode("hideImageMode", dayString, settingsData.noImageMode);
@@ -71,6 +77,11 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   const [monthlyLeaderboard, setMonthlyLeaderboard] = useState<MonthlyLeaderboardEntry[]>([]);
   const [championshipLoading, setChampionshipLoading] = useState(false);
+  const lastChampionshipSyncKey = useRef<string | null>(null);
+  const pendingChampionshipSync = useRef<{
+    key: string;
+    promise: ReturnType<typeof statsService.syncDailyResultToSupabase>;
+  } | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem(`guessedShield-${dayString}`);
@@ -120,22 +131,65 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     let cancelled = false;
 
     async function syncChampionshipResult() {
-      if (!gameEnded || guesses.length === 0 || !user) {
+      if (!gameEnded || guesses.length === 0 || !userId) {
+        return;
+      }
+
+      const syncKey = [
+        userId,
+        dayString,
+        guesses.length,
+        dailyScore.mainScore,
+        dailyScore.bonusScore,
+        dailyScore.totalScore,
+        guessedShield ? 1 : 0,
+        guessedMap ? 1 : 0,
+      ].join(":");
+
+      if (lastChampionshipSyncKey.current === syncKey) {
         return;
       }
 
       setChampionshipLoading(true);
-      await statsService.syncDailyResultToSupabase(
-        user.id,
-        dayString,
-        guesses,
-        guessedShield,
-        guessedMap
-      );
-      const leaderboard = await statsService.getMonthlyLeaderboard(dayString, 100);
-      if (!cancelled) {
-        setMonthlyLeaderboard(leaderboard);
-        setChampionshipLoading(false);
+      const syncPromise =
+        pendingChampionshipSync.current?.key === syncKey
+          ? pendingChampionshipSync.current.promise
+          : statsService.syncDailyResultToSupabase(
+              userId,
+              dayString,
+              guesses,
+              guessedShield,
+              guessedMap
+            );
+
+      if (pendingChampionshipSync.current?.key !== syncKey) {
+        pendingChampionshipSync.current = {
+          key: syncKey,
+          promise: syncPromise,
+        };
+      }
+
+      try {
+        const syncedResult = await syncPromise;
+        if (syncedResult) {
+          lastChampionshipSyncKey.current = syncKey;
+        }
+
+        if (cancelled) {
+          return;
+        }
+
+        const leaderboard = await statsService.getMonthlyLeaderboard(dayString, 100);
+        if (!cancelled) {
+          setMonthlyLeaderboard(leaderboard);
+        }
+      } finally {
+        if (pendingChampionshipSync.current?.key === syncKey) {
+          pendingChampionshipSync.current = null;
+        }
+        if (!cancelled) {
+          setChampionshipLoading(false);
+        }
       }
     }
 
@@ -144,14 +198,24 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     return () => {
       cancelled = true;
     };
-  }, [dayString, gameEnded, guessedMap, guessedShield, guesses, user]);
+  }, [
+    dailyScore.bonusScore,
+    dailyScore.mainScore,
+    dailyScore.totalScore,
+    dayString,
+    gameEnded,
+    guessedMap,
+    guessedShield,
+    guesses,
+    userId,
+  ]);
 
   useEffect(() => {
-    if (!user) {
+    if (!userId) {
       setMonthlyLeaderboard([]);
       setChampionshipLoading(false);
     }
-  }, [user]);
+  }, [userId]);
 
   useEffect(() => {
     if (gameEnded && guesses[guesses.length - 1]?.distance === 0) {
@@ -274,22 +338,24 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
             </button>
           )}
           <div className="flex my-1">
-            <img
-              className={`pointer-events-none w-full h-auto m-auto transition-transform duration-700 ease-in ${hideImageMode && !gameEnded ? "hidden" : ""}`}
-              alt="country to guess"
-              src={srcImage}
-              onError={({ currentTarget }) => {
-                currentTarget.onerror = null;
-                currentTarget.src = mapImage;
-              }}
-              style={
-                rotationMode && !gameEnded
-                  ? {
-                      transform: `rotate(${randomAngle}deg) scale(${imageScale})`,
-                    }
-                  : {}
-              }
-            />
+            {srcImage && mapImage && (
+              <img
+                className={`pointer-events-none w-full h-auto m-auto transition-transform duration-700 ease-in ${hideImageMode && !gameEnded ? "hidden" : ""}`}
+                alt="country to guess"
+                src={srcImage}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = mapImage;
+                }}
+                style={
+                  rotationMode && !gameEnded
+                    ? {
+                        transform: `rotate(${randomAngle}deg) scale(${imageScale})`,
+                      }
+                    : {}
+                }
+              />
+            )}
           </div>
           {rotationMode && !hideImageMode && !gameEnded && (
             <button
@@ -313,7 +379,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                 <MonthlyChampionshipSummary
                   score={dailyScore}
                   leaderboard={monthlyLeaderboard}
-                  currentUserId={user?.id}
+                  currentUserId={userId}
                   loading={championshipLoading}
                   canPlayShieldBonus={dailyScore.won && !hasParticipatedInNewPhase}
                   canPlayMapBonus={

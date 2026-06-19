@@ -76,6 +76,57 @@ export interface MonthlyLeaderboardEntry {
   rank_delta: number
 }
 
+interface SupabaseErrorLike {
+  code?: string
+  message?: string
+}
+
+function isMissingSubmitDailyResultRpc(error: SupabaseErrorLike | null): boolean {
+  return Boolean(
+    error &&
+      error.code === 'PGRST202' &&
+      error.message?.includes('submit_daily_result')
+  )
+}
+
+async function syncDailyResultWithLegacyUpsert(
+  userId: string,
+  gameDate: string,
+  guesses: Guess[],
+  guessedShield: boolean,
+  guessedMap: boolean,
+  score: ReturnType<typeof calculateDailyScore>
+): Promise<DailyResult | null> {
+  const dailyResult = {
+    user_id: userId,
+    game_date: gameDate,
+    guesses: guesses as unknown as Json,
+    completed: score.completed,
+    won: score.won,
+    tries_count: score.triesCount,
+    best_distance: score.bestDistance,
+    shield_bonus: score.won && guessedShield,
+    map_bonus: score.won && guessedMap,
+    main_score: score.mainScore,
+    bonus_score: score.bonusScore,
+    total_score: score.totalScore,
+    updated_at: new Date().toISOString()
+  }
+
+  const { data, error } = await supabase
+    .from('daily_results')
+    .upsert(dailyResult, { onConflict: 'user_id,game_date' })
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error syncing daily result with legacy upsert:', error)
+    return null
+  }
+
+  return data as DailyResult
+}
+
 export const statsService = {
   async createUserProfile(userId: string, username: string): Promise<UserProfile | null> {
     const { data, error } = await supabase
@@ -269,7 +320,7 @@ export const statsService = {
   },
 
   async syncDailyResultToSupabase(
-    _userId: string,
+    userId: string,
     gameDate: string,
     guesses: Guess[],
     guessedShield: boolean,
@@ -289,6 +340,17 @@ export const statsService = {
     })
 
     if (error) {
+      if (isMissingSubmitDailyResultRpc(error)) {
+        return syncDailyResultWithLegacyUpsert(
+          userId,
+          gameDate,
+          guesses,
+          guessedShield,
+          guessedMap,
+          score
+        )
+      }
+
       console.error('Error syncing daily result:', error)
       return null
     }
