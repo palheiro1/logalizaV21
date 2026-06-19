@@ -1,6 +1,8 @@
 import React from 'react'
 import { LeaderboardEntry } from '../services/statsService'
 import { useTranslation } from 'react-i18next'
+import { Twemoji } from 'react-emoji-render'
+import { getAvatarColorClass, normalizeAvatarEmoji } from '../domain/avatar'
 
 interface LeaderboardEntryProps {
   entry: LeaderboardEntry
@@ -26,6 +28,13 @@ export const LeaderboardEntryComponent: React.FC<LeaderboardEntryProps> = ({
     }`}>
       <div className="flex-shrink-0 w-12 text-center font-bold text-lg">
         {getRankEmoji(entry.rank)}
+      </div>
+      <div
+        className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-lg ${getAvatarColorClass(
+          entry.avatar_color
+        )}`}
+      >
+        <Twemoji text={normalizeAvatarEmoji(entry.avatar_emoji)} />
       </div>
       <div className="flex-1 ml-3">
         <div className="font-semibold text-gray-900 dark:text-gray-100">

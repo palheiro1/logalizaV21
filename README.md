@@ -37,7 +37,7 @@ Adivinhe a comarca galega do dia em até 6 tentativas. Cada tentativa revela pis
 - **Leaderboard**: Compita com outros jogadores e veja as melhores pontuações.
 - **Modo Multiplayer**: Desafie amigos e compartilhe resultados.
 - **Interface Responsiva**: Jogue no desktop ou mobile.
-- **Suporte a Múltiplos Idiomas**: Disponível em galego, espanhol e português.
+- **Suporte a Múltiplos Idiomas**: Disponível em galego e português.
 - **Autenticação**: Faça login para salvar seu progresso e estatísticas.
 
 ## Tecnologias Utilizadas
@@ -156,4 +156,4 @@ Agradecemos a todos os contribuidores e à comunidade por tornar este projeto po
 
 ---
 
-**Divirta-se aprendendo geografia galega com LoGaliza!** 🇪🇸
+**Divirta-se aprendendo geografia galega com LoGaliza!**

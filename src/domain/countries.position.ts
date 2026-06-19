@@ -391,12 +391,6 @@ export const worldCountries: countriesI[] = [
     name: "Eritrea",
   },
   {
-    code: "ES",
-    latitude: 40.463667,
-    longitude: -3.74922,
-    name: "Spain",
-  },
-  {
     code: "ET",
     latitude: 9.145,
     longitude: 40.489673,

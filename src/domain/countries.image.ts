@@ -148,7 +148,6 @@ export const countryCodesWithImage = [
   "cm",
   "cx",
   "do",
-  "es",
   "ga",
   "gi",
   "gs",

@@ -67,7 +67,6 @@ export const corsicanCountryNames: Record<string, string> = {
   EG: "Egittu",
   EH: "Sahara occidentale",
   ER: "Eritrea",
-  ES: "Spagna",
   ET: "Etiopia",
   FI: "Finlandia",
   FJ: "Figi",

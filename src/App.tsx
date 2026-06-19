@@ -19,6 +19,7 @@ import { LeaderboardPanel } from "./components/panels/LeaderboardPanel";
 import { SplashScreen } from "./components/SplashScreen";
 import { LoginModal } from "./components/auth/LoginModal";
 import { AuthButton } from "./components/auth/AuthButton";
+import { ProfilePanel } from "./components/ProfilePanel";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useSettings } from "./hooks/useSettings";
 import { getDayString, useTodays } from "./hooks/useTodays";
@@ -45,6 +46,7 @@ export default function App() {
     const [statsOpen, setStatsOpen] = useState(false);
     const [leaderboardOpen, setLeaderboardOpen] = useState(false);
     const [loginOpen, setLoginOpen] = useState(false);
+    const [profileOpen, setProfileOpen] = useState(false);
 
     // Estado para controlar o splash screen
     const [showSplash, setShowSplash] = useState(true);
@@ -120,6 +122,7 @@ export default function App() {
                     <LeaderboardPanel isOpen={leaderboardOpen} close={() => setLeaderboardOpen(false)} />
                     {/* Componente de login */}
                     <LoginModal isOpen={loginOpen} close={() => setLoginOpen(false)} theme={settingsData.theme} />
+                    <ProfilePanel isOpen={profileOpen} close={() => setProfileOpen(false)} />
                     <div className="flex justify-center flex-auto dark:bg-slate-900 dark:text-slate-50">
                         <div className="w-full max-w-lg flex flex-col">
                             {/* Professional header with improved design */}
@@ -128,7 +131,10 @@ export default function App() {
                                     {/* Left side: Auth button */}
                                     <div className="flex items-center">
                                         <div>
-                                            <AuthButton onLoginClick={() => setLoginOpen(true)} />
+                                            <AuthButton
+                                                onLoginClick={() => setLoginOpen(true)}
+                                                onProfileClick={() => setProfileOpen(true)}
+                                            />
                                         </div>
                                     </div>
                                     
@@ -169,7 +175,11 @@ export default function App() {
                                 </div>
                             </header>
                             {/* Componente do jogo */}
-                            <Game settingsData={settingsData} updateSettings={updateSettings} />
+                            <Game
+                                settingsData={settingsData}
+                                updateSettings={updateSettings}
+                                onLoginClick={() => setLoginOpen(true)}
+                            />
                             <footer className="flex justify-center items-center mt-8 mb-4">
                                 <Twemoji text="❤️" className="flex items-center justify-center mr-1" /> Logaliza? -
                                 {country && supportLink[country.code] != null ? (

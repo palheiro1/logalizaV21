@@ -5,18 +5,24 @@ export interface Database {
         Row: {
           id: string
           username: string
+          avatar_emoji: string
+          avatar_color: string
           created_at: string
           updated_at: string
         }
         Insert: {
           id: string
           username: string
+          avatar_emoji?: string
+          avatar_color?: string
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
           username?: string
+          avatar_emoji?: string
+          avatar_color?: string
           created_at?: string
           updated_at?: string
         }
@@ -66,9 +72,16 @@ export interface Database {
           game_date: string
           guesses: any
           completed: boolean
+          won: boolean
           tries_count: number | null
           best_distance: number | null
+          shield_bonus: boolean
+          map_bonus: boolean
+          main_score: number
+          bonus_score: number
+          total_score: number
           created_at: string
+          updated_at: string
         }
         Insert: {
           id?: string
@@ -76,9 +89,16 @@ export interface Database {
           game_date: string
           guesses: any
           completed?: boolean
+          won?: boolean
           tries_count?: number | null
           best_distance?: number | null
+          shield_bonus?: boolean
+          map_bonus?: boolean
+          main_score?: number
+          bonus_score?: number
+          total_score?: number
           created_at?: string
+          updated_at?: string
         }
         Update: {
           id?: string
@@ -86,10 +106,47 @@ export interface Database {
           game_date?: string
           guesses?: any
           completed?: boolean
+          won?: boolean
           tries_count?: number | null
           best_distance?: number | null
+          shield_bonus?: boolean
+          map_bonus?: boolean
+          main_score?: number
+          bonus_score?: number
+          total_score?: number
           created_at?: string
+          updated_at?: string
         }
+      }
+    }
+    Functions: {
+      get_user_rank: {
+        Args: {
+          user_id: string
+        }
+        Returns: number
+      }
+      get_monthly_leaderboard: {
+        Args: {
+          target_month_start: string
+          target_today: string
+        }
+        Returns: {
+          user_id: string
+          username: string
+          avatar_emoji: string
+          avatar_color: string
+          total_score: number
+          days_played: number
+          wins: number
+          bonus_score: number
+          today_score: number
+          today_main_score: number
+          today_bonus_score: number
+          rank: number
+          previous_rank: number
+          rank_delta: number
+        }[]
       }
     }
   }

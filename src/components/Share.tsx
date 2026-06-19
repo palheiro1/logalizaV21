@@ -11,6 +11,7 @@ import {
 import { Guess } from "../domain/guess";
 import React from "react";
 import { SettingsData } from "../hooks/useSettings";
+import { DailyScore } from "../domain/scoring";
 
 const START_DATE = DateTime.fromISO("2022-01-21");
 
@@ -22,6 +23,7 @@ export interface ShareProps {
   rotationMode: boolean;
   guessedShield: boolean; // Indicates if the user guessed the shield
   guessedMap: boolean;    // NEW prop to indicate if the user guessed the map
+  dailyScore: DailyScore;
 }
 
 export function Share({
@@ -32,6 +34,7 @@ export function Share({
   rotationMode,
   guessedShield,
   guessedMap, // NEW prop
+  dailyScore,
 }: ShareProps) {
   const { t } = useTranslation();
   const { theme } = settingsData;
@@ -50,7 +53,7 @@ export function Share({
       : "";
     const bestPercent = `(${computeProximityPercent(bestDistance).toString()}%)`;
 
-    const title = `#LoGaliza!, adivinha umha comarca cada dia #${dayCount} ${guessCount}/4 ${bestPercent}${difficultyModifierEmoji}`;
+    const title = `#LoGaliza!, adivinha umha comarca cada dia #${dayCount} ${guessCount}/4 +${dailyScore.totalScore} pts ${bestPercent}${difficultyModifierEmoji}`;
   
     const guessString = guesses
       .map((guess) => {
@@ -70,7 +73,7 @@ export function Share({
     const iconsLine = iconsPart ? `${iconsPart}\n${gameLink}` : gameLink;
 
     return title + "\n" + guessString + "\n" + iconsLine;
-  }, [dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap]);
+  }, [dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap, dailyScore]);
 
   return (
     <CopyToClipboard

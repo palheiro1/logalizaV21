@@ -7,6 +7,7 @@ import { countriesWithImage } from './../environment';
 import { useAuth } from "../contexts/AuthContext";
 import { statsService } from "../services/statsService";
 import { getStatsData } from "../domain/stats";
+import { MAX_TRY_COUNT } from "../domain/scoring";
 
 // Safe hook that handles auth context not being available
 function useSafeAuth() {
@@ -56,7 +57,7 @@ export function useTodays(dayString: string): [
       // Sync stats to Supabase when game is completed (won or max tries reached)
       // Only if user is logged in
       if (user) {
-        const isGameCompleted = newGuess.distance === 0 || newGuesses.length >= 4; // MAX_TRY_COUNT = 4
+        const isGameCompleted = newGuess.distance === 0 || newGuesses.length >= MAX_TRY_COUNT;
         if (isGameCompleted) {
           try {
             console.log('useTodays: Game completed, syncing stats to Supabase...');

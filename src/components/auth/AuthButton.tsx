@@ -5,10 +5,11 @@ import { useTranslation } from 'react-i18next'
 
 interface AuthButtonProps {
   onLoginClick: () => void
+  onProfileClick: () => void
 }
 
-export const AuthButton: React.FC<AuthButtonProps> = ({ onLoginClick }) => {
-  const { user, signOut } = useAuth()
+export const AuthButton: React.FC<AuthButtonProps> = ({ onLoginClick, onProfileClick }) => {
+  const { user } = useAuth()
   const { t } = useTranslation()
 
   if (user) {
@@ -16,8 +17,8 @@ export const AuthButton: React.FC<AuthButtonProps> = ({ onLoginClick }) => {
       <button
         className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200 group relative"
         type="button"
-        onClick={signOut}
-        title={t('auth.signOut')}
+        onClick={onProfileClick}
+        title={t('profile.title')}
       >
         <Twemoji text="👤" className="text-lg group-hover:scale-110 transition-transform duration-200" />
         {/* Optional: Add a small indicator for logged in state */}

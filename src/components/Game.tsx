@@ -16,16 +16,20 @@ import { toast, Id, ToastContent } from "react-toastify";
 import * as geolib from "geolib";
 import { SettingsData } from "../hooks/useSettings";
 import MapPhase from "./MapPhase";
-
-const MAX_TRY_COUNT = 4;
+import { useAuth } from "../contexts/AuthContext";
+import { calculateDailyScore, MAX_TRY_COUNT } from "../domain/scoring";
+import { MonthlyLeaderboardEntry, statsService } from "../services/statsService";
+import { MonthlyChampionshipSummary } from "./MonthlyChampionshipSummary";
 
 interface GameProps {
   settingsData: SettingsData;
   updateSettings: (newSettings: Partial<SettingsData>) => void;
+  onLoginClick?: () => void;
 }
 
-export function Game({ settingsData, updateSettings }: GameProps) {
+export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const dayString = useMemo(() => getDayString(settingsData.shiftDayCount), [settingsData.shiftDayCount]);
 
   useNewsNotifications(dayString);
@@ -57,11 +61,28 @@ export function Game({ settingsData, updateSettings }: GameProps) {
   const [hideImageMode, setHideImageMode] = useMode("hideImageMode", dayString, settingsData.noImageMode);
   const [rotationMode, setRotationMode] = useMode("rotationMode", dayString, settingsData.rotationMode);
 
-  const [guessedShield, setGuessedShield] = useState(false);
+  const [guessedShield, setGuessedShield] = useState(() => {
+    const stored = localStorage.getItem(`guessedShield-${dayString}`);
+    return stored ? JSON.parse(stored) : false;
+  });
   const [guessedMap, setGuessedMap] = useState(() => {
     const stored = localStorage.getItem(`guessedMap-${dayString}`);
     return stored ? JSON.parse(stored) : false;
   });
+
+  const [monthlyLeaderboard, setMonthlyLeaderboard] = useState<MonthlyLeaderboardEntry[]>([]);
+  const [championshipLoading, setChampionshipLoading] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(`guessedShield-${dayString}`);
+    setGuessedShield(stored ? JSON.parse(stored) : false);
+    const storedMap = localStorage.getItem(`guessedMap-${dayString}`);
+    setGuessedMap(storedMap ? JSON.parse(storedMap) : false);
+  }, [dayString]);
+
+  useEffect(() => {
+    localStorage.setItem(`guessedShield-${dayString}`, JSON.stringify(guessedShield));
+  }, [guessedShield, dayString]);
   
   // Persist guessedMap in localStorage
   useEffect(() => {
@@ -98,6 +119,48 @@ export function Game({ settingsData, updateSettings }: GameProps) {
   const gameEnded =
     guesses.length === MAX_TRY_COUNT ||
     guesses[guesses.length - 1]?.distance === 0;
+
+  const dailyScore = useMemo(
+    () => calculateDailyScore(guesses, guessedShield, guessedMap),
+    [guesses, guessedShield, guessedMap]
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function syncChampionshipResult() {
+      if (!gameEnded || guesses.length === 0 || !user) {
+        return;
+      }
+
+      setChampionshipLoading(true);
+      await statsService.syncDailyResultToSupabase(
+        user.id,
+        dayString,
+        guesses,
+        guessedShield,
+        guessedMap
+      );
+      const leaderboard = await statsService.getMonthlyLeaderboard(dayString, 100);
+      if (!cancelled) {
+        setMonthlyLeaderboard(leaderboard);
+        setChampionshipLoading(false);
+      }
+    }
+
+    syncChampionshipResult();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [dayString, gameEnded, guessedMap, guessedShield, guesses, user]);
+
+  useEffect(() => {
+    if (!user) {
+      setMonthlyLeaderboard([]);
+      setChampionshipLoading(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (gameEnded && guesses[guesses.length - 1]?.distance === 0) {
@@ -248,15 +311,15 @@ export function Game({ settingsData, updateSettings }: GameProps) {
           <div className="my-2">
             {gameEnded && country ? (
               <>
-                {!hasParticipatedInNewPhase && (
-                  <button
-                    className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded mb-2"
-                    type="button"
-                    onClick={() => setShowNewPhase(true)}
-                  >
-                    {t("BÓNUS DO ESCUDO")}
-                  </button>
-                )}
+                <MonthlyChampionshipSummary
+                  score={dailyScore}
+                  leaderboard={monthlyLeaderboard}
+                  currentUserId={user?.id}
+                  loading={championshipLoading}
+                  canPlayShieldBonus={dailyScore.won && !hasParticipatedInNewPhase}
+                  onPlayShieldBonus={() => setShowNewPhase(true)}
+                  onLoginClick={onLoginClick}
+                />
                 <Share
                   guesses={guesses}
                   dayString={dayString}
@@ -265,6 +328,7 @@ export function Game({ settingsData, updateSettings }: GameProps) {
                   rotationMode={rotationMode}
                   guessedShield={guessedShield}
                   guessedMap={guessedMap} // NEW prop passed to Share
+                  dailyScore={dailyScore}
                 />
                 <div className="flex justify-center mt-4">
                   <a

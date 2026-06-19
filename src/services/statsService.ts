@@ -1,11 +1,18 @@
 import { supabase } from '../lib/supabase'
 import { StatsData } from '../domain/stats'
+import { Guess } from '../domain/guess'
+import { calculateDailyScore } from '../domain/scoring'
+import { DateTime } from 'luxon'
+import { DEFAULT_AVATAR_COLOR, DEFAULT_AVATAR_EMOJI } from '../domain/avatar'
 
 export interface UserProfile {
   id: string
   username: string
+  avatar_emoji: string
+  avatar_color: string
   created_at: string
   updated_at: string
+  avatarColumnsMissing?: boolean
 }
 
 export interface UserStats {
@@ -24,6 +31,8 @@ export interface UserStats {
 export interface LeaderboardEntry {
   user_id: string
   username: string
+  avatar_emoji: string
+  avatar_color: string
   max_streak: number
   current_streak: number
   played: number
@@ -31,12 +40,52 @@ export interface LeaderboardEntry {
   rank: number
 }
 
+export interface DailyResult {
+  id: string
+  user_id: string
+  game_date: string
+  guesses: Guess[]
+  completed: boolean
+  won: boolean
+  tries_count: number | null
+  best_distance: number | null
+  shield_bonus: boolean
+  map_bonus: boolean
+  main_score: number
+  bonus_score: number
+  total_score: number
+  created_at: string
+  updated_at: string
+}
+
+export interface MonthlyLeaderboardEntry {
+  user_id: string
+  username: string
+  avatar_emoji: string
+  avatar_color: string
+  total_score: number
+  days_played: number
+  wins: number
+  bonus_score: number
+  today_score: number
+  today_main_score: number
+  today_bonus_score: number
+  rank: number
+  previous_rank: number
+  rank_delta: number
+}
+
 export const statsService = {
   async createUserProfile(userId: string, username: string): Promise<UserProfile | null> {
     const { data, error } = await supabase
       .from('user_profiles')
       .insert([
-        { id: userId, username }
+        {
+          id: userId,
+          username,
+          avatar_emoji: DEFAULT_AVATAR_EMOJI,
+          avatar_color: DEFAULT_AVATAR_COLOR
+        }
       ])
       .select()
       .single()
@@ -65,17 +114,54 @@ export const statsService = {
   },
 
   async updateUsername(userId: string, newUsername: string): Promise<UserProfile | null> {
+    const existingProfile = await statsService.getUserProfile(userId)
+    return statsService.updateUserProfile(userId, {
+      username: newUsername,
+      avatar_emoji: existingProfile?.avatar_emoji ?? DEFAULT_AVATAR_EMOJI,
+      avatar_color: existingProfile?.avatar_color ?? DEFAULT_AVATAR_COLOR
+    })
+  },
+
+  async updateUserProfile(
+    userId: string,
+    updates: Pick<UserProfile, 'username' | 'avatar_emoji' | 'avatar_color'>
+  ): Promise<UserProfile | null> {
+    const updatedAt = new Date().toISOString()
     const { data, error } = await supabase
       .from('user_profiles')
       .update({ 
-        username: newUsername,
-        updated_at: new Date().toISOString()
+        ...updates,
+        updated_at: updatedAt
       })
       .eq('id', userId)
       .select()
       .single()
 
     if (error) {
+      if (error.code === 'PGRST204' && error.message.includes('avatar_')) {
+        const { data: usernameData, error: usernameError } = await supabase
+          .from('user_profiles')
+          .update({
+            username: updates.username,
+            updated_at: updatedAt
+          })
+          .eq('id', userId)
+          .select()
+          .single()
+
+        if (usernameError) {
+          console.error('Error updating username:', usernameError)
+          return null
+        }
+
+        return {
+          ...usernameData,
+          avatar_emoji: DEFAULT_AVATAR_EMOJI,
+          avatar_color: DEFAULT_AVATAR_COLOR,
+          avatarColumnsMissing: true
+        } as UserProfile
+      }
+
       console.error('Error updating username:', error)
       return null
     }
@@ -159,6 +245,84 @@ export const statsService = {
     return data
   },
 
+  async syncDailyResultToSupabase(
+    userId: string,
+    gameDate: string,
+    guesses: Guess[],
+    guessedShield: boolean,
+    guessedMap: boolean
+  ): Promise<DailyResult | null> {
+    const score = calculateDailyScore(guesses, guessedShield, guessedMap)
+
+    if (!score.completed) {
+      return null
+    }
+
+    const dailyResult = {
+      user_id: userId,
+      game_date: gameDate,
+      guesses,
+      completed: score.completed,
+      won: score.won,
+      tries_count: score.triesCount,
+      best_distance: score.bestDistance,
+      shield_bonus: score.won && guessedShield,
+      map_bonus: score.won && guessedMap,
+      main_score: score.mainScore,
+      bonus_score: score.bonusScore,
+      total_score: score.totalScore,
+      updated_at: new Date().toISOString()
+    }
+
+    const { data, error } = await supabase
+      .from('daily_results')
+      .upsert(dailyResult, { onConflict: 'user_id,game_date' })
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Error syncing daily result:', error)
+      return null
+    }
+
+    return data as DailyResult
+  },
+
+  async getMonthlyLeaderboard(dayString: string, limit = 100): Promise<MonthlyLeaderboardEntry[]> {
+    const monthStart = DateTime.fromFormat(dayString, 'yyyy-MM-dd')
+      .startOf('month')
+      .toFormat('yyyy-MM-dd')
+
+    const { data, error } = await supabase.rpc('get_monthly_leaderboard', {
+      target_month_start: monthStart,
+      target_today: dayString
+    })
+
+    if (error) {
+      console.error('Error fetching monthly leaderboard:', error)
+      return []
+    }
+
+    const rows = (data ?? []) as MonthlyLeaderboardEntry[]
+
+    return rows.slice(0, limit).map((entry: MonthlyLeaderboardEntry) => ({
+      user_id: entry.user_id,
+      username: entry.username,
+      avatar_emoji: entry.avatar_emoji ?? DEFAULT_AVATAR_EMOJI,
+      avatar_color: entry.avatar_color ?? DEFAULT_AVATAR_COLOR,
+      total_score: Number(entry.total_score),
+      days_played: Number(entry.days_played),
+      wins: Number(entry.wins),
+      bonus_score: Number(entry.bonus_score),
+      today_score: Number(entry.today_score),
+      today_main_score: Number(entry.today_main_score),
+      today_bonus_score: Number(entry.today_bonus_score),
+      rank: Number(entry.rank),
+      previous_rank: Number(entry.previous_rank),
+      rank_delta: Number(entry.rank_delta)
+    }))
+  },
+
   async getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {
     console.log('statsService: Fetching leaderboard...')
     
@@ -228,6 +392,8 @@ export const statsService = {
           return {
             user_id: stat.user_id,
             username: profile.username,
+            avatar_emoji: profile.avatar_emoji ?? DEFAULT_AVATAR_EMOJI,
+            avatar_color: profile.avatar_color ?? DEFAULT_AVATAR_COLOR,
             max_streak: stat.max_streak,
             current_streak: stat.current_streak,
             played: stat.played,

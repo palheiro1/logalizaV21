@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import { Panel } from './Panel'
 import { Leaderboard } from '../Leaderboard'
-import { UsernameEditor } from '../UsernameEditor'
+import { MonthlyLeaderboard } from '../MonthlyLeaderboard'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '../../contexts/AuthContext'
-import { statsService, UserProfile } from '../../services/statsService'
 
 interface LeaderboardPanelProps {
   isOpen: boolean
@@ -13,83 +11,41 @@ interface LeaderboardPanelProps {
 
 export const LeaderboardPanel: React.FC<LeaderboardPanelProps> = ({ isOpen, close }) => {
   const { t } = useTranslation()
-  const { user } = useAuth()
-  const [isEditingUsername, setIsEditingUsername] = useState(false)
-  const [currentUsername, setCurrentUsername] = useState<string>('')
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
-
-  const loadUserProfile = useCallback(async () => {
-    if (!user) return
-    
-    try {
-      const profile = await statsService.getUserProfile(user.id)
-      if (profile) {
-        setUserProfile(profile)
-        setCurrentUsername(profile.username)
-      }
-    } catch (error) {
-      console.error('Error loading user profile:', error)
-    }
-  }, [user])
-
-  useEffect(() => {
-    if (user && isOpen) {
-      loadUserProfile()
-    }
-  }, [user, isOpen, loadUserProfile])
-
-  const handleUsernameUpdate = (newUsername: string) => {
-    setCurrentUsername(newUsername)
-    setIsEditingUsername(false)
-    // Trigger leaderboard refresh by updating the userProfile
-    if (userProfile) {
-      setUserProfile({ ...userProfile, username: newUsername })
-    }
-  }
-
-  const handleEditUsernameClick = () => {
-    setIsEditingUsername(true)
-  }
-
-  const handleCancelEdit = () => {
-    setIsEditingUsername(false)
-  }
+  const [activeTab, setActiveTab] = useState<'month' | 'general'>('month')
 
   return (
     <Panel title={t('leaderboard.title')} isOpen={isOpen} close={close}>
       <div className="space-y-4">
-        {/* Username section for authenticated users */}
-        {user && userProfile && (
-          <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-            {isEditingUsername ? (
-              <UsernameEditor
-                currentUsername={currentUsername}
-                onUsernameUpdate={handleUsernameUpdate}
-                onCancel={handleCancelEdit}
-              />
-            ) : (
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('username.yourUsername')}:
-                  </p>
-                  <p className="font-medium text-gray-900 dark:text-gray-100">
-                    {currentUsername}
-                  </p>
-                </div>
-                <button
-                  onClick={handleEditUsernameClick}
-                  className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-                >
-                  {t('username.edit')}
-                </button>
-              </div>
-            )}
-          </div>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            className={`rounded px-3 py-2 text-sm font-bold ${
+              activeTab === 'month'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200'
+            }`}
+            type="button"
+            onClick={() => setActiveTab('month')}
+          >
+            {t('leaderboard.month')}
+          </button>
+          <button
+            className={`rounded px-3 py-2 text-sm font-bold ${
+              activeTab === 'general'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200'
+            }`}
+            type="button"
+            onClick={() => setActiveTab('general')}
+          >
+            {t('leaderboard.general')}
+          </button>
+        </div>
+
+        {activeTab === 'month' ? (
+          <MonthlyLeaderboard />
+        ) : (
+          <Leaderboard />
         )}
-        
-        {/* Leaderboard */}
-        <Leaderboard key={userProfile?.username} />
       </div>
     </Panel>
   )

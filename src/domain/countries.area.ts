@@ -65,7 +65,6 @@ export const worldAreas: Record<string, number> = {
   EG: 1001449,
   ER: 117600,
   EH: 266000,
-  ES: 505992,
   EE: 45227,
   ET: 1104300,
   FI: 338145,
