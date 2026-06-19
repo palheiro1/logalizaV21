@@ -2,7 +2,7 @@
   "name": "logaliza",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://logaliza.estreleira.gal",
+  "homepage": "https://logaliza.vercel.app",
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@supabase/supabase-js": "^2.51.0",

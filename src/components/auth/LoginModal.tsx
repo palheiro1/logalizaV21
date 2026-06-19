@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { Panel } from '../panels/Panel'
 import { useTranslation } from 'react-i18next'
-import { APP_URL } from '../../config/app'
+import { getAuthRedirectUrl } from '../../config/app'
 
 interface LoginModalProps {
   isOpen: boolean
@@ -36,7 +36,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close }) => {
           email,
           password,
           options: {
-            emailRedirectTo: APP_URL
+            emailRedirectTo: getAuthRedirectUrl()
           }
         })
         if (error) throw error
@@ -55,7 +55,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close }) => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: APP_URL
+          redirectTo: getAuthRedirectUrl()
         }
       })
       if (error) throw error

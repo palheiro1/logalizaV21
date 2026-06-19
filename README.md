@@ -1,6 +1,6 @@
 # LoGaliza!
 
-**Joga e aprende geografia galega aqui: [https://logaliza.estreleira.gal](https://logaliza.estreleira.gal) !**
+**Joga e aprende geografia galega aqui: [https://logaliza.vercel.app](https://logaliza.vercel.app) !**
 
 LoGaliza! é um jogo diário de geografia inspirado no Worldle, focado nas comarcas da Galiza. Cada dia, os jogadores têm a oportunidade de adivinhar uma comarca específica usando pistas progressivas, promovendo o conhecimento sobre a cultura, história e geografia da região.
 
