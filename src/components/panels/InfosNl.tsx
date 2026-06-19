@@ -17,7 +17,7 @@ export function InfosNl({ isOpen, close, settingsData }: InfosProps) {
     <Panel title="Spelinstructies" isOpen={isOpen} close={close}>
       <div className="space-y-3 text-justify border-b-2 border-gray-200 pb-3 mb-3">
         <div>
-          Je hebt 6 kansen om de <Worldle /> te raden.
+          Je hebt 4 kansen om de <Worldle /> te raden.
         </div>
         <div>Iedere gok moet een geldig land, gebied, enzovoort zijn.</div>
         <div>
@@ -93,11 +93,11 @@ export function InfosNl({ isOpen, close, settingsData }: InfosProps) {
           Zie de{" "}
           <a
             className="underline"
-            href="https://worldle.notion.site/Worldle-b84ab0f002e34866980a4d47cf9291b7"
+            href="https://estreleira.gal/faq"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Worldle Veelgestelde Vragen
+            LoGaliza Veelgestelde Vragen
           </a>
           !
         </div>

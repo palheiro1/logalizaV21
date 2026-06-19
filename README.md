@@ -1,13 +1,13 @@
 # LoGaliza!
 
-**Joga e aprende geografia galega aqui: [https://logaliza.vercel.app/](https://logaliza.vercel.app/) !**
+**Joga e aprende geografia galega aqui: [https://logaliza.estreleira.gal](https://logaliza.estreleira.gal) !**
 
 LoGaliza! é um jogo diário de geografia inspirado no Worldle, focado nas comarcas da Galiza. Cada dia, os jogadores têm a oportunidade de adivinhar uma comarca específica usando pistas progressivas, promovendo o conhecimento sobre a cultura, história e geografia da região.
 
 ## Como Jogar
 
 ### Objetivo
-Adivinhe a comarca galega do dia em até 6 tentativas. Cada tentativa revela pistas sobre a comarca correta.
+Adivinhe a comarca galega do dia em até 4 tentativas. Cada tentativa revela pistas sobre a comarca correta.
 
 ### Mecânica do Jogo
 1. **Pistas Progressivas**: A cada tentativa incorreta, você recebe novas pistas sobre a comarca:
@@ -21,8 +21,8 @@ Adivinhe a comarca galega do dia em até 6 tentativas. Cada tentativa revela pis
    - **Modo Mapa**: Visualize a localização no mapa interativo.
 
 3. **Pontuação e Estatísticas**:
-   - Ganhe pontos baseados na precisão e rapidez das suas adivinhações.
-   - Acompanhe seu progresso no leaderboard global.
+   - Ganhe pontos baseados no número de tentativas e nos bónus diários.
+   - Acompanhe seu progresso no campeonato mensal e no leaderboard geral.
    - Compartilhe seus resultados com amigos.
 
 ### Dicas para Jogadores
@@ -34,8 +34,8 @@ Adivinhe a comarca galega do dia em até 6 tentativas. Cada tentativa revela pis
 
 - **Jogo Diário**: Uma nova comarca todos os dias.
 - **Pistas Diversificadas**: Além das silhuetas dos mapas, inclui informações sobre cultura, história e costumes.
-- **Leaderboard**: Compita com outros jogadores e veja as melhores pontuações.
-- **Modo Multiplayer**: Desafie amigos e compartilhe resultados.
+- **Leaderboard**: Compita com outros jogadores no campeonato mensal.
+- **Partilha social**: Compartilhe resultados e bónus do dia.
 - **Interface Responsiva**: Jogue no desktop ou mobile.
 - **Suporte a Múltiplos Idiomas**: Disponível em galego e português.
 - **Autenticação**: Faça login para salvar seu progresso e estatísticas.

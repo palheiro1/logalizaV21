@@ -2,6 +2,10 @@ import Modal from "react-modal";
 import React, { useEffect, useState } from "react";
 import { Twemoji } from "react-emoji-render";
 
+if (typeof document !== "undefined") {
+  Modal.setAppElement("#root");
+}
+
 interface PanelProps {
   title: string;
   isOpen: boolean;
@@ -33,7 +37,7 @@ export function Panel({
       isOpen={isOpen}
       onRequestClose={close}
       className="flex justify-center h-full"
-      ariaHideApp={false}
+      contentLabel={title}
     >
       <div className="w-full max-w-lg bg-white dark:bg-slate-900 dark:text-slate-100 text-sm overflow-auto px-2">
         <header className="border-b-2 border-gray-200 mb-3 flex">
@@ -43,7 +47,7 @@ export function Panel({
           >
             {title}
           </h2>
-          <button type="button" onClick={close}>
+          <button type="button" onClick={close} aria-label="Fechar">
             <Twemoji text="❌" />
           </button>
         </header>

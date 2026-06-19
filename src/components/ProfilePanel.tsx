@@ -19,7 +19,7 @@ interface ProfilePanelProps {
 
 export const ProfilePanel: React.FC<ProfilePanelProps> = ({ isOpen, close }) => {
   const { t } = useTranslation();
-  const { user, signOut } = useAuth();
+  const { user, signOut, refreshProfile } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [username, setUsername] = useState("");
   const [avatarEmoji, setAvatarEmoji] = useState("");
@@ -100,6 +100,7 @@ export const ProfilePanel: React.FC<ProfilePanelProps> = ({ isOpen, close }) => 
     setUsername(updatedProfile.username);
     setAvatarEmoji(normalizeAvatarEmoji(updatedProfile.avatar_emoji));
     setAvatarColor(normalizeAvatarColor(updatedProfile.avatar_color));
+    await refreshProfile();
     if (updatedProfile.avatarColumnsMissing) {
       setError(t("profile.avatarMigrationNeeded"));
     }

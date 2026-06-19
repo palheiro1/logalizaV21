@@ -18,7 +18,7 @@ export function InfosFr({ isOpen, close, settingsData }: InfosProps) {
       <div className="space-y-3 text-justify border-b-2 border-gray-200 pb-3 mb-3">
         <div>
           {" "}
-          Devine le <Worldle /> en 6 essais.
+          Devine le <Worldle /> en 4 essais.
         </div>
         <div>Chaque essai doit être un pays, un territoire, etc... valide.</div>
         <div>
@@ -96,11 +96,11 @@ export function InfosFr({ isOpen, close, settingsData }: InfosProps) {
           Rendez-vous sur la{" "}
           <a
             className="underline"
-            href="https://worldle.notion.site/Worldle-4005ca16fc9341e7be8adcfd30628146"
+            href="https://estreleira.gal/faq"
             target="_blank"
             rel="noopener noreferrer"
           >
-            FAQ Worldle
+            FAQ LoGaliza
           </a>{" "}
           !
         </div>

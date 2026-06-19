@@ -12,6 +12,7 @@ import { Guess } from "../domain/guess";
 import React from "react";
 import { SettingsData } from "../hooks/useSettings";
 import { DailyScore } from "../domain/scoring";
+import { APP_URL } from "../config/app";
 
 const START_DATE = DateTime.fromISO("2022-01-21");
 
@@ -68,7 +69,7 @@ export function Share({
       .filter(Boolean)
       .join(" ");
       
-    const gameLink = "https://logaliza.vercel.app/";
+    const gameLink = APP_URL;
     
     const iconsLine = iconsPart ? `${iconsPart}\n${gameLink}` : gameLink;
 

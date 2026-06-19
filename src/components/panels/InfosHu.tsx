@@ -98,11 +98,11 @@ export function InfosHu({ isOpen, close, settingsData }: InfosProps) {
         <div>
           <a
             className="underline"
-            href="https://worldle.notion.site/Worldle-4005ca16fc9341e7be8adcfd30628146"
+            href="https://estreleira.gal/faq"
             target="_blank"
             rel="noopener noreferrer"
           >
-            FAQ Worldle
+            FAQ LoGaliza
           </a>
         </div>
       </div>

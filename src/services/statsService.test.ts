@@ -20,8 +20,8 @@ describe("statsService championship methods", () => {
     jest.clearAllMocks();
   });
 
-  it("upserts a completed daily result with score breakdown", async () => {
-    const single = jest.fn().mockResolvedValue({
+  it("submits a completed daily result through the official RPC", async () => {
+    (supabase.rpc as jest.Mock).mockResolvedValue({
       data: {
         id: "result-1",
         user_id: "user-1",
@@ -41,9 +41,6 @@ describe("statsService championship methods", () => {
       },
       error: null,
     });
-    const select = jest.fn(() => ({ single }));
-    const upsert = jest.fn(() => ({ select }));
-    (supabase.from as jest.Mock).mockReturnValue({ upsert });
 
     await statsService.syncDailyResultToSupabase(
       "user-1",
@@ -53,23 +50,12 @@ describe("statsService championship methods", () => {
       true
     );
 
-    expect(supabase.from).toHaveBeenCalledWith("daily_results");
-    expect(upsert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        user_id: "user-1",
-        game_date: "2026-06-19",
-        completed: true,
-        won: true,
-        tries_count: 1,
-        best_distance: 0,
-        shield_bonus: true,
-        map_bonus: true,
-        main_score: 100,
-        bonus_score: 40,
-        total_score: 140,
-      }),
-      { onConflict: "user_id,game_date" }
-    );
+    expect(supabase.rpc).toHaveBeenCalledWith("submit_daily_result", {
+      target_game_date: "2026-06-19",
+      submitted_guesses: [hit()],
+      submitted_shield_bonus: true,
+      submitted_map_bonus: true,
+    });
   });
 
   it("calls the monthly leaderboard RPC with the month start", async () => {

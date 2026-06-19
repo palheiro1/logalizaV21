@@ -11,7 +11,9 @@ interface MonthlyChampionshipSummaryProps {
   currentUserId?: string;
   loading: boolean;
   canPlayShieldBonus: boolean;
+  canPlayMapBonus: boolean;
   onPlayShieldBonus: () => void;
+  onPlayMapBonus: () => void;
   onLoginClick?: () => void;
 }
 
@@ -21,7 +23,9 @@ export function MonthlyChampionshipSummary({
   currentUserId,
   loading,
   canPlayShieldBonus,
+  canPlayMapBonus,
   onPlayShieldBonus,
+  onPlayMapBonus,
   onLoginClick,
 }: MonthlyChampionshipSummaryProps) {
   const { t } = useTranslation();
@@ -59,6 +63,16 @@ export function MonthlyChampionshipSummary({
           onClick={onPlayShieldBonus}
         >
           {t("championship.playShieldBonus")}
+        </button>
+      )}
+
+      {canPlayMapBonus && (
+        <button
+          className="mt-3 w-full rounded bg-green-600 px-4 py-2 font-bold uppercase text-white hover:bg-green-500 active:bg-green-700"
+          type="button"
+          onClick={onPlayMapBonus}
+        >
+          {t("championship.playMapBonus")}
         </button>
       )}
 
@@ -104,7 +118,7 @@ export function MonthlyChampionshipSummary({
                 <RankDeltaBadge delta={rankDelta} />
               </div>
               <LeaderboardSlice
-                entries={visibleEntries}
+                sections={visibleEntries}
                 currentUserId={currentUserId}
               />
             </>
@@ -155,22 +169,40 @@ function RankDeltaBadge({ delta }: { delta: number }) {
 }
 
 function LeaderboardSlice({
-  entries,
+  sections,
   currentUserId,
 }: {
-  entries: MonthlyLeaderboardEntry[];
+  sections: Array<MonthlyLeaderboardEntry | "separator">;
   currentUserId: string;
 }) {
   return (
     <div className="space-y-1">
-      {entries.map((entry) => {
+      {sections.map((entry, index) => {
+        if (entry === "separator") {
+          return (
+            <div
+              key={`separator-${index}`}
+              className="py-1 text-center text-xs font-bold opacity-60"
+            >
+              ...
+            </div>
+          );
+        }
         const isCurrentUser = entry.user_id === currentUserId;
+        const movementClass =
+          isCurrentUser && entry.rank_delta > 0
+            ? "animate-rankUp"
+            : isCurrentUser && entry.rank_delta < 0
+            ? "animate-rankDown"
+            : isCurrentUser
+            ? "animate-pop"
+            : "";
         return (
           <div
             key={entry.user_id}
-            className={`flex items-center justify-between rounded px-2 py-1 text-sm ${
+            className={`flex items-center justify-between rounded px-2 py-1 text-sm ${movementClass} ${
               isCurrentUser
-                ? "animate-pop bg-blue-700 font-bold text-white"
+                ? "bg-blue-700 font-bold text-white"
                 : "bg-blue-50 dark:bg-slate-800"
             }`}
           >
@@ -194,7 +226,7 @@ function LeaderboardSlice({
 function getVisibleEntries(
   leaderboard: MonthlyLeaderboardEntry[],
   currentUserEntry?: MonthlyLeaderboardEntry
-) {
+): Array<MonthlyLeaderboardEntry | "separator"> {
   const topEntries = leaderboard.slice(0, 5);
   if (!currentUserEntry || currentUserEntry.rank <= 5) {
     return topEntries;
@@ -209,8 +241,11 @@ function getVisibleEntries(
   );
   const seen = new Set(topEntries.map((entry) => entry.user_id));
 
+  const aroundOnly = aroundEntries.filter((entry) => !seen.has(entry.user_id));
+
   return [
     ...topEntries,
-    ...aroundEntries.filter((entry) => !seen.has(entry.user_id)),
+    ...(aroundOnly.length > 0 ? (["separator"] as const) : []),
+    ...aroundOnly,
   ];
 }

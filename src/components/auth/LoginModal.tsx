@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { Panel } from '../panels/Panel'
 import { useTranslation } from 'react-i18next'
+import { APP_URL } from '../../config/app'
 
 interface LoginModalProps {
   isOpen: boolean
   close: () => void
-  theme?: 'light' | 'dark'
 }
 
-export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = 'light' }) => {
+export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close }) => {
   const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,35 +22,28 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
     setLoading(true)
     setMessage('')
 
-    console.log('LoginModal: Starting authentication...', { isLogin, email })
-
     try {
       if (isLogin) {
-        console.log('LoginModal: Attempting sign in...')
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
         })
-        console.log('LoginModal: Sign in result:', { data, error })
         if (error) throw error
-        setMessage('Login successful!')
+        setMessage(t('auth.loginSuccess'))
         close()
       } else {
-        console.log('LoginModal: Attempting sign up...')
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: 'https://logaliza.vercel.app/'
+            emailRedirectTo: APP_URL
           }
         })
-        console.log('LoginModal: Sign up result:', { data, error })
         if (error) throw error
-        setMessage('Check your email for the confirmation link!')
+        setMessage(t('auth.confirmEmail'))
       }
-    } catch (error: any) {
-      console.error('LoginModal: Authentication error:', error)
-      setMessage(error.message)
+    } catch (error: unknown) {
+      setMessage(getErrorMessage(error))
     } finally {
       setLoading(false)
     }
@@ -58,19 +51,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
 
   const handleGoogleLogin = async () => {
     setLoading(true)
-    console.log('LoginModal: Starting Google OAuth...')
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://logaliza.vercel.app/'
+          redirectTo: APP_URL
         }
       })
-      console.log('LoginModal: Google OAuth result:', { data, error })
       if (error) throw error
-    } catch (error: any) {
-      console.error('LoginModal: Google OAuth error:', error)
-      setMessage(error.message)
+    } catch (error: unknown) {
+      setMessage(getErrorMessage(error))
     } finally {
       setLoading(false)
     }
@@ -113,7 +103,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
             disabled={loading}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Loading...' : (isLogin ? 'Entrar' : 'Registar')}
+            {loading ? t('auth.loading') : (isLogin ? t('auth.signIn') : t('auth.signUp'))}
           </button>
 
           <div className="text-center">
@@ -122,7 +112,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
               onClick={() => setIsLogin(!isLogin)}
               className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400"
             >
-              {isLogin ? "Ainda nom tés conta? Regista-te" : "Já tés conta? Inicia sessom"}
+              {isLogin ? t('auth.needAccount') : t('auth.haveAccount')}
             </button>
           </div>
         </form>
@@ -133,7 +123,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
               <div className="w-full border-t border-gray-300 dark:border-gray-600" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white dark:bg-gray-900 text-gray-500">Ou continua com</span>
+              <span className="px-2 bg-white dark:bg-gray-900 text-gray-500">{t('auth.continueWith')}</span>
             </div>
           </div>
 
@@ -168,7 +158,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
 
         {message && (
           <div className={`mt-4 p-3 rounded-md ${
-            message.includes('successful') || message.includes('email') 
+            message === t('auth.loginSuccess') || message === t('auth.confirmEmail')
               ? 'bg-green-50 text-green-800 dark:bg-green-900 dark:text-green-200' 
               : 'bg-red-50 text-red-800 dark:bg-red-900 dark:text-red-200'
           }`}>
@@ -178,4 +168,19 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close, theme = '
       </div>
     </Panel>
   )
+}
+
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message
+  }
+
+  if (typeof error === 'object' && error != null && 'message' in error) {
+    const message = (error as { message?: unknown }).message
+    if (typeof message === 'string') {
+      return message
+    }
+  }
+
+  return 'Erro de autenticaçom'
 }

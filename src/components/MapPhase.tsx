@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { galicianCountryNamesChanga } from "../domain/comarcas.name.co";
+import seedrandom from "seedrandom";
 
 interface MapPhaseProps {
   correctCountry: string;
+  dayString: string;
   onPhaseEnd: () => void;
-  onMapCorrect: () => void; // NEW prop
+  onMapGuessResult: (correct: boolean) => void;
 }
 
-const MapPhase: React.FC<MapPhaseProps> = ({ correctCountry, onPhaseEnd, onMapCorrect }) => {
+const MapPhase: React.FC<MapPhaseProps> = ({ correctCountry, dayString, onPhaseEnd, onMapGuessResult }) => {
   const { t } = useTranslation();
   const [options, setOptions] = useState<string[]>([]);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -18,36 +20,24 @@ const MapPhase: React.FC<MapPhaseProps> = ({ correctCountry, onPhaseEnd, onMapCo
   useEffect(() => {
     const generateOptions = () => {
       const allCountries = Object.keys(galicianCountryNamesChanga);
-      const randomOptions = new Set<string>();
-      randomOptions.add(correctCountry);
-
-      while (randomOptions.size < 4) {
-        const randomCountry = allCountries[Math.floor(Math.random() * allCountries.length)];
-        if (randomCountry !== correctCountry) {
-          randomOptions.add(randomCountry);
-        }
-      }
-
-      setOptions(shuffleArray(Array.from(randomOptions)));
+      const random = seedrandom(`${dayString}:map:${correctCountry}`);
+      const distractors = shuffleArray(
+        allCountries.filter((country) => country !== correctCountry),
+        random
+      ).slice(0, 3);
+      setOptions(shuffleArray([correctCountry, ...distractors], random));
     };
 
     generateOptions();
-  }, [correctCountry]);
-
-  const shuffleArray = (array: string[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
+  }, [correctCountry, dayString]);
 
   const handleOptionClick = (option: string) => {
     if (isDisabled) return;
     setSelectedOption(option);
     setIsDisabled(true);
-    if (option === correctCountry) {
-      onMapCorrect(); // NEW: update guessedMap in parent
+    const correct = option === correctCountry;
+    onMapGuessResult(correct);
+    if (correct) {
       setMessage(t("Bravo!"));
     } else {
       setMessage(t("Nom era este mapa!"));
@@ -102,5 +92,13 @@ const MapPhase: React.FC<MapPhaseProps> = ({ correctCountry, onPhaseEnd, onMapCo
     </div>
   );
 };
+
+function shuffleArray(array: string[], random: () => number) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 export default MapPhase;

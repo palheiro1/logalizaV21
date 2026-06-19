@@ -29,6 +29,151 @@ BEGIN
   END IF;
 END $$;
 
+DROP POLICY IF EXISTS "Users can insert own results" ON daily_results;
+DROP POLICY IF EXISTS "Users can update own results" ON daily_results;
+
+CREATE OR REPLACE FUNCTION submit_daily_result(
+  target_game_date DATE,
+  submitted_guesses JSONB,
+  submitted_shield_bonus BOOLEAN DEFAULT FALSE,
+  submitted_map_bonus BOOLEAN DEFAULT FALSE
+)
+RETURNS daily_results AS $$
+DECLARE
+  requesting_user UUID := auth.uid();
+  guess_count INTEGER;
+  win_try INTEGER;
+  completed_result BOOLEAN;
+  best_distance_result NUMERIC;
+  main_score_result INTEGER := 0;
+  bonus_score_result INTEGER := 0;
+  final_shield_bonus BOOLEAN := FALSE;
+  final_map_bonus BOOLEAN := FALSE;
+  existing_result daily_results;
+  saved_result daily_results;
+BEGIN
+  IF requesting_user IS NULL THEN
+    RAISE EXCEPTION 'Authentication required' USING ERRCODE = '28000';
+  END IF;
+
+  IF target_game_date IS NULL THEN
+    RAISE EXCEPTION 'target_game_date is required' USING ERRCODE = '22023';
+  END IF;
+
+  IF submitted_guesses IS NULL OR jsonb_typeof(submitted_guesses) <> 'array' THEN
+    RAISE EXCEPTION 'submitted_guesses must be an array' USING ERRCODE = '22023';
+  END IF;
+
+  guess_count := jsonb_array_length(submitted_guesses);
+  IF guess_count < 1 OR guess_count > 4 THEN
+    RAISE EXCEPTION 'submitted_guesses must contain 1 to 4 guesses' USING ERRCODE = '22023';
+  END IF;
+
+  IF EXISTS (
+    SELECT 1
+    FROM jsonb_array_elements(submitted_guesses) AS guess(value)
+    WHERE jsonb_typeof(guess.value) <> 'object'
+      OR NULLIF(BTRIM(guess.value ->> 'name'), '') IS NULL
+      OR NULLIF(BTRIM(guess.value ->> 'direction'), '') IS NULL
+      OR NULLIF(BTRIM(guess.value ->> 'distance'), '') IS NULL
+      OR (guess.value ->> 'distance') !~ '^[0-9]+(\.[0-9]+)?$'
+  ) THEN
+    RAISE EXCEPTION 'submitted_guesses contains invalid guesses' USING ERRCODE = '22023';
+  END IF;
+
+  SELECT *
+  INTO existing_result
+  FROM daily_results
+  WHERE user_id = requesting_user
+    AND game_date = target_game_date;
+
+  IF FOUND THEN
+    final_shield_bonus := existing_result.shield_bonus OR (existing_result.won AND COALESCE(submitted_shield_bonus, FALSE));
+    final_map_bonus := existing_result.map_bonus OR (existing_result.won AND COALESCE(submitted_map_bonus, FALSE));
+    bonus_score_result :=
+      CASE WHEN final_shield_bonus THEN 20 ELSE 0 END +
+      CASE WHEN final_map_bonus THEN 20 ELSE 0 END;
+
+    UPDATE daily_results
+    SET
+      shield_bonus = final_shield_bonus,
+      map_bonus = final_map_bonus,
+      bonus_score = bonus_score_result,
+      total_score = existing_result.main_score + bonus_score_result,
+      updated_at = NOW()
+    WHERE id = existing_result.id
+    RETURNING * INTO saved_result;
+
+    RETURN saved_result;
+  END IF;
+
+  SELECT MIN(guess.ordinality)::INTEGER
+  INTO win_try
+  FROM jsonb_array_elements(submitted_guesses) WITH ORDINALITY AS guess(value, ordinality)
+  WHERE (guess.value ->> 'distance') ~ '^[0-9]+(\.[0-9]+)?$'
+    AND (guess.value ->> 'distance')::NUMERIC = 0;
+
+  completed_result := win_try IS NOT NULL OR guess_count >= 4;
+  IF NOT completed_result THEN
+    RAISE EXCEPTION 'Cannot submit incomplete daily result' USING ERRCODE = '22023';
+  END IF;
+
+  SELECT MIN((guess.value ->> 'distance')::NUMERIC)
+  INTO best_distance_result
+  FROM jsonb_array_elements(submitted_guesses) WITH ORDINALITY AS guess(value, ordinality)
+  WHERE (guess.value ->> 'distance') ~ '^[0-9]+(\.[0-9]+)?$';
+
+  IF win_try IS NOT NULL THEN
+    main_score_result := CASE win_try
+      WHEN 1 THEN 100
+      WHEN 2 THEN 75
+      WHEN 3 THEN 50
+      WHEN 4 THEN 25
+      ELSE 0
+    END;
+    final_shield_bonus := COALESCE(submitted_shield_bonus, FALSE);
+    final_map_bonus := COALESCE(submitted_map_bonus, FALSE);
+    bonus_score_result :=
+      CASE WHEN final_shield_bonus THEN 20 ELSE 0 END +
+      CASE WHEN final_map_bonus THEN 20 ELSE 0 END;
+  END IF;
+
+  INSERT INTO daily_results (
+    user_id,
+    game_date,
+    guesses,
+    completed,
+    won,
+    tries_count,
+    best_distance,
+    shield_bonus,
+    map_bonus,
+    main_score,
+    bonus_score,
+    total_score,
+    updated_at
+  )
+  VALUES (
+    requesting_user,
+    target_game_date,
+    submitted_guesses,
+    completed_result,
+    win_try IS NOT NULL,
+    CASE WHEN win_try IS NOT NULL THEN win_try ELSE guess_count END,
+    best_distance_result,
+    win_try IS NOT NULL AND final_shield_bonus,
+    win_try IS NOT NULL AND final_map_bonus,
+    main_score_result,
+    bonus_score_result,
+    main_score_result + bonus_score_result,
+    NOW()
+  )
+  RETURNING * INTO saved_result;
+
+  RETURN saved_result;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
 DROP FUNCTION IF EXISTS get_monthly_leaderboard(DATE, DATE);
 
 CREATE OR REPLACE FUNCTION get_monthly_leaderboard(
@@ -115,5 +260,6 @@ RETURNS TABLE (
 $$ LANGUAGE sql SECURITY DEFINER;
 
 GRANT EXECUTE ON FUNCTION get_monthly_leaderboard(DATE, DATE) TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION submit_daily_result(DATE, JSONB, BOOLEAN, BOOLEAN) TO authenticated;
 
 NOTIFY pgrst, 'reload schema';

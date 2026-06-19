@@ -1,3 +1,11 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
 export interface Database {
   public: {
     Tables: {
@@ -70,7 +78,7 @@ export interface Database {
           id: string
           user_id: string
           game_date: string
-          guesses: any
+          guesses: Json
           completed: boolean
           won: boolean
           tries_count: number | null
@@ -87,7 +95,7 @@ export interface Database {
           id?: string
           user_id: string
           game_date: string
-          guesses: any
+          guesses: Json
           completed?: boolean
           won?: boolean
           tries_count?: number | null
@@ -104,7 +112,7 @@ export interface Database {
           id?: string
           user_id?: string
           game_date?: string
-          guesses?: any
+          guesses?: Json
           completed?: boolean
           won?: boolean
           tries_count?: number | null
@@ -147,6 +155,31 @@ export interface Database {
           previous_rank: number
           rank_delta: number
         }[]
+      }
+      submit_daily_result: {
+        Args: {
+          target_game_date: string
+          submitted_guesses: Json
+          submitted_shield_bonus?: boolean
+          submitted_map_bonus?: boolean
+        }
+        Returns: {
+          id: string
+          user_id: string
+          game_date: string
+          guesses: Json
+          completed: boolean
+          won: boolean
+          tries_count: number | null
+          best_distance: number | null
+          shield_bonus: boolean
+          map_bonus: boolean
+          main_score: number
+          bonus_score: number
+          total_score: number
+          created_at: string
+          updated_at: string
+        }
       }
     }
   }

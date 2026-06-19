@@ -18,7 +18,7 @@ export function InfosCo({ isOpen, close, settingsData }: InfosProps) {
       <div className="space-y-3 text-justify border-b-2 border-gray-200 pb-3 mb-3">
         <div>
           {" "}
-          Induvinate u <Worldle /> in 6 colpi.
+          Induvinate u <Worldle /> in 4 colpi.
         </div>
         <div>
           Ogni colpu deve esse u nome accettevule d’un paese o d’un territoriu.
@@ -98,11 +98,11 @@ export function InfosCo({ isOpen, close, settingsData }: InfosProps) {
           Visitate a{" "}
           <a
             className="underline"
-            href="https://worldle.notion.site/Worldle-b84ab0f002e34866980a4d47cf9291b7"
+            href="https://estreleira.gal/faq"
             target="_blank"
             rel="noopener noreferrer"
           >
-            FAQ di Worldle
+            FAQ di LoGaliza
           </a>{" "}
           !
         </div>

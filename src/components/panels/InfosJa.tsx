@@ -97,11 +97,11 @@ export function InfosJa({ isOpen, close, settingsData }: InfosProps) {
         <div>
           <a
             className="underline"
-            href="https://worldle.notion.site/Worldle-b84ab0f002e34866980a4d47cf9291b7"
+            href="https://estreleira.gal/faq"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Worldle FAQ
+            LoGaliza FAQ
           </a>
           をご覧ください。
         </div>

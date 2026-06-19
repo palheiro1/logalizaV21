@@ -27,7 +27,7 @@ export function useNewsNotifications(dayString: string) {
 
     notificationsToDisplay.forEach((message) => {
       toast.info(
-        <div dangerouslySetInnerHTML={{ __html: t(`news.${message}`) }} />,
+        <div>{t(`news.${message}`)}</div>,
         {
           autoClose: false,
         }

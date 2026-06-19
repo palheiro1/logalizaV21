@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { galicianCountryNamesChanga } from "../domain/comarcas.name.co";
+import seedrandom from "seedrandom";
 
 interface NewPhaseProps {
   correctCountry: string;
-  onCorrectGuess: () => void;
+  dayString: string;
+  onGuessResult: (correct: boolean) => void;
   onPhaseEnd: () => void;
 }
 
-const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onPhaseEnd }) => {
-  const { t, i18n } = useTranslation();
+const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, dayString, onGuessResult, onPhaseEnd }) => {
+  const { t } = useTranslation();
   const [options, setOptions] = useState<string[]>([]);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -18,40 +20,26 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
   useEffect(() => {
     const generateOptions = () => {
       const allCountries = Object.keys(galicianCountryNamesChanga);
-      const randomOptions = new Set<string>();
-      randomOptions.add(correctCountry);
-
-      while (randomOptions.size < 4) {
-        const randomCountry = allCountries[Math.floor(Math.random() * allCountries.length)];
-        if (randomCountry !== correctCountry) {
-          randomOptions.add(randomCountry);
-        }
-      }
-
-      const optionsArray = Array.from(randomOptions);
-      setOptions(shuffleArray(optionsArray));
+      const random = seedrandom(`${dayString}:shield:${correctCountry}`);
+      const distractors = shuffleArray(
+        allCountries.filter((country) => country !== correctCountry),
+        random
+      ).slice(0, 3);
+      setOptions(shuffleArray([correctCountry, ...distractors], random));
     };
 
     generateOptions();
-  }, [correctCountry]);
-
-  // Shuffle the array to randomize options
-  const shuffleArray = (array: string[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
+  }, [correctCountry, dayString]);
 
   // Handle user option click
   const handleOptionClick = (option: string) => {
     if (isDisabled) return; // Prevent further clicks if already disabled
     setSelectedOption(option);
     setIsDisabled(true); // Disable buttons after the first choice
-    if (option === correctCountry) {
+    const correct = option === correctCountry;
+    onGuessResult(correct);
+    if (correct) {
       setMessage(t("Brava!"));
-      onCorrectGuess();
     } else {
       setMessage(t("Nom era esse escudo!"));
     }
@@ -89,7 +77,6 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
                   height={200}
                   className="w-full h-auto object-contain"
                   onError={(e) => {
-                    console.error('Image load error for:', imagePath);
                     const imgElement = e.target as HTMLImageElement;
                     imgElement.style.display = 'none';
                   }}
@@ -113,5 +100,13 @@ const NewPhase: React.FC<NewPhaseProps> = ({ correctCountry, onCorrectGuess, onP
     </div>
   );
 };
+
+function shuffleArray(array: string[], random: () => number) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 export default NewPhase;

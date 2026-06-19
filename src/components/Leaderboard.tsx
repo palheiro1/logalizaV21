@@ -4,7 +4,11 @@ import { LeaderboardEntryComponent } from './LeaderboardEntry'
 import { useAuth } from '../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
 
-export const Leaderboard: React.FC = () => {
+interface LeaderboardProps {
+  isActive: boolean
+}
+
+export const Leaderboard: React.FC<LeaderboardProps> = ({ isActive }) => {
   const { t } = useTranslation()
   const { user } = useAuth()
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
@@ -13,34 +17,29 @@ export const Leaderboard: React.FC = () => {
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
+      if (!isActive) {
+        return
+      }
       try {
         setLoading(true)
-        console.log('Leaderboard: Starting fetch...')
         
-        const startTime = Date.now()
         const data = await statsService.getLeaderboard(100)
-        const endTime = Date.now()
-        
-        console.log(`Leaderboard: Data received in ${endTime - startTime}ms:`, data)
         setLeaderboard(data)
         
         if (user) {
-          console.log('Leaderboard: Fetching user rank for:', user.id)
           const rank = await statsService.getUserRank(user.id)
-          console.log('Leaderboard: User rank:', rank)
           setUserRank(rank)
         }
       } catch (error) {
         console.error('Leaderboard: Error fetching leaderboard:', error)
         setLeaderboard([]) // Set empty array on error
       } finally {
-        console.log('Leaderboard: Fetch complete, setting loading to false')
         setLoading(false)
       }
     }
 
     fetchLeaderboard()
-  }, [user])
+  }, [isActive, user])
 
   if (loading) {
     return (

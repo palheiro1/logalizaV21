@@ -9,7 +9,11 @@ import {
 import { Twemoji } from "react-emoji-render";
 import { getAvatarColorClass, normalizeAvatarEmoji } from "../domain/avatar";
 
-export const MonthlyLeaderboard: React.FC = () => {
+interface MonthlyLeaderboardProps {
+  isActive: boolean;
+}
+
+export const MonthlyLeaderboard: React.FC<MonthlyLeaderboardProps> = ({ isActive }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const [leaderboard, setLeaderboard] = useState<MonthlyLeaderboardEntry[]>([]);
@@ -19,6 +23,9 @@ export const MonthlyLeaderboard: React.FC = () => {
     let cancelled = false;
 
     async function fetchLeaderboard() {
+      if (!isActive) {
+        return;
+      }
       setLoading(true);
       const data = await statsService.getMonthlyLeaderboard(getDayString(), 100);
       if (!cancelled) {
@@ -32,7 +39,7 @@ export const MonthlyLeaderboard: React.FC = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [isActive]);
 
   if (loading) {
     return (

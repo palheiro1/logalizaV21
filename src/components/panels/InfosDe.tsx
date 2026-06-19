@@ -17,7 +17,7 @@ export function InfosDe({ isOpen, close, settingsData }: InfosProps) {
     <Panel title="Wie wird gespielt?" isOpen={isOpen} close={close}>
       <div className="space-y-3 text-justify border-b-2 border-gray-200 pb-3 mb-3">
         <div>
-          Errate das <Worldle /> in 6 Versuchen.
+          Errate das <Worldle /> in 4 Versuchen.
         </div>
         <div>Jeder Versuch muss ein gültiges Land, Territorium, ... sein</div>
         <div>
@@ -94,11 +94,11 @@ export function InfosDe({ isOpen, close, settingsData }: InfosProps) {
           Schau ins{" "}
           <a
             className="underline"
-            href="https://worldle.notion.site/Worldle-b84ab0f002e34866980a4d47cf9291b7"
+            href="https://estreleira.gal/faq"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Worldle FAQ
+            LoGaliza FAQ
           </a>
           !
         </div>

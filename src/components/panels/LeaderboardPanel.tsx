@@ -42,9 +42,9 @@ export const LeaderboardPanel: React.FC<LeaderboardPanelProps> = ({ isOpen, clos
         </div>
 
         {activeTab === 'month' ? (
-          <MonthlyLeaderboard />
+          <MonthlyLeaderboard isActive={isOpen} />
         ) : (
-          <Leaderboard />
+          <Leaderboard isActive={isOpen} />
         )}
       </div>
     </Panel>

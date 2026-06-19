@@ -17,7 +17,7 @@ export function InfosPl({ isOpen, close, settingsData }: InfosProps) {
     <Panel title="Zasady gry" isOpen={isOpen} close={close}>
       <div className="space-y-3 text-justify border-b-2 border-gray-200 pb-3 mb-3">
         <div>
-          Odgadnij <Worldle /> w 6. próbach.
+          Odgadnij <Worldle /> w 4 próbach.
         </div>
         <div>
           W każdej próbie odgadnięcia musisz podać istniejący kraj, terytorium,
@@ -97,11 +97,11 @@ export function InfosPl({ isOpen, close, settingsData }: InfosProps) {
           Sprawdź{" "}
           <a
             className="underline"
-            href="https://worldle.notion.site/Worldle-b84ab0f002e34866980a4d47cf9291b7"
+            href="https://estreleira.gal/faq"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Worldle FAQ
+            LoGaliza FAQ
           </a>
           !
         </div>

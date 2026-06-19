@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SettingsData } from "../../hooks/useSettings";
-import { translations } from "../../i18n";
 import { Panel } from "./Panel";
 
 interface SettingsProps {
@@ -17,7 +16,7 @@ export function Settings({
   settingsData,
   updateSettings,
 }: SettingsProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [debugEnabled, setDebugEnabled] = useState(false);
 
   return (

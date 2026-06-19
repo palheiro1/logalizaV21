@@ -22,6 +22,7 @@ export function Stats({ isOpen, close, distanceUnit }: StatsProps) {
   } = getStatsData();
 
   const maxDistribution = Math.max(...Object.values(guessDistribution));
+  const distributionBase = maxDistribution || 1;
   return (
     <Panel title={t("stats.title")} isOpen={isOpen} close={close}>
       <div className="flex justify-center">
@@ -47,11 +48,11 @@ export function Stats({ isOpen, close, distanceUnit }: StatsProps) {
             <li key={index} className="my-2 flex">
               <div className="mr-1 font-bold">{index}</div>
               <div
-                className="bg-slate-400"
-                style={{
-                  flex: `0 1 ${Math.round((count / maxDistribution) * 100)}%`,
-                }}
-              />
+                  className="bg-slate-400"
+                  style={{
+                    flex: `0 1 ${Math.round((count / distributionBase) * 100)}%`,
+                  }}
+                />
               <div className="px-1 bg-slate-400 font-bold">{count}</div>
             </li>
           ))}

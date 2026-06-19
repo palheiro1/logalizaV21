@@ -4,6 +4,7 @@ import { Guess } from '../domain/guess'
 import { calculateDailyScore } from '../domain/scoring'
 import { DateTime } from 'luxon'
 import { DEFAULT_AVATAR_COLOR, DEFAULT_AVATAR_EMOJI } from '../domain/avatar'
+import { Json } from '../types/database'
 
 export interface UserProfile {
   id: string
@@ -91,6 +92,31 @@ export const statsService = {
       .single()
 
     if (error) {
+      if (error.code === 'PGRST204' && error.message.includes('avatar_')) {
+        const { data: usernameData, error: usernameError } = await supabase
+          .from('user_profiles')
+          .insert([
+            {
+              id: userId,
+              username
+            }
+          ])
+          .select()
+          .single()
+
+        if (usernameError) {
+          console.error('Error creating user profile:', usernameError)
+          return null
+        }
+
+        return {
+          ...usernameData,
+          avatar_emoji: DEFAULT_AVATAR_EMOJI,
+          avatar_color: DEFAULT_AVATAR_COLOR,
+          avatarColumnsMissing: true
+        } as UserProfile
+      }
+
       console.error('Error creating user profile:', error)
       return null
     }
@@ -170,8 +196,6 @@ export const statsService = {
   },
 
   async syncStatsToSupabase(userId: string, stats: StatsData): Promise<UserStats | null> {
-    console.log('statsService: Syncing stats for user:', userId)
-    
     // First check if user already has stats
     const { data: existing, error: fetchError } = await supabase
       .from('user_stats')
@@ -226,7 +250,6 @@ export const statsService = {
       result = data
     }
 
-    console.log('statsService: Stats synced successfully:', result)
     return result
   },
 
@@ -246,7 +269,7 @@ export const statsService = {
   },
 
   async syncDailyResultToSupabase(
-    userId: string,
+    _userId: string,
     gameDate: string,
     guesses: Guess[],
     guessedShield: boolean,
@@ -258,27 +281,12 @@ export const statsService = {
       return null
     }
 
-    const dailyResult = {
-      user_id: userId,
-      game_date: gameDate,
-      guesses,
-      completed: score.completed,
-      won: score.won,
-      tries_count: score.triesCount,
-      best_distance: score.bestDistance,
-      shield_bonus: score.won && guessedShield,
-      map_bonus: score.won && guessedMap,
-      main_score: score.mainScore,
-      bonus_score: score.bonusScore,
-      total_score: score.totalScore,
-      updated_at: new Date().toISOString()
-    }
-
-    const { data, error } = await supabase
-      .from('daily_results')
-      .upsert(dailyResult, { onConflict: 'user_id,game_date' })
-      .select()
-      .single()
+    const { data, error } = await supabase.rpc('submit_daily_result', {
+      target_game_date: gameDate,
+      submitted_guesses: guesses as unknown as Json,
+      submitted_shield_bonus: score.won && guessedShield,
+      submitted_map_bonus: score.won && guessedMap
+    })
 
     if (error) {
       console.error('Error syncing daily result:', error)
@@ -324,8 +332,6 @@ export const statsService = {
   },
 
   async getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {
-    console.log('statsService: Fetching leaderboard...')
-    
     try {
       // First, get all user stats with the latest record for each user
       const { data: statsData, error: statsError } = await supabase
@@ -338,10 +344,7 @@ export const statsService = {
         throw statsError
       }
 
-      console.log('statsService: Raw stats data:', statsData)
-
       if (!statsData || statsData.length === 0) {
-        console.log('statsService: No stats data found')
         return []
       }
 
@@ -355,7 +358,6 @@ export const statsService = {
       })
 
       const uniqueStats = Array.from(userStatsMap.values())
-      console.log('statsService: Unique stats:', uniqueStats)
 
       // Get user profiles
       const { data: profilesData, error: profilesError } = await supabase
@@ -367,10 +369,7 @@ export const statsService = {
         throw profilesError
       }
 
-      console.log('statsService: Profiles data:', profilesData)
-
       if (!profilesData || profilesData.length === 0) {
-        console.log('statsService: No profiles data found')
         return []
       }
 
@@ -385,7 +384,6 @@ export const statsService = {
         .map(stat => {
           const profile = profilesMap.get(stat.user_id)
           if (!profile) {
-            console.warn('statsService: No profile found for user:', stat.user_id)
             return null
           }
           
@@ -415,7 +413,6 @@ export const statsService = {
           rank: index + 1
         }))
 
-      console.log('statsService: Final leaderboard:', leaderboard)
       return leaderboard
       
     } catch (error) {

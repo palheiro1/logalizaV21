@@ -22,7 +22,8 @@ function useSafeAuth() {
 // noRepeatStartDate is obsolete with global pool selection
 
 export function getDayString(shiftDayCount?: number) {
-  return DateTime.utc()
+  return DateTime.now()
+    .setZone("Europe/Madrid")
     .plus({ days: shiftDayCount ?? 0 })
     .toFormat("yyyy-MM-dd");
 }
@@ -60,10 +61,8 @@ export function useTodays(dayString: string): [
         const isGameCompleted = newGuess.distance === 0 || newGuesses.length >= MAX_TRY_COUNT;
         if (isGameCompleted) {
           try {
-            console.log('useTodays: Game completed, syncing stats to Supabase...');
             const currentStats = getStatsData();
             await statsService.syncStatsToSupabase(user.id, currentStats);
-            console.log('useTodays: Stats synced successfully');
           } catch (error) {
             console.error('useTodays: Error syncing stats to Supabase:', error);
           }
@@ -96,26 +95,8 @@ export function useTodays(dayString: string): [
     const sel = getGlobalPictureForDay(dayString);
     return sel.imageNumber;
   }, [dayString]);
-  console.log(randomImageNumber);
 
   return [todays, addGuess, randomImageNumber, randomAngle, imageScale];
-}
-
-
-function randomWithSeed(seed: number) {
-  // Gerador de números pseudoaleatórios baseado na semente (congruente simples)
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
-}
-
-function getDaySeed() {
-  // Obtenha a data atual
-  const today = new Date();
-  // Cria uma semente baseada no ano, mês e dia (ignorando horas, minutos e segundos)
-  const seed =     today.getFullYear() * 10000000000 +   // Ano
-  (today.getMonth() + 1) * 100000000 +  // Mês
-  today.getDate() * 1000000        // Dia
-  return seed;
 }
 
 // Removed old seeded random image selector (now using global pool)

@@ -4,7 +4,7 @@ import { getCountryName, sanitizeCountryName, getCountryFilename } from "../doma
 import { countries, srcImageFolder } from "../environment";
 import { useMode } from "../hooks/useMode";
 import { useNewsNotifications } from "../hooks/useNewsNotifications";
-import { getDayString, useTodays, simulateNextPictures } from "../hooks/useTodays";
+import { getDayString, useTodays } from "../hooks/useTodays";
 import { CountryInput } from "./CountryInput";
 import { Guesses } from "./Guesses";
 import { Share } from "./Share";
@@ -43,7 +43,6 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     [country, i18n.resolvedLanguage]
   );
   const normalizedCountryName = sanitizeCountryName(countryName);
-  console.log(normalizedCountryName);
 
   let imageFilename = null;
   const start = new Date("2023-01-13");
@@ -96,25 +95,17 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   });
 
   const [showMapPhase, setShowMapPhase] = useState(false);
+  const [hasParticipatedInMapPhase, setHasParticipatedInMapPhase] = useState(() => {
+    const storedValue = localStorage.getItem(`hasParticipatedInMapPhase-${dayString}`);
+    return storedValue ? JSON.parse(storedValue) : false;
+  });
 
-  // Debug: log next 100 pictures (day, country, and image path)
   useEffect(() => {
-    try {
-      const next = simulateNextPictures(dayString, 100);
-      const list = next.map((x) => {
-        const base = getCountryFilename(i18n.resolvedLanguage, x.country);
-        const code = x.country.code.toLowerCase();
-        const filename = `${base}${x.imageNumber}.jpg`;
-        const path = `images/${srcImageFolder}/${code}/${filename}`;
-        return { day: x.dayString, country: x.country.code, imageNumber: x.imageNumber, path };
-      });
-      console.log("Next 100 pictures:", list);
-    } catch (e) {
-      console.warn("Could not simulate next pictures:", e);
-    }
-    // run once on mount for current dayString context
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const storedShieldAttempt = localStorage.getItem(`hasParticipatedInNewPhase-${dayString}`);
+    setHasParticipatedInNewPhase(storedShieldAttempt ? JSON.parse(storedShieldAttempt) : false);
+    const storedMapAttempt = localStorage.getItem(`hasParticipatedInMapPhase-${dayString}`);
+    setHasParticipatedInMapPhase(storedMapAttempt ? JSON.parse(storedMapAttempt) : false);
+  }, [dayString]);
 
   const gameEnded =
     guesses.length === MAX_TRY_COUNT ||
@@ -175,6 +166,10 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   useEffect(() => {
     localStorage.setItem(`hasParticipatedInNewPhase-${dayString}`, JSON.stringify(hasParticipatedInNewPhase));
   }, [hasParticipatedInNewPhase, dayString]);
+
+  useEffect(() => {
+    localStorage.setItem(`hasParticipatedInMapPhase-${dayString}`, JSON.stringify(hasParticipatedInMapPhase));
+  }, [hasParticipatedInMapPhase, dayString]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -242,7 +237,6 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   const handleMapPhaseTransition = () => {
     setShowNewPhase(false);
-    setHasParticipatedInNewPhase(true);
     setShowMapPhase(true);
   };
 
@@ -250,15 +244,20 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     setShowMapPhase(false);
   };
 
-  const handleCorrectGuess = () => {
-    setGuessedShield(true);
-    toast.success(t("Parabéns, hoje ganhache o bónus!"));
+  const handleShieldGuess = (correct: boolean) => {
+    setHasParticipatedInNewPhase(true);
+    if (correct) {
+      setGuessedShield(true);
+      toast.success(t("Parabéns, hoje ganhache o bónus!"));
+    }
   };
 
-  // NEW: Callback when map is correctly guessed
-  const handleMapCorrect = () => {
-    setGuessedMap(true);
-    toast.success(t("Parabéns, mapa correto!"));
+  const handleMapGuess = (correct: boolean) => {
+    setHasParticipatedInMapPhase(true);
+    if (correct) {
+      setGuessedMap(true);
+      toast.success(t("Parabéns, mapa correto!"));
+    }
   };
 
   return (
@@ -317,7 +316,13 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                   currentUserId={user?.id}
                   loading={championshipLoading}
                   canPlayShieldBonus={dailyScore.won && !hasParticipatedInNewPhase}
+                  canPlayMapBonus={
+                    dailyScore.won &&
+                    hasParticipatedInNewPhase &&
+                    !hasParticipatedInMapPhase
+                  }
                   onPlayShieldBonus={() => setShowNewPhase(true)}
+                  onPlayMapBonus={() => setShowMapPhase(true)}
                   onLoginClick={onLoginClick}
                 />
                 <Share
@@ -375,18 +380,20 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
         </>
       ) : showNewPhase ? (
         country && (
-          <NewPhase 
-            correctCountry={country.code} 
-            onCorrectGuess={handleCorrectGuess} 
+          <NewPhase
+            correctCountry={country.code}
+            dayString={dayString}
+            onGuessResult={handleShieldGuess}
             onPhaseEnd={handleMapPhaseTransition}
           />
         )
       ) : showMapPhase ? (
         country && (
-          <MapPhase 
-            correctCountry={country.code} 
+          <MapPhase
+            correctCountry={country.code}
+            dayString={dayString}
             onPhaseEnd={handleMapPhaseEnd}
-            onMapCorrect={handleMapCorrect} // NEW: Pass callback for correct map guess
+            onMapGuessResult={handleMapGuess}
           />
         )
       ) : null }
