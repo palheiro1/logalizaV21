@@ -5,7 +5,7 @@ import { Country } from "../domain/countries";
 import { Guess, loadAllGuesses, saveGuesses } from "../domain/guess";
 import { countriesWithImage } from './../environment';
 import { useAuth } from "../contexts/AuthContext";
-import { statsService } from "../services/statsService";
+import { DailyResult, statsService } from "../services/statsService";
 import { getStatsData } from "../domain/stats";
 import { MAX_TRY_COUNT } from "../domain/scoring";
 
@@ -36,13 +36,16 @@ export function useTodays(dayString: string): [
   (guess: Guess) => void,
   number,
   number,
-  number
+  number,
+  DailyResult | null
 ] {
   const { user } = useSafeAuth();
+  const userId = user?.id;
   const [todays, setTodays] = useState<{
     country?: Country;
     guesses: Guess[];
   }>({ guesses: [] });
+  const [remoteDailyResult, setRemoteDailyResult] = useState<DailyResult | null>(null);
 
   const addGuess = useCallback(
     async (newGuess: Guess) => {
@@ -57,27 +60,50 @@ export function useTodays(dayString: string): [
 
       // Sync stats to Supabase when game is completed (won or max tries reached)
       // Only if user is logged in
-      if (user) {
+      if (userId) {
         const isGameCompleted = newGuess.distance === 0 || newGuesses.length >= MAX_TRY_COUNT;
         if (isGameCompleted) {
           try {
             const currentStats = getStatsData();
-            await statsService.syncStatsToSupabase(user.id, currentStats);
+            await statsService.syncStatsToSupabase(userId, currentStats);
           } catch (error) {
             console.error('useTodays: Error syncing stats to Supabase:', error);
           }
         }
       }
     },
-    [dayString, todays, user]
+    [dayString, todays, userId]
   );
 
   useEffect(() => {
+    let cancelled = false;
     const guesses = loadAllGuesses()[dayString] ?? [];
     const selection = getGlobalPictureForDay(dayString);
     const country = selection.country;
     setTodays({ country, guesses });
-  }, [dayString]);
+    setRemoteDailyResult(null);
+
+    async function hydrateFromSupabase() {
+      if (!userId) {
+        return;
+      }
+
+      const dailyResult = await statsService.getDailyResultFromSupabase(userId, dayString);
+      if (cancelled || !dailyResult) {
+        return;
+      }
+
+      setRemoteDailyResult(dailyResult);
+      setTodays({ country, guesses: dailyResult.guesses });
+      saveGuesses(dayString, dailyResult.guesses);
+    }
+
+    hydrateFromSupabase();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [dayString, userId]);
 
   const randomAngle = useMemo(
     () => seedrandom.alea(dayString)() * 360,
@@ -96,7 +122,7 @@ export function useTodays(dayString: string): [
     return sel.imageNumber;
   }, [dayString]);
 
-  return [todays, addGuess, randomImageNumber, randomAngle, imageScale];
+  return [todays, addGuess, randomImageNumber, randomAngle, imageScale, remoteDailyResult];
 }
 
 // Removed old seeded random image selector (now using global pool)

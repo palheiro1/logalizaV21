@@ -34,6 +34,7 @@ export function MonthlyChampionshipSummary({
   );
   const visibleEntries = getVisibleEntries(leaderboard, currentUserEntry);
   const rankDelta = currentUserEntry?.rank_delta ?? 0;
+  const hasLeaderboardEntries = visibleEntries.length > 0;
 
   return (
     <section className="my-3 rounded border-2 border-blue-200 bg-blue-50 p-3 text-blue-950 dark:border-blue-800 dark:bg-slate-800 dark:text-blue-50">
@@ -97,7 +98,7 @@ export function MonthlyChampionshipSummary({
         </div>
       )}
 
-      {currentUserId && (
+      {(currentUserId || hasLeaderboardEntries || loading) && (
         <div className="mt-3 rounded bg-white p-3 dark:bg-slate-900">
           {loading ? (
             <p className="text-center text-sm">
@@ -117,6 +118,21 @@ export function MonthlyChampionshipSummary({
                 </div>
                 <RankDeltaBadge delta={rankDelta} />
               </div>
+              <LeaderboardSlice
+                sections={visibleEntries}
+                currentUserId={currentUserId}
+              />
+            </>
+          ) : hasLeaderboardEntries ? (
+            <>
+              <p className="mb-2 text-sm font-bold opacity-80">
+                {t("championship.topThisMonth")}
+              </p>
+              {currentUserId && (
+                <p className="mb-2 text-sm opacity-80">
+                  {t("championship.noMonthlyData")}
+                </p>
+              )}
               <LeaderboardSlice
                 sections={visibleEntries}
                 currentUserId={currentUserId}
@@ -173,7 +189,7 @@ function LeaderboardSlice({
   currentUserId,
 }: {
   sections: Array<MonthlyLeaderboardEntry | "separator">;
-  currentUserId: string;
+  currentUserId?: string;
 }) {
   return (
     <div className="space-y-1">
@@ -188,7 +204,7 @@ function LeaderboardSlice({
             </div>
           );
         }
-        const isCurrentUser = entry.user_id === currentUserId;
+        const isCurrentUser = currentUserId != null && entry.user_id === currentUserId;
         const movementClass =
           isCurrentUser && entry.rank_delta > 0
             ? "animate-rankUp"

@@ -44,7 +44,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   const countryInputRef = useRef<HTMLInputElement>(null);
 
-  const [todays, addGuess, randomImageNumber, randomAngle, imageScale] = useTodays(dayString);
+  const [todays, addGuess, randomImageNumber, randomAngle, imageScale, remoteDailyResult] = useTodays(dayString);
   const { country, guesses } = todays;
   const countryName = useMemo(
     () => (country ? getCountryName(i18n.resolvedLanguage, country) : ""),
@@ -145,6 +145,24 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     setHasParticipatedInMapPhase(storedMapAttempt ? JSON.parse(storedMapAttempt) : false);
   }, [dayString]);
 
+  useEffect(() => {
+    if (!remoteDailyResult || remoteDailyResult.game_date !== dayString) {
+      return;
+    }
+
+    setGuessedShield(remoteDailyResult.shield_bonus);
+    setGuessedMap(remoteDailyResult.map_bonus);
+
+    if (remoteDailyResult.shield_bonus) {
+      setHasParticipatedInNewPhase(true);
+      setShieldAttemptResult("correct");
+    }
+
+    if (remoteDailyResult.map_bonus) {
+      setHasParticipatedInMapPhase(true);
+    }
+  }, [dayString, remoteDailyResult]);
+
   const gameEnded =
     guesses.length === MAX_TRY_COUNT ||
     guesses[guesses.length - 1]?.distance === 0;
@@ -160,7 +178,23 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     let cancelled = false;
 
     async function syncChampionshipResult() {
-      if (!gameEnded || guesses.length === 0 || !userId) {
+      if (!gameEnded || guesses.length === 0) {
+        return;
+      }
+
+      setChampionshipLoading(true);
+
+      if (!userId) {
+        try {
+          const leaderboard = await statsService.getMonthlyLeaderboard(dayString, 100);
+          if (!cancelled) {
+            setMonthlyLeaderboard(leaderboard);
+          }
+        } finally {
+          if (!cancelled) {
+            setChampionshipLoading(false);
+          }
+        }
         return;
       }
 
@@ -176,10 +210,19 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
       ].join(":");
 
       if (lastChampionshipSyncKey.current === syncKey) {
+        try {
+          const leaderboard = await statsService.getMonthlyLeaderboard(dayString, 100);
+          if (!cancelled) {
+            setMonthlyLeaderboard(leaderboard);
+          }
+        } finally {
+          if (!cancelled) {
+            setChampionshipLoading(false);
+          }
+        }
         return;
       }
 
-      setChampionshipLoading(true);
       const syncPromise =
         pendingChampionshipSync.current?.key === syncKey
           ? pendingChampionshipSync.current.promise
@@ -247,7 +290,6 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   useEffect(() => {
     if (!userId) {
-      setMonthlyLeaderboard([]);
       setChampionshipLoading(false);
     }
   }, [userId]);

@@ -15,6 +15,12 @@ const hit = (): Guess => ({
   direction: "N",
 });
 
+const miss = (): Guess => ({
+  name: "Miss",
+  distance: 12000,
+  direction: "NE",
+});
+
 describe("statsService championship methods", () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -109,7 +115,9 @@ describe("statsService championship methods", () => {
     );
 
     expect(supabase.from).toHaveBeenCalledWith("daily_results");
-    expect(selectExisting).toHaveBeenCalledWith("shield_bonus,map_bonus");
+    expect(selectExisting).toHaveBeenCalledWith(
+      "guesses,completed,won,tries_count,best_distance,shield_bonus,map_bonus,main_score"
+    );
     expect(eqUserId).toHaveBeenCalledWith("user_id", "user-1");
     expect(eqGameDate).toHaveBeenCalledWith("game_date", "2026-06-19");
     expect(upsert).toHaveBeenCalledWith(
@@ -145,8 +153,14 @@ describe("statsService championship methods", () => {
     });
     const maybeSingle = jest.fn().mockResolvedValue({
       data: {
+        guesses: [miss(), hit()],
+        completed: true,
+        won: true,
+        tries_count: 2,
+        best_distance: 0,
         shield_bonus: true,
         map_bonus: true,
+        main_score: 75,
       },
       error: null,
     });
@@ -161,13 +175,13 @@ describe("statsService championship methods", () => {
         guesses: [hit()],
         completed: true,
         won: true,
-        tries_count: 1,
+        tries_count: 2,
         best_distance: 0,
         shield_bonus: true,
         map_bonus: true,
-        main_score: 100,
+        main_score: 75,
         bonus_score: 40,
-        total_score: 140,
+        total_score: 115,
         created_at: "2026-06-19T00:00:00.000Z",
         updated_at: "2026-06-19T00:00:00.000Z",
       },
@@ -191,11 +205,55 @@ describe("statsService championship methods", () => {
       expect.objectContaining({
         shield_bonus: true,
         map_bonus: true,
+        main_score: 75,
         bonus_score: 40,
-        total_score: 140,
+        total_score: 115,
       }),
       { onConflict: "user_id,game_date" }
     );
+  });
+
+  it("loads an existing daily result for cross-device hydration", async () => {
+    const maybeSingle = jest.fn().mockResolvedValue({
+      data: {
+        id: "result-1",
+        user_id: "user-1",
+        game_date: "2026-06-19",
+        guesses: [miss(), hit()],
+        completed: true,
+        won: true,
+        tries_count: 2,
+        best_distance: 0,
+        shield_bonus: true,
+        map_bonus: false,
+        main_score: 75,
+        bonus_score: 20,
+        total_score: 95,
+        created_at: "2026-06-19T00:00:00.000Z",
+        updated_at: "2026-06-19T00:00:00.000Z",
+      },
+      error: null,
+    });
+    const eqGameDate = jest.fn(() => ({ maybeSingle }));
+    const eqUserId = jest.fn(() => ({ eq: eqGameDate }));
+    const select = jest.fn(() => ({ eq: eqUserId }));
+    (supabase.from as jest.Mock).mockReturnValue({ select });
+
+    const result = await statsService.getDailyResultFromSupabase(
+      "user-1",
+      "2026-06-19"
+    );
+
+    expect(supabase.from).toHaveBeenCalledWith("daily_results");
+    expect(select).toHaveBeenCalledWith("*");
+    expect(eqUserId).toHaveBeenCalledWith("user_id", "user-1");
+    expect(eqGameDate).toHaveBeenCalledWith("game_date", "2026-06-19");
+    expect(result).toMatchObject({
+      user_id: "user-1",
+      guesses: [miss(), hit()],
+      main_score: 75,
+      shield_bonus: true,
+    });
   });
 
   it("calls the monthly leaderboard RPC with the month start", async () => {

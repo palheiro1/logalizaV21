@@ -81,6 +81,29 @@ interface SupabaseErrorLike {
   message?: string
 }
 
+function isGuess(value: unknown): value is Guess {
+  if (typeof value !== 'object' || value == null) {
+    return false
+  }
+
+  const maybeGuess = value as Partial<Guess>
+  return (
+    typeof maybeGuess.name === 'string' &&
+    typeof maybeGuess.distance === 'number' &&
+    typeof maybeGuess.direction === 'string'
+  )
+}
+
+function normalizeDailyResult(data: unknown): DailyResult {
+  const result = data as Omit<DailyResult, 'guesses'> & { guesses: unknown }
+  return {
+    ...result,
+    guesses: Array.isArray(result.guesses)
+      ? result.guesses.filter(isGuess)
+      : []
+  }
+}
+
 function isMissingSubmitDailyResultRpc(error: SupabaseErrorLike | null): boolean {
   return Boolean(
     error &&
@@ -99,7 +122,7 @@ async function syncDailyResultWithLegacyUpsert(
 ): Promise<DailyResult | null> {
   const { data: existingResult, error: existingError } = await supabase
     .from('daily_results')
-    .select('shield_bonus,map_bonus')
+    .select('guesses,completed,won,tries_count,best_distance,shield_bonus,map_bonus,main_score')
     .eq('user_id', userId)
     .eq('game_date', gameDate)
     .maybeSingle()
@@ -108,8 +131,15 @@ async function syncDailyResultWithLegacyUpsert(
     console.error('Error loading existing daily result before legacy upsert:', existingError)
   }
 
-  const shieldBonus = Boolean(existingResult?.shield_bonus) || (score.won && guessedShield)
-  const mapBonus = Boolean(existingResult?.map_bonus) || (score.won && guessedMap)
+  const preserveExistingMainResult =
+    Boolean(existingResult?.completed) &&
+    (Number(existingResult?.main_score) > 0 || Boolean(existingResult?.won))
+  const officialWon = preserveExistingMainResult ? Boolean(existingResult?.won) : score.won
+  const officialMainScore = preserveExistingMainResult
+    ? Number(existingResult?.main_score ?? 0)
+    : score.mainScore
+  const shieldBonus = Boolean(existingResult?.shield_bonus) || (officialWon && guessedShield)
+  const mapBonus = Boolean(existingResult?.map_bonus) || (officialWon && guessedMap)
   const bonusScore =
     (shieldBonus ? SHIELD_BONUS_POINTS : 0) +
     (mapBonus ? MAP_BONUS_POINTS : 0)
@@ -117,16 +147,16 @@ async function syncDailyResultWithLegacyUpsert(
   const dailyResult = {
     user_id: userId,
     game_date: gameDate,
-    guesses: guesses as unknown as Json,
-    completed: score.completed,
-    won: score.won,
-    tries_count: score.triesCount,
-    best_distance: score.bestDistance,
+    guesses: (preserveExistingMainResult ? existingResult?.guesses : guesses) as unknown as Json,
+    completed: preserveExistingMainResult ? Boolean(existingResult?.completed) : score.completed,
+    won: officialWon,
+    tries_count: preserveExistingMainResult ? existingResult?.tries_count ?? null : score.triesCount,
+    best_distance: preserveExistingMainResult ? existingResult?.best_distance ?? null : score.bestDistance,
     shield_bonus: shieldBonus,
     map_bonus: mapBonus,
-    main_score: score.mainScore,
+    main_score: officialMainScore,
     bonus_score: bonusScore,
-    total_score: score.mainScore + bonusScore,
+    total_score: officialMainScore + bonusScore,
     updated_at: new Date().toISOString()
   }
 
@@ -141,7 +171,7 @@ async function syncDailyResultWithLegacyUpsert(
     return null
   }
 
-  return data as DailyResult
+  return normalizeDailyResult(data)
 }
 
 export const statsService = {
@@ -372,7 +402,23 @@ export const statsService = {
       return null
     }
 
-    return data as DailyResult
+    return normalizeDailyResult(data)
+  },
+
+  async getDailyResultFromSupabase(userId: string, gameDate: string): Promise<DailyResult | null> {
+    const { data, error } = await supabase
+      .from('daily_results')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('game_date', gameDate)
+      .maybeSingle()
+
+    if (error) {
+      console.error('Error loading daily result from Supabase:', error)
+      return null
+    }
+
+    return data ? normalizeDailyResult(data) : null
   },
 
   async getMonthlyLeaderboard(dayString: string, limit = 100): Promise<MonthlyLeaderboardEntry[]> {
