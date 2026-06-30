@@ -20,6 +20,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { calculateDailyScore, MAX_TRY_COUNT } from "../domain/scoring";
 import { MonthlyLeaderboardEntry, statsService } from "../services/statsService";
 import { MonthlyChampionshipSummary } from "./MonthlyChampionshipSummary";
+import { PreviousMonthChampionshipScreen } from "./PreviousMonthChampionshipScreen";
+import { DateTime } from "luxon";
 
 interface GameProps {
   settingsData: SettingsData;
@@ -39,6 +41,19 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   const { user } = useAuth();
   const userId = user?.id;
   const dayString = useMemo(() => getDayString(settingsData.shiftDayCount), [settingsData.shiftDayCount]);
+  const gameDate = useMemo(
+    () => DateTime.fromFormat(dayString, "yyyy-MM-dd"),
+    [dayString]
+  );
+  const isFirstDayOfMonth = gameDate.day === 1;
+  const previousMonthLabel = useMemo(
+    () =>
+      gameDate
+        .minus({ months: 1 })
+        .setLocale(i18n.resolvedLanguage)
+        .toFormat("LLLL yyyy"),
+    [gameDate, i18n.resolvedLanguage]
+  );
 
   useNewsNotifications(dayString);
 
@@ -88,6 +103,8 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     );
 
   const [monthlyLeaderboard, setMonthlyLeaderboard] = useState<MonthlyLeaderboardEntry[]>([]);
+  const [previousMonthLeaderboard, setPreviousMonthLeaderboard] = useState<MonthlyLeaderboardEntry[]>([]);
+  const [previousMonthLoading, setPreviousMonthLoading] = useState(false);
   const [championshipLoading, setChampionshipLoading] = useState(false);
   const lastChampionshipSyncKey = useRef<string | null>(null);
   const pendingChampionshipSync = useRef<{
@@ -125,6 +142,31 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
       setShieldAttemptResult("correct");
     }
   }, [guessedShield, shieldAttemptResult]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchPreviousMonthLeaderboard() {
+      if (!isFirstDayOfMonth) {
+        setPreviousMonthLeaderboard([]);
+        setPreviousMonthLoading(false);
+        return;
+      }
+
+      setPreviousMonthLoading(true);
+      const leaderboard = await statsService.getPreviousMonthlyLeaderboard(dayString);
+      if (!cancelled) {
+        setPreviousMonthLeaderboard(leaderboard);
+        setPreviousMonthLoading(false);
+      }
+    }
+
+    fetchPreviousMonthLeaderboard();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [dayString, isFirstDayOfMonth]);
 
   const [showNewPhase, setShowNewPhase] = useState(false);
   const [hasParticipatedInNewPhase, setHasParticipatedInNewPhase] = useState(() => {
@@ -406,6 +448,15 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     <div className="flex-grow flex flex-col mx-2">
       { !showNewPhase && !showMapPhase ? (
         <>
+          {isFirstDayOfMonth && (
+            <PreviousMonthChampionshipScreen
+              leaderboard={previousMonthLeaderboard}
+              currentUserId={userId}
+              loading={previousMonthLoading}
+              monthLabel={previousMonthLabel}
+              onLoginClick={onLoginClick}
+            />
+          )}
           {hideImageMode && !gameEnded && (
             <button
               className="font-bold border-2 p-1 rounded uppercase my-2 hover:bg-gray-50 active:bg-gray-100 dark:hover:bg-slate-800 dark:active:bg-slate-700"

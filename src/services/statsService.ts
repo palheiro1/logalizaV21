@@ -421,14 +421,18 @@ export const statsService = {
     return data ? normalizeDailyResult(data) : null
   },
 
-  async getMonthlyLeaderboard(dayString: string, limit = 100): Promise<MonthlyLeaderboardEntry[]> {
-    const monthStart = DateTime.fromFormat(dayString, 'yyyy-MM-dd')
+  async getMonthlyLeaderboardForMonth(
+    monthStartDayString: string,
+    targetDayString: string,
+    limit = 100
+  ): Promise<MonthlyLeaderboardEntry[]> {
+    const monthStart = DateTime.fromFormat(monthStartDayString, 'yyyy-MM-dd')
       .startOf('month')
       .toFormat('yyyy-MM-dd')
 
     const { data, error } = await supabase.rpc('get_monthly_leaderboard', {
       target_month_start: monthStart,
-      target_today: dayString
+      target_today: targetDayString
     })
 
     if (error) {
@@ -454,6 +458,26 @@ export const statsService = {
       previous_rank: Number(entry.previous_rank),
       rank_delta: Number(entry.rank_delta)
     }))
+  },
+
+  async getMonthlyLeaderboard(dayString: string, limit = 100): Promise<MonthlyLeaderboardEntry[]> {
+    return statsService.getMonthlyLeaderboardForMonth(dayString, dayString, limit)
+  },
+
+  async getPreviousMonthlyLeaderboard(
+    dayString: string,
+    limit = Number.POSITIVE_INFINITY
+  ): Promise<MonthlyLeaderboardEntry[]> {
+    const currentDate = DateTime.fromFormat(dayString, 'yyyy-MM-dd')
+    const previousMonth = currentDate.minus({ months: 1 })
+    const previousMonthStart = previousMonth.startOf('month').toFormat('yyyy-MM-dd')
+    const previousMonthEnd = previousMonth.endOf('month').toFormat('yyyy-MM-dd')
+
+    return statsService.getMonthlyLeaderboardForMonth(
+      previousMonthStart,
+      previousMonthEnd,
+      limit
+    )
   },
 
   async getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {

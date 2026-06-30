@@ -296,6 +296,34 @@ describe("statsService championship methods", () => {
     });
   });
 
+  it("loads the closed previous month leaderboard for the first-day recap", async () => {
+    (supabase.rpc as jest.Mock).mockResolvedValue({
+      data: [],
+      error: null,
+    });
+
+    await statsService.getPreviousMonthlyLeaderboard("2026-06-01");
+
+    expect(supabase.rpc).toHaveBeenCalledWith("get_monthly_leaderboard", {
+      target_month_start: "2026-05-01",
+      target_today: "2026-05-31",
+    });
+  });
+
+  it("loads December as the previous month for a January first-day recap", async () => {
+    (supabase.rpc as jest.Mock).mockResolvedValue({
+      data: [],
+      error: null,
+    });
+
+    await statsService.getPreviousMonthlyLeaderboard("2026-01-01");
+
+    expect(supabase.rpc).toHaveBeenCalledWith("get_monthly_leaderboard", {
+      target_month_start: "2025-12-01",
+      target_today: "2025-12-31",
+    });
+  });
+
   it("updates username and avatar together", async () => {
     const single = jest.fn().mockResolvedValue({
       data: {
