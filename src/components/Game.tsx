@@ -535,6 +535,13 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
             countryInputRef={countryInputRef}
             settingsData={settingsData}
           />
+          {gameEnded && country && audioSample && (
+            <AudioSampleReveal
+              sample={audioSample}
+              countryName={countryName}
+              won={dailyScore.won}
+            />
+          )}
           <div className="my-2">
             {gameEnded && country ? (
               <>
@@ -564,13 +571,6 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                   dailyScore={dailyScore}
                   audioMode={isAudioDay}
                 />
-                {audioSample && (
-                  <AudioSampleReveal
-                    sample={audioSample}
-                    countryName={countryName}
-                    won={dailyScore.won}
-                  />
-                )}
                 <div className="flex justify-center mt-4">
                   <a
                     className="underline text-center mx-8"

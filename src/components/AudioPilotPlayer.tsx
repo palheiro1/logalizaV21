@@ -96,7 +96,7 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
 
   return (
     <section
-      className="my-3 rounded-2xl border-2 border-red-200 bg-gradient-to-br from-red-50 to-white p-5 shadow-sm dark:border-red-900 dark:from-slate-800 dark:to-slate-900"
+      className="my-3 rounded-2xl border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white p-5 text-center shadow-sm dark:border-blue-800 dark:from-slate-800 dark:to-slate-900"
       aria-label="Reprodutor da amostra sonora"
     >
       <audio
@@ -112,11 +112,15 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
         onError={() => setError(true)}
       />
 
-      <div className="flex items-center">
+      <div className="flex flex-col items-center">
+        <p className="mb-4 text-lg font-bold text-blue-950 dark:text-blue-50">
+          A que comarca corresponde este sotaque?
+        </p>
+
         <button
           type="button"
           onClick={togglePlayback}
-          className="mr-4 flex h-16 w-16 flex-none items-center justify-center rounded-full bg-red-600 text-2xl text-white shadow-md transition hover:bg-red-500 active:scale-95 dark:bg-red-500 dark:hover:bg-red-400"
+          className="flex h-16 w-16 flex-none items-center justify-center rounded-full bg-blue-600 text-2xl text-white shadow-md transition hover:bg-blue-700 active:scale-95 dark:bg-blue-600 dark:hover:bg-blue-500"
           aria-label={
             isPlaying
               ? "Pausar a amostra"
@@ -128,30 +132,20 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
           {isPlaying ? "❚❚" : hasEnded ? "↻" : "▶"}
         </button>
 
-        <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold uppercase tracking-widest text-red-700 dark:text-red-300">
-            Voz incógnita
-          </p>
-          <p className="mt-1 text-lg font-bold">
-            {isPlaying
-              ? "Escuitando…"
-              : hasEnded
-              ? "Podes ouvi-la outra vez"
-              : "Carrega para escuitar"}
-          </p>
+        <div className="mt-4 w-full">
           <div
-            className="mt-3 h-2 overflow-hidden rounded-full bg-red-100 dark:bg-slate-700"
+            className="mx-auto h-2 max-w-sm overflow-hidden rounded-full bg-blue-100 dark:bg-slate-700"
             role="progressbar"
             aria-valuemin={0}
             aria-valuemax={clipDuration}
             aria-valuenow={Math.min(clipDuration, elapsed)}
           >
             <div
-              className="h-full rounded-full bg-red-600 transition-all duration-150 dark:bg-red-400"
+              className="h-full rounded-full bg-blue-600 transition-all duration-150 dark:bg-blue-400"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="mt-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
+          <div className="mx-auto mt-1 flex max-w-sm justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>{formatTime(elapsed)}</span>
             <span>{formatTime(clipDuration)}</span>
           </div>
