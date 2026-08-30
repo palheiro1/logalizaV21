@@ -25,6 +25,7 @@ export interface ShareProps {
   guessedShield: boolean; // Indicates if the user guessed the shield
   guessedMap: boolean;    // NEW prop to indicate if the user guessed the map
   dailyScore: DailyScore;
+  audioMode?: boolean;
 }
 
 export function Share({
@@ -36,6 +37,7 @@ export function Share({
   guessedShield,
   guessedMap, // NEW prop
   dailyScore,
+  audioMode = false,
 }: ShareProps) {
   const { t } = useTranslation();
   const { theme } = settingsData;
@@ -47,7 +49,9 @@ export function Share({
     const dayCount = Math.floor(
       Interval.fromDateTimes(START_DATE, DateTime.fromISO(dayString)).length("day")
     );
-    const difficultyModifierEmoji = hideImageMode
+    const difficultyModifierEmoji = audioMode
+      ? " 🎙️"
+      : hideImageMode
       ? " 🙈"
       : rotationMode
       ? " 🌀"
@@ -74,7 +78,7 @@ export function Share({
     const iconsLine = iconsPart ? `${iconsPart}\n${gameLink}` : gameLink;
 
     return title + "\n" + guessString + "\n" + iconsLine;
-  }, [dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap, dailyScore]);
+  }, [audioMode, dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap, dailyScore]);
 
   return (
     <CopyToClipboard

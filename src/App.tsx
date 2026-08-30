@@ -26,6 +26,7 @@ import { getDayString, useTodays } from "./hooks/useTodays";
 import { galicianComarcas } from "./domain/comarcas.position";
 import { forcedCountries, randomNumber } from "./hooks/forcedLead";
 import seedrandom from 'seedrandom';
+import { AudioPilotGame, isAudioPilotMode } from "./components/AudioPilotGame";
 
 // Link de suporte para diferentes países
 const supportLink: Record<string, string> = {
@@ -34,6 +35,7 @@ const supportLink: Record<string, string> = {
 
 export default function App() {
     const { t, i18n } = useTranslation();
+    const audioPilotMode = isAudioPilotMode();
     
     // Obtém a string do dia atual
     const dayString = useMemo(getDayString, []);
@@ -175,11 +177,15 @@ export default function App() {
                                 </div>
                             </header>
                             {/* Componente do jogo */}
-                            <Game
-                                settingsData={settingsData}
-                                updateSettings={updateSettings}
-                                onLoginClick={() => setLoginOpen(true)}
-                            />
+                            {audioPilotMode ? (
+                                <AudioPilotGame settingsData={settingsData} />
+                            ) : (
+                                <Game
+                                    settingsData={settingsData}
+                                    updateSettings={updateSettings}
+                                    onLoginClick={() => setLoginOpen(true)}
+                                />
+                            )}
                             <footer className="flex justify-center items-center mt-8 mb-4">
                                 <Twemoji text="❤️" className="flex items-center justify-center mr-1" /> Logaliza? -
                                 {country && supportLink[country.code] != null ? (

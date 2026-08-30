@@ -22,6 +22,8 @@ import { MonthlyLeaderboardEntry, statsService } from "../services/statsService"
 import { MonthlyChampionshipSummary } from "./MonthlyChampionshipSummary";
 import { PreviousMonthChampionshipScreen } from "./PreviousMonthChampionshipScreen";
 import { DateTime } from "luxon";
+import { AudioPilotPlayer } from "./AudioPilotPlayer";
+import { AudioSampleReveal } from "./AudioSampleReveal";
 
 interface GameProps {
   settingsData: SettingsData;
@@ -36,11 +38,29 @@ function getStoredBonusAttemptResult(key: string): BonusAttemptResult | null {
   return stored === "correct" || stored === "wrong" ? stored : null;
 }
 
+function getDevelopmentPreviewDayShift(): number {
+  if (process.env.NODE_ENV !== "development") {
+    return 0;
+  }
+
+  const requestedShift = Number(
+    new URLSearchParams(window.location.search).get("previewDay")
+  );
+
+  return Number.isInteger(requestedShift) && requestedShift >= 0 && requestedShift <= 7
+    ? requestedShift
+    : 0;
+}
+
 export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const userId = user?.id;
-  const dayString = useMemo(() => getDayString(settingsData.shiftDayCount), [settingsData.shiftDayCount]);
+  const previewDayShift = getDevelopmentPreviewDayShift();
+  const dayString = useMemo(
+    () => getDayString(settingsData.shiftDayCount + previewDayShift),
+    [previewDayShift, settingsData.shiftDayCount]
+  );
   const gameDate = useMemo(
     () => DateTime.fromFormat(dayString, "yyyy-MM-dd"),
     [dayString]
@@ -59,8 +79,17 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   const countryInputRef = useRef<HTMLInputElement>(null);
 
-  const [todays, addGuess, randomImageNumber, randomAngle, imageScale, remoteDailyResult] = useTodays(dayString);
+  const [
+    todays,
+    addGuess,
+    randomImageNumber,
+    randomAngle,
+    imageScale,
+    remoteDailyResult,
+    audioSample,
+  ] = useTodays(dayString);
   const { country, guesses } = todays;
+  const isAudioDay = audioSample != null;
   const countryName = useMemo(
     () => (country ? getCountryName(i18n.resolvedLanguage, country) : ""),
     [country, i18n.resolvedLanguage]
@@ -69,7 +98,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   let imageFilename = null;
   const start = new Date("2023-01-13");
-  if (country != null && new Date() > start) {
+  if (!isAudioDay && country != null && new Date() > start) {
     imageFilename =
       getCountryFilename(i18n.resolvedLanguage, country) +
       randomImageNumber +
@@ -457,7 +486,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
               onLoginClick={onLoginClick}
             />
           )}
-          {hideImageMode && !gameEnded && (
+          {!isAudioDay && hideImageMode && !gameEnded && (
             <button
               className="font-bold border-2 p-1 rounded uppercase my-2 hover:bg-gray-50 active:bg-gray-100 dark:hover:bg-slate-800 dark:active:bg-slate-700"
               type="button"
@@ -467,7 +496,11 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
             </button>
           )}
           <div className="flex my-1">
-            {srcImage && mapImage && (
+            {audioSample ? (
+              <div className="w-full">
+                <AudioPilotPlayer sample={audioSample} />
+              </div>
+            ) : srcImage && mapImage ? (
               <img
                 className={`pointer-events-none w-full h-auto m-auto transition-transform duration-700 ease-in ${hideImageMode && !gameEnded ? "hidden" : ""}`}
                 alt="country to guess"
@@ -484,9 +517,9 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                     : {}
                 }
               />
-            )}
+            ) : null}
           </div>
-          {rotationMode && !hideImageMode && !gameEnded && (
+          {!isAudioDay && rotationMode && !hideImageMode && !gameEnded && (
             <button
               className="font-bold rounded p-1 border-2 uppercase mb-2 hover:bg-gray-50 active:bg-gray-100 dark:hover:bg-slate-800 dark:active:bg-slate-700"
               type="button"
@@ -529,7 +562,15 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                   guessedShield={guessedShield}
                   guessedMap={guessedMap} // NEW prop passed to Share
                   dailyScore={dailyScore}
+                  audioMode={isAudioDay}
                 />
+                {audioSample && (
+                  <AudioSampleReveal
+                    sample={audioSample}
+                    countryName={countryName}
+                    won={dailyScore.won}
+                  />
+                )}
                 <div className="flex justify-center mt-4">
                   <a
                     className="underline text-center mx-8"
@@ -540,7 +581,8 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                     <Twemoji text={t("🗺️ Mapa das Comarcas") || ""} options={{ className: "inline-block" }} />
                   </a>
                   {/* Add a check if the link exists before rendering */}
-                  {listagemLigazons[normalizedCountryName] && 
+                  {!isAudioDay &&
+                   listagemLigazons[normalizedCountryName] &&
                    listagemLigazons[normalizedCountryName][randomImageNumber] && (
                     <a
                       className="underline text-center mx-8"

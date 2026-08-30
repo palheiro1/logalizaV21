@@ -3,11 +3,16 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import seedrandom from "seedrandom";
 import { Country } from "../domain/countries";
 import { Guess, loadAllGuesses, saveGuesses } from "../domain/guess";
-import { countriesWithImage } from './../environment';
+import { countriesWithImage } from "./../environment";
 import { useAuth } from "../contexts/AuthContext";
 import { DailyResult, statsService } from "../services/statsService";
 import { getStatsData } from "../domain/stats";
 import { MAX_TRY_COUNT } from "../domain/scoring";
+import {
+  AudioSample,
+  audioSamples,
+  getAudioSampleById,
+} from "../domain/audioSamples";
 
 // Safe hook that handles auth context not being available
 function useSafeAuth() {
@@ -37,7 +42,8 @@ export function useTodays(dayString: string): [
   number,
   number,
   number,
-  DailyResult | null
+  DailyResult | null,
+  AudioSample | undefined
 ] {
   const { user } = useSafeAuth();
   const userId = user?.id;
@@ -45,7 +51,8 @@ export function useTodays(dayString: string): [
     country?: Country;
     guesses: Guess[];
   }>({ guesses: [] });
-  const [remoteDailyResult, setRemoteDailyResult] = useState<DailyResult | null>(null);
+  const [remoteDailyResult, setRemoteDailyResult] =
+    useState<DailyResult | null>(null);
 
   const addGuess = useCallback(
     async (newGuess: Guess) => {
@@ -61,13 +68,14 @@ export function useTodays(dayString: string): [
       // Sync stats to Supabase when game is completed (won or max tries reached)
       // Only if user is logged in
       if (userId) {
-        const isGameCompleted = newGuess.distance === 0 || newGuesses.length >= MAX_TRY_COUNT;
+        const isGameCompleted =
+          newGuess.distance === 0 || newGuesses.length >= MAX_TRY_COUNT;
         if (isGameCompleted) {
           try {
             const currentStats = getStatsData();
             await statsService.syncStatsToSupabase(userId, currentStats);
           } catch (error) {
-            console.error('useTodays: Error syncing stats to Supabase:', error);
+            console.error("useTodays: Error syncing stats to Supabase:", error);
           }
         }
       }
@@ -78,7 +86,7 @@ export function useTodays(dayString: string): [
   useEffect(() => {
     let cancelled = false;
     const guesses = loadAllGuesses()[dayString] ?? [];
-    const selection = getGlobalPictureForDay(dayString);
+    const selection = getGlobalContentForDay(dayString);
     const country = selection.country;
     setTodays({ country, guesses });
     setRemoteDailyResult(null);
@@ -88,7 +96,10 @@ export function useTodays(dayString: string): [
         return;
       }
 
-      const dailyResult = await statsService.getDailyResultFromSupabase(userId, dayString);
+      const dailyResult = await statsService.getDailyResultFromSupabase(
+        userId,
+        dayString
+      );
       if (cancelled || !dailyResult) {
         return;
       }
@@ -118,11 +129,24 @@ export function useTodays(dayString: string): [
 
   // Determine image number from global non-repeating pool
   const randomImageNumber = useMemo(() => {
-    const sel = getGlobalPictureForDay(dayString);
+    const sel = getGlobalContentForDay(dayString);
     return sel.imageNumber;
   }, [dayString]);
 
-  return [todays, addGuess, randomImageNumber, randomAngle, imageScale, remoteDailyResult];
+  const audioSample = useMemo(
+    () => getGlobalContentForDay(dayString).audioSample,
+    [dayString]
+  );
+
+  return [
+    todays,
+    addGuess,
+    randomImageNumber,
+    randomAngle,
+    imageScale,
+    remoteDailyResult,
+    audioSample,
+  ];
 }
 
 // Removed old seeded random image selector (now using global pool)
@@ -149,51 +173,135 @@ function diffDays(a: string, b: string): number {
   return Math.trunc(db.diff(da, "days").days);
 }
 
-function mod(n: number, m: number) { return ((n % m) + m) % m; }
+function mod(n: number, m: number) {
+  return ((n % m) + m) % m;
+}
 
-type PoolEntry = { code: string; imageNumber: number };
+type ImagePoolEntry = {
+  kind: "image";
+  code: string;
+  imageNumber: number;
+};
 
-function buildGlobalPool(): PoolEntry[] {
-  const entries: PoolEntry[] = [];
+type AudioPoolEntry = {
+  kind: "audio";
+  code: string;
+  audioSampleId: string;
+};
+
+type PoolEntry = ImagePoolEntry | AudioPoolEntry;
+
+function buildImagePool(): ImagePoolEntry[] {
+  const entries: ImagePoolEntry[] = [];
   for (const c of countriesWithImage as unknown as Array<{ code: string }>) {
     for (const img of AVAILABLE_IMAGE_NUMBERS) {
-      entries.push({ code: c.code, imageNumber: img });
+      entries.push({ kind: "image", code: c.code, imageNumber: img });
     }
   }
   return entries;
 }
 
-function getCycleOrder(poolSize: number, cycle: number): number[] {
-  const base = Array.from({ length: poolSize }, (_, i) => i);
-  const seed = `${GLOBAL_POOL_SEED}-cycle-${cycle}`;
-  return shuffleArray(base, seed);
+function buildMultimediaPool(): PoolEntry[] {
+  return [
+    ...buildImagePool(),
+    ...audioSamples.map(
+      ({ id, comarcaCode }): AudioPoolEntry => ({
+        kind: "audio",
+        code: comarcaCode,
+        audioSampleId: id,
+      })
+    ),
+  ];
 }
 
-function getGlobalPictureForDay(dayString: string): { country: Country; imageNumber: number } {
-  const pool = buildGlobalPool();
-  const days = diffDays(GLOBAL_POOL_START, dayString);
+type DailyContentSelection = {
+  country: Country;
+  imageNumber: number;
+  audioSample?: AudioSample;
+};
+
+function selectFromPool(
+  pool: PoolEntry[],
+  dayOffset: number,
+  seedPrefix: string,
+  pinFirstAudio: boolean
+): DailyContentSelection {
   const poolSize = pool.length;
-  const cycle = Math.floor(days / poolSize);
-  const idxInCycle = mod(days, poolSize);
-  const order = getCycleOrder(poolSize, cycle);
+  const cycle = Math.floor(dayOffset / poolSize);
+  const idxInCycle = mod(dayOffset, poolSize);
+  let order = shuffleArray(
+    Array.from({ length: poolSize }, (_, index) => index),
+    `${seedPrefix}-cycle-${cycle}`
+  );
+
+  if (pinFirstAudio) {
+    const firstAudioOrderIndex = order.findIndex(
+      (poolIndex) => pool[poolIndex].kind === "audio"
+    );
+    const [firstAudioPoolIndex] = order.splice(firstAudioOrderIndex, 1);
+    order = [firstAudioPoolIndex, ...order];
+  }
+
   const entry = pool[order[idxInCycle]];
-  const country = (countriesWithImage as unknown as Country[]).find(c => c.code === entry.code) as Country;
+  const country = (countriesWithImage as unknown as Country[]).find(
+    ({ code }) => code === entry.code
+  ) as Country;
+
+  if (entry.kind === "audio") {
+    return {
+      country,
+      imageNumber: AVAILABLE_IMAGE_NUMBERS[0],
+      audioSample: getAudioSampleById(entry.audioSampleId),
+    };
+  }
+
   return { country, imageNumber: entry.imageNumber };
 }
 
+const MULTIMEDIA_POOL_START = "2026-08-31";
+const MULTIMEDIA_POOL_SEED = "logaliza-v21-multimedia";
+
+export function getGlobalContentForDay(
+  dayString: string
+): DailyContentSelection {
+  if (dayString < MULTIMEDIA_POOL_START) {
+    const pool = buildImagePool();
+    const days = diffDays(GLOBAL_POOL_START, dayString);
+    return selectFromPool(pool, days, GLOBAL_POOL_SEED, false);
+  }
+
+  const pool = buildMultimediaPool();
+  const days = diffDays(MULTIMEDIA_POOL_START, dayString);
+  return selectFromPool(pool, days, MULTIMEDIA_POOL_SEED, true);
+}
+
 // Exported utility: simulate next pictures for upcoming days without mutating storage
-export function simulateNextPictures(startDayString: string, count: number): Array<{
+export function simulateNextPictures(
+  startDayString: string,
+  count: number
+): Array<{
   dayString: string;
   country: Country;
   imageNumber: number;
+  audioSampleId?: string;
 }> {
-  const results: Array<{ dayString: string; country: Country; imageNumber: number }> = [];
+  const results: Array<{
+    dayString: string;
+    country: Country;
+    imageNumber: number;
+    audioSampleId?: string;
+  }> = [];
   const start = DateTime.fromFormat(startDayString, "yyyy-MM-dd");
   for (let offset = 0; offset < count; offset++) {
     const d = start.plus({ days: offset });
     const ds = d.toFormat("yyyy-MM-dd");
-    const sel = getGlobalPictureForDay(ds);
-    results.push({ dayString: ds, country: sel.country, imageNumber: sel.imageNumber });
+    const sel = getGlobalContentForDay(ds);
+    results.push({
+      dayString: ds,
+      country: sel.country,
+      imageNumber: sel.imageNumber,
+      audioSampleId: sel.audioSample?.id,
+    });
   }
   return results;
 }
