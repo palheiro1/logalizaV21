@@ -33,12 +33,6 @@ export function AudioSampleReveal({
           gravada em <strong>{sample.locality}</strong> ({sample.municipality})
           em {sample.recordedAt}.
         </p>
-        <p>
-          <strong>Tema:</strong> {sample.topic}
-        </p>
-        <blockquote className="border-l-4 border-red-500 pl-3 italic text-gray-600 dark:text-gray-300">
-          “{sample.transcriptExcerpt}”
-        </blockquote>
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Fonte: {sample.sourceLabel}, {sample.sourceRecord}. Gravaçom de{" "}
           {sample.recorder}. Uma voz individual nom representa toda a fala da
