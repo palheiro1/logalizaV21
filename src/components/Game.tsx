@@ -24,6 +24,7 @@ import { PreviousMonthChampionshipScreen } from "./PreviousMonthChampionshipScre
 import { DateTime } from "luxon";
 import { AudioPilotPlayer } from "./AudioPilotPlayer";
 import { AudioSampleReveal } from "./AudioSampleReveal";
+import { MunicipalitiesPhase } from "./MunicipalitiesPhase";
 
 interface GameProps {
   settingsData: SettingsData;
@@ -125,10 +126,19 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     const stored = localStorage.getItem(`guessedMap-${dayString}`);
     return stored ? JSON.parse(stored) : false;
   });
+  const [guessedMunicipalities, setGuessedMunicipalities] = useState(() => {
+    const stored = localStorage.getItem(`guessedMunicipalities-${dayString}`);
+    return stored ? JSON.parse(stored) : false;
+  });
   const shieldAttemptStorageKey = `shieldAttemptResult-${dayString}`;
+  const municipalitiesAttemptStorageKey = `municipalitiesAttemptResult-${dayString}`;
   const [shieldAttemptResult, setShieldAttemptResult] =
     useState<BonusAttemptResult | null>(() =>
       getStoredBonusAttemptResult(shieldAttemptStorageKey)
+    );
+  const [municipalitiesAttemptResult, setMunicipalitiesAttemptResult] =
+    useState<BonusAttemptResult | null>(() =>
+      getStoredBonusAttemptResult(municipalitiesAttemptStorageKey)
     );
 
   const [monthlyLeaderboard, setMonthlyLeaderboard] = useState<MonthlyLeaderboardEntry[]>([]);
@@ -146,7 +156,16 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     setGuessedShield(stored ? JSON.parse(stored) : false);
     const storedMap = localStorage.getItem(`guessedMap-${dayString}`);
     setGuessedMap(storedMap ? JSON.parse(storedMap) : false);
+    const storedMunicipalities = localStorage.getItem(
+      `guessedMunicipalities-${dayString}`
+    );
+    setGuessedMunicipalities(
+      storedMunicipalities ? JSON.parse(storedMunicipalities) : false
+    );
     setShieldAttemptResult(getStoredBonusAttemptResult(`shieldAttemptResult-${dayString}`));
+    setMunicipalitiesAttemptResult(
+      getStoredBonusAttemptResult(`municipalitiesAttemptResult-${dayString}`)
+    );
   }, [dayString]);
 
   useEffect(() => {
@@ -159,6 +178,13 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   }, [guessedMap, dayString]);
 
   useEffect(() => {
+    localStorage.setItem(
+      `guessedMunicipalities-${dayString}`,
+      JSON.stringify(guessedMunicipalities)
+    );
+  }, [guessedMunicipalities, dayString]);
+
+  useEffect(() => {
     if (shieldAttemptResult) {
       localStorage.setItem(shieldAttemptStorageKey, shieldAttemptResult);
     } else {
@@ -167,10 +193,30 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   }, [shieldAttemptResult, shieldAttemptStorageKey]);
 
   useEffect(() => {
+    if (municipalitiesAttemptResult) {
+      localStorage.setItem(
+        municipalitiesAttemptStorageKey,
+        municipalitiesAttemptResult
+      );
+    } else {
+      localStorage.removeItem(municipalitiesAttemptStorageKey);
+    }
+  }, [municipalitiesAttemptResult, municipalitiesAttemptStorageKey]);
+
+  useEffect(() => {
     if (guessedShield && shieldAttemptResult !== "correct") {
       setShieldAttemptResult("correct");
     }
   }, [guessedShield, shieldAttemptResult]);
+
+  useEffect(() => {
+    if (
+      guessedMunicipalities &&
+      municipalitiesAttemptResult !== "correct"
+    ) {
+      setMunicipalitiesAttemptResult("correct");
+    }
+  }, [guessedMunicipalities, municipalitiesAttemptResult]);
 
   useEffect(() => {
     let cancelled = false;
@@ -208,6 +254,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     const storedValue = localStorage.getItem(`hasParticipatedInMapPhase-${dayString}`);
     return storedValue ? JSON.parse(storedValue) : false;
   });
+  const [showMunicipalitiesPhase, setShowMunicipalitiesPhase] = useState(false);
 
   useEffect(() => {
     const storedShieldAttempt = localStorage.getItem(`hasParticipatedInNewPhase-${dayString}`);
@@ -223,6 +270,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
     setGuessedShield(remoteDailyResult.shield_bonus);
     setGuessedMap(remoteDailyResult.map_bonus);
+    setGuessedMunicipalities(remoteDailyResult.municipalities_bonus);
 
     if (remoteDailyResult.shield_bonus) {
       setHasParticipatedInNewPhase(true);
@@ -232,6 +280,10 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     if (remoteDailyResult.map_bonus) {
       setHasParticipatedInMapPhase(true);
     }
+
+    if (remoteDailyResult.municipalities_bonus) {
+      setMunicipalitiesAttemptResult("correct");
+    }
   }, [dayString, remoteDailyResult]);
 
   const gameEnded =
@@ -239,8 +291,14 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     guesses[guesses.length - 1]?.distance === 0;
 
   const dailyScore = useMemo(
-    () => calculateDailyScore(guesses, guessedShield, guessedMap),
-    [guesses, guessedShield, guessedMap]
+    () =>
+      calculateDailyScore(
+        guesses,
+        guessedShield,
+        guessedMap,
+        guessedMunicipalities
+      ),
+    [guesses, guessedShield, guessedMap, guessedMunicipalities]
   );
   const shieldBonusAttempted =
     shieldAttemptResult != null || (hasParticipatedInNewPhase && guessedShield);
@@ -278,6 +336,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
         dailyScore.totalScore,
         guessedShield ? 1 : 0,
         guessedMap ? 1 : 0,
+        guessedMunicipalities ? 1 : 0,
       ].join(":");
 
       if (lastChampionshipSyncKey.current === syncKey) {
@@ -302,7 +361,8 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
               dayString,
               guesses,
               guessedShield,
-              guessedMap
+              guessedMap,
+              guessedMunicipalities
             );
 
       if (pendingChampionshipSync.current?.key !== syncKey) {
@@ -321,6 +381,13 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
           }
           if (!cancelled && syncedResult.map_bonus && !guessedMap) {
             setGuessedMap(true);
+          }
+          if (
+            !cancelled &&
+            syncedResult.municipalities_bonus &&
+            !guessedMunicipalities
+          ) {
+            setGuessedMunicipalities(true);
           }
         }
 
@@ -354,6 +421,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     dayString,
     gameEnded,
     guessedMap,
+    guessedMunicipalities,
     guessedShield,
     guesses,
     userId,
@@ -456,6 +524,10 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     setShowMapPhase(false);
   };
 
+  const handleMunicipalitiesPhaseEnd = () => {
+    setShowMunicipalitiesPhase(false);
+  };
+
   const handleShieldGuess = (correct: boolean) => {
     setHasParticipatedInNewPhase(true);
     setShieldAttemptResult(correct ? "correct" : "wrong");
@@ -473,9 +545,17 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     }
   };
 
+  const handleMunicipalitiesGuess = (correct: boolean) => {
+    setMunicipalitiesAttemptResult(correct ? "correct" : "wrong");
+    if (correct) {
+      setGuessedMunicipalities(true);
+      toast.success(t("municipalitiesBonus.correct"));
+    }
+  };
+
   return (
     <div className="flex-grow flex flex-col mx-2">
-      { !showNewPhase && !showMapPhase ? (
+      { !showNewPhase && !showMapPhase && !showMunicipalitiesPhase ? (
         <>
           {isFirstDayOfMonth && (
             <PreviousMonthChampionshipScreen
@@ -556,8 +636,14 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                     shieldBonusAttempted &&
                     !hasParticipatedInMapPhase
                   }
+                  canPlayMunicipalitiesBonus={
+                    municipalitiesAttemptResult == null
+                  }
                   onPlayShieldBonus={() => setShowNewPhase(true)}
                   onPlayMapBonus={() => setShowMapPhase(true)}
+                  onPlayMunicipalitiesBonus={() =>
+                    setShowMunicipalitiesPhase(true)
+                  }
                   onLoginClick={onLoginClick}
                 />
                 <Share
@@ -568,6 +654,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                   rotationMode={rotationMode}
                   guessedShield={guessedShield}
                   guessedMap={guessedMap} // NEW prop passed to Share
+                  guessedMunicipalities={guessedMunicipalities}
                   dailyScore={dailyScore}
                   audioMode={isAudioDay}
                 />
@@ -631,6 +718,15 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
             dayString={dayString}
             onPhaseEnd={handleMapPhaseEnd}
             onMapGuessResult={handleMapGuess}
+          />
+        )
+      ) : showMunicipalitiesPhase ? (
+        country && (
+          <MunicipalitiesPhase
+            correctCountry={country.code}
+            dayString={dayString}
+            onGuessResult={handleMunicipalitiesGuess}
+            onPhaseEnd={handleMunicipalitiesPhaseEnd}
           />
         )
       ) : null }

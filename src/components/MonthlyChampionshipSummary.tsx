@@ -12,8 +12,10 @@ interface MonthlyChampionshipSummaryProps {
   loading: boolean;
   canPlayShieldBonus: boolean;
   canPlayMapBonus: boolean;
+  canPlayMunicipalitiesBonus: boolean;
   onPlayShieldBonus: () => void;
   onPlayMapBonus: () => void;
+  onPlayMunicipalitiesBonus: () => void;
   onLoginClick?: () => void;
 }
 
@@ -24,8 +26,10 @@ export function MonthlyChampionshipSummary({
   loading,
   canPlayShieldBonus,
   canPlayMapBonus,
+  canPlayMunicipalitiesBonus,
   onPlayShieldBonus,
   onPlayMapBonus,
+  onPlayMunicipalitiesBonus,
   onLoginClick,
 }: MonthlyChampionshipSummaryProps) {
   const { t } = useTranslation();
@@ -48,13 +52,17 @@ export function MonthlyChampionshipSummary({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 text-center">
+      <div className="grid grid-cols-2 gap-2 text-center">
         <ScoreTile label={t("championship.comarca")} value={score.mainScore} />
         <ScoreTile
           label={t("championship.shield")}
           value={score.shieldBonusScore}
         />
         <ScoreTile label={t("championship.map")} value={score.mapBonusScore} />
+        <ScoreTile
+          label={t("championship.municipalities")}
+          value={score.municipalitiesBonusScore}
+        />
       </div>
 
       {canPlayShieldBonus && (
@@ -74,6 +82,16 @@ export function MonthlyChampionshipSummary({
           onClick={onPlayMapBonus}
         >
           {t("championship.playMapBonus")}
+        </button>
+      )}
+
+      {canPlayMunicipalitiesBonus && (
+        <button
+          className="mt-3 w-full rounded bg-blue-700 px-4 py-2 font-bold uppercase text-white hover:bg-blue-600 active:bg-blue-800"
+          type="button"
+          onClick={onPlayMunicipalitiesBonus}
+        >
+          {t("championship.playMunicipalitiesBonus")}
         </button>
       )}
 

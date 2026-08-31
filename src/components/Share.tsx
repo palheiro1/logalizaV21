@@ -24,6 +24,7 @@ export interface ShareProps {
   rotationMode: boolean;
   guessedShield: boolean; // Indicates if the user guessed the shield
   guessedMap: boolean;    // NEW prop to indicate if the user guessed the map
+  guessedMunicipalities: boolean;
   dailyScore: DailyScore;
   audioMode?: boolean;
 }
@@ -36,6 +37,7 @@ export function Share({
   rotationMode,
   guessedShield,
   guessedMap, // NEW prop
+  guessedMunicipalities,
   dailyScore,
   audioMode = false,
 }: ShareProps) {
@@ -69,7 +71,11 @@ export function Share({
       })
       .join("\n");
   
-    const iconsPart = [guessedShield ? "🛡" : "", guessedMap ? "🗺️" : ""]
+    const iconsPart = [
+      guessedShield ? "🛡" : "",
+      guessedMap ? "🗺️" : "",
+      guessedMunicipalities ? "🏘️" : "",
+    ]
       .filter(Boolean)
       .join(" ");
       
@@ -78,7 +84,7 @@ export function Share({
     const iconsLine = iconsPart ? `${iconsPart}\n${gameLink}` : gameLink;
 
     return title + "\n" + guessString + "\n" + iconsLine;
-  }, [audioMode, dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap, dailyScore]);
+  }, [audioMode, dayString, guesses, hideImageMode, rotationMode, theme, guessedShield, guessedMap, guessedMunicipalities, dailyScore]);
 
   return (
     <CopyToClipboard

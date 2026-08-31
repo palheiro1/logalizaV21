@@ -36,13 +36,46 @@ describe("calculateDailyScore", () => {
     );
   });
 
-  it("scores both bonuses only after a main win", () => {
+  it("scores the shield and map bonuses only after a main win", () => {
     expect(calculateDailyScore([hit()], true, true)).toMatchObject({
       mainScore: 100,
       shieldBonusScore: 20,
       mapBonusScore: 20,
       bonusScore: 40,
       totalScore: 140,
+    });
+  });
+
+  it("scores the municipalities bonus after either a win or a loss", () => {
+    expect(calculateDailyScore([hit()], false, false, true)).toMatchObject({
+      won: true,
+      municipalitiesBonusScore: 20,
+      bonusScore: 20,
+      totalScore: 120,
+    });
+
+    expect(
+      calculateDailyScore(
+        [miss(1000), miss(2000), miss(3000), miss(4000)],
+        false,
+        false,
+        true
+      )
+    ).toMatchObject({
+      won: false,
+      municipalitiesBonusScore: 20,
+      bonusScore: 20,
+      totalScore: 20,
+    });
+  });
+
+  it("does not score the municipalities bonus before the game ends", () => {
+    expect(
+      calculateDailyScore([miss(1000)], false, false, true)
+    ).toMatchObject({
+      completed: false,
+      municipalitiesBonusScore: 0,
+      totalScore: 0,
     });
   });
 

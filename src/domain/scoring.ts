@@ -3,6 +3,7 @@ import { Guess } from "./guess";
 export const MAX_TRY_COUNT = 4;
 export const SHIELD_BONUS_POINTS = 20;
 export const MAP_BONUS_POINTS = 20;
+export const MUNICIPALITIES_BONUS_POINTS = 20;
 
 const MAIN_SCORE_BY_TRY: Record<number, number> = {
   1: 100,
@@ -19,6 +20,7 @@ export interface DailyScore {
   mainScore: number;
   shieldBonusScore: number;
   mapBonusScore: number;
+  municipalitiesBonusScore: number;
   bonusScore: number;
   totalScore: number;
 }
@@ -26,7 +28,8 @@ export interface DailyScore {
 export function calculateDailyScore(
   guesses: Guess[],
   guessedShield: boolean,
-  guessedMap: boolean
+  guessedMap: boolean,
+  guessedMunicipalities = false
 ): DailyScore {
   const winIndex = guesses.findIndex((guess) => guess.distance === 0);
   const won = winIndex >= 0;
@@ -39,7 +42,10 @@ export function calculateDailyScore(
   const mainScore = won ? MAIN_SCORE_BY_TRY[winIndex + 1] ?? 0 : 0;
   const shieldBonusScore = won && guessedShield ? SHIELD_BONUS_POINTS : 0;
   const mapBonusScore = won && guessedMap ? MAP_BONUS_POINTS : 0;
-  const bonusScore = shieldBonusScore + mapBonusScore;
+  const municipalitiesBonusScore =
+    completed && guessedMunicipalities ? MUNICIPALITIES_BONUS_POINTS : 0;
+  const bonusScore =
+    shieldBonusScore + mapBonusScore + municipalitiesBonusScore;
 
   return {
     won,
@@ -49,6 +55,7 @@ export function calculateDailyScore(
     mainScore,
     shieldBonusScore,
     mapBonusScore,
+    municipalitiesBonusScore,
     bonusScore,
     totalScore: mainScore + bonusScore,
   };

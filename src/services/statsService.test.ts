@@ -39,6 +39,7 @@ describe("statsService championship methods", () => {
         best_distance: 0,
         shield_bonus: true,
         map_bonus: true,
+        municipalities_bonus: false,
         main_score: 100,
         bonus_score: 40,
         total_score: 140,
@@ -61,6 +62,49 @@ describe("statsService championship methods", () => {
       submitted_guesses: [hit()],
       submitted_shield_bonus: true,
       submitted_map_bonus: true,
+      submitted_municipalities_bonus: false,
+    });
+  });
+
+  it("submits the municipalities bonus after a completed loss", async () => {
+    const losingGuesses = [miss(), miss(), miss(), miss()];
+    (supabase.rpc as jest.Mock).mockResolvedValue({
+      data: {
+        id: "result-1",
+        user_id: "user-1",
+        game_date: "2026-06-19",
+        guesses: losingGuesses,
+        completed: true,
+        won: false,
+        tries_count: 4,
+        best_distance: 12000,
+        shield_bonus: false,
+        map_bonus: false,
+        municipalities_bonus: true,
+        main_score: 0,
+        bonus_score: 20,
+        total_score: 20,
+        created_at: "2026-06-19T00:00:00.000Z",
+        updated_at: "2026-06-19T00:00:00.000Z",
+      },
+      error: null,
+    });
+
+    await statsService.syncDailyResultToSupabase(
+      "user-1",
+      "2026-06-19",
+      losingGuesses,
+      false,
+      false,
+      true
+    );
+
+    expect(supabase.rpc).toHaveBeenCalledWith("submit_daily_result", {
+      target_game_date: "2026-06-19",
+      submitted_guesses: losingGuesses,
+      submitted_shield_bonus: false,
+      submitted_map_bonus: false,
+      submitted_municipalities_bonus: true,
     });
   });
 
@@ -116,7 +160,7 @@ describe("statsService championship methods", () => {
 
     expect(supabase.from).toHaveBeenCalledWith("daily_results");
     expect(selectExisting).toHaveBeenCalledWith(
-      "guesses,completed,won,tries_count,best_distance,shield_bonus,map_bonus,main_score"
+      "guesses,completed,won,tries_count,best_distance,shield_bonus,map_bonus,municipalities_bonus,main_score"
     );
     expect(eqUserId).toHaveBeenCalledWith("user_id", "user-1");
     expect(eqGameDate).toHaveBeenCalledWith("game_date", "2026-06-19");
@@ -130,6 +174,7 @@ describe("statsService championship methods", () => {
         best_distance: 0,
         shield_bonus: true,
         map_bonus: false,
+        municipalities_bonus: false,
         main_score: 100,
         bonus_score: 20,
         total_score: 120,

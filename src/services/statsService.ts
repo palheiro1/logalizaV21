@@ -1,7 +1,12 @@
 import { supabase } from '../lib/supabase'
 import { StatsData } from '../domain/stats'
 import { Guess } from '../domain/guess'
-import { calculateDailyScore, MAP_BONUS_POINTS, SHIELD_BONUS_POINTS } from '../domain/scoring'
+import {
+  calculateDailyScore,
+  MAP_BONUS_POINTS,
+  MUNICIPALITIES_BONUS_POINTS,
+  SHIELD_BONUS_POINTS
+} from '../domain/scoring'
 import { DateTime } from 'luxon'
 import { DEFAULT_AVATAR_COLOR, DEFAULT_AVATAR_EMOJI } from '../domain/avatar'
 import { Json } from '../types/database'
@@ -52,6 +57,7 @@ export interface DailyResult {
   best_distance: number | null
   shield_bonus: boolean
   map_bonus: boolean
+  municipalities_bonus: boolean
   main_score: number
   bonus_score: number
   total_score: number
@@ -98,6 +104,7 @@ function normalizeDailyResult(data: unknown): DailyResult {
   const result = data as Omit<DailyResult, 'guesses'> & { guesses: unknown }
   return {
     ...result,
+    municipalities_bonus: Boolean(result.municipalities_bonus),
     guesses: Array.isArray(result.guesses)
       ? result.guesses.filter(isGuess)
       : []
@@ -118,11 +125,12 @@ async function syncDailyResultWithLegacyUpsert(
   guesses: Guess[],
   guessedShield: boolean,
   guessedMap: boolean,
+  guessedMunicipalities: boolean,
   score: ReturnType<typeof calculateDailyScore>
 ): Promise<DailyResult | null> {
   const { data: existingResult, error: existingError } = await supabase
     .from('daily_results')
-    .select('guesses,completed,won,tries_count,best_distance,shield_bonus,map_bonus,main_score')
+    .select('guesses,completed,won,tries_count,best_distance,shield_bonus,map_bonus,municipalities_bonus,main_score')
     .eq('user_id', userId)
     .eq('game_date', gameDate)
     .maybeSingle()
@@ -140,9 +148,13 @@ async function syncDailyResultWithLegacyUpsert(
     : score.mainScore
   const shieldBonus = Boolean(existingResult?.shield_bonus) || (officialWon && guessedShield)
   const mapBonus = Boolean(existingResult?.map_bonus) || (officialWon && guessedMap)
+  const municipalitiesBonus =
+    Boolean(existingResult?.municipalities_bonus) ||
+    (score.completed && guessedMunicipalities)
   const bonusScore =
     (shieldBonus ? SHIELD_BONUS_POINTS : 0) +
-    (mapBonus ? MAP_BONUS_POINTS : 0)
+    (mapBonus ? MAP_BONUS_POINTS : 0) +
+    (municipalitiesBonus ? MUNICIPALITIES_BONUS_POINTS : 0)
 
   const dailyResult = {
     user_id: userId,
@@ -154,6 +166,7 @@ async function syncDailyResultWithLegacyUpsert(
     best_distance: preserveExistingMainResult ? existingResult?.best_distance ?? null : score.bestDistance,
     shield_bonus: shieldBonus,
     map_bonus: mapBonus,
+    municipalities_bonus: municipalitiesBonus,
     main_score: officialMainScore,
     bonus_score: bonusScore,
     total_score: officialMainScore + bonusScore,
@@ -371,9 +384,15 @@ export const statsService = {
     gameDate: string,
     guesses: Guess[],
     guessedShield: boolean,
-    guessedMap: boolean
+    guessedMap: boolean,
+    guessedMunicipalities = false
   ): Promise<DailyResult | null> {
-    const score = calculateDailyScore(guesses, guessedShield, guessedMap)
+    const score = calculateDailyScore(
+      guesses,
+      guessedShield,
+      guessedMap,
+      guessedMunicipalities
+    )
 
     if (!score.completed) {
       return null
@@ -383,7 +402,9 @@ export const statsService = {
       target_game_date: gameDate,
       submitted_guesses: guesses as unknown as Json,
       submitted_shield_bonus: score.won && guessedShield,
-      submitted_map_bonus: score.won && guessedMap
+      submitted_map_bonus: score.won && guessedMap,
+      submitted_municipalities_bonus:
+        score.completed && guessedMunicipalities
     })
 
     if (error) {
@@ -394,6 +415,7 @@ export const statsService = {
           guesses,
           guessedShield,
           guessedMap,
+          guessedMunicipalities,
           score
         )
       }

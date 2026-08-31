@@ -7,6 +7,7 @@ ALTER TABLE user_profiles ADD COLUMN IF NOT EXISTS avatar_color VARCHAR(20) DEFA
 ALTER TABLE daily_results ADD COLUMN IF NOT EXISTS won BOOLEAN DEFAULT FALSE;
 ALTER TABLE daily_results ADD COLUMN IF NOT EXISTS shield_bonus BOOLEAN DEFAULT FALSE;
 ALTER TABLE daily_results ADD COLUMN IF NOT EXISTS map_bonus BOOLEAN DEFAULT FALSE;
+ALTER TABLE daily_results ADD COLUMN IF NOT EXISTS municipalities_bonus BOOLEAN DEFAULT FALSE;
 ALTER TABLE daily_results ADD COLUMN IF NOT EXISTS main_score INTEGER DEFAULT 0;
 ALTER TABLE daily_results ADD COLUMN IF NOT EXISTS bonus_score INTEGER DEFAULT 0;
 ALTER TABLE daily_results ADD COLUMN IF NOT EXISTS total_score INTEGER DEFAULT 0;
@@ -32,13 +33,17 @@ END $$;
 DROP POLICY IF EXISTS "Users can insert own results" ON daily_results;
 DROP POLICY IF EXISTS "Users can update own results" ON daily_results;
 
-CREATE OR REPLACE FUNCTION submit_daily_result(
+DROP FUNCTION IF EXISTS public.submit_daily_result(DATE, JSONB, BOOLEAN, BOOLEAN);
+DROP FUNCTION IF EXISTS public.submit_daily_result(DATE, JSONB, BOOLEAN, BOOLEAN, BOOLEAN);
+
+CREATE OR REPLACE FUNCTION public.submit_daily_result(
   target_game_date DATE,
   submitted_guesses JSONB,
   submitted_shield_bonus BOOLEAN DEFAULT FALSE,
-  submitted_map_bonus BOOLEAN DEFAULT FALSE
+  submitted_map_bonus BOOLEAN DEFAULT FALSE,
+  submitted_municipalities_bonus BOOLEAN DEFAULT FALSE
 )
-RETURNS daily_results AS $$
+RETURNS public.daily_results AS $$
 DECLARE
   requesting_user UUID := auth.uid();
   guess_count INTEGER;
@@ -49,9 +54,10 @@ DECLARE
   bonus_score_result INTEGER := 0;
   final_shield_bonus BOOLEAN := FALSE;
   final_map_bonus BOOLEAN := FALSE;
+  final_municipalities_bonus BOOLEAN := FALSE;
   existing_needs_main_backfill BOOLEAN := FALSE;
-  existing_result daily_results;
-  saved_result daily_results;
+  existing_result public.daily_results;
+  saved_result public.daily_results;
 BEGIN
   IF requesting_user IS NULL THEN
     RAISE EXCEPTION 'Authentication required' USING ERRCODE = '28000';
@@ -110,7 +116,7 @@ BEGIN
 
   SELECT *
   INTO existing_result
-  FROM daily_results
+  FROM public.daily_results
   WHERE user_id = requesting_user
     AND game_date = target_game_date;
 
@@ -136,12 +142,16 @@ BEGIN
     final_map_bonus :=
       COALESCE(existing_result.map_bonus, FALSE)
       OR ((CASE WHEN existing_needs_main_backfill THEN win_try IS NOT NULL ELSE existing_result.won END) AND COALESCE(submitted_map_bonus, FALSE));
+    final_municipalities_bonus :=
+      COALESCE(existing_result.municipalities_bonus, FALSE)
+      OR COALESCE(submitted_municipalities_bonus, FALSE);
     bonus_score_result :=
       CASE WHEN final_shield_bonus THEN 20 ELSE 0 END +
-      CASE WHEN final_map_bonus THEN 20 ELSE 0 END;
+      CASE WHEN final_map_bonus THEN 20 ELSE 0 END +
+      CASE WHEN final_municipalities_bonus THEN 20 ELSE 0 END;
 
     IF existing_needs_main_backfill THEN
-      UPDATE daily_results
+      UPDATE public.daily_results
       SET
         guesses = submitted_guesses,
         completed = completed_result,
@@ -150,6 +160,7 @@ BEGIN
         best_distance = best_distance_result,
         shield_bonus = final_shield_bonus,
         map_bonus = final_map_bonus,
+        municipalities_bonus = final_municipalities_bonus,
         main_score = main_score_result,
         bonus_score = bonus_score_result,
         total_score = main_score_result + bonus_score_result,
@@ -160,10 +171,11 @@ BEGIN
       RETURN saved_result;
     END IF;
 
-    UPDATE daily_results
+    UPDATE public.daily_results
     SET
       shield_bonus = final_shield_bonus,
       map_bonus = final_map_bonus,
+      municipalities_bonus = final_municipalities_bonus,
       bonus_score = bonus_score_result,
       total_score = existing_result.main_score + bonus_score_result,
       updated_at = NOW()
@@ -176,12 +188,14 @@ BEGIN
   IF win_try IS NOT NULL THEN
     final_shield_bonus := COALESCE(submitted_shield_bonus, FALSE);
     final_map_bonus := COALESCE(submitted_map_bonus, FALSE);
-    bonus_score_result :=
-      CASE WHEN final_shield_bonus THEN 20 ELSE 0 END +
-      CASE WHEN final_map_bonus THEN 20 ELSE 0 END;
   END IF;
+  final_municipalities_bonus := COALESCE(submitted_municipalities_bonus, FALSE);
+  bonus_score_result :=
+    CASE WHEN final_shield_bonus THEN 20 ELSE 0 END +
+    CASE WHEN final_map_bonus THEN 20 ELSE 0 END +
+    CASE WHEN final_municipalities_bonus THEN 20 ELSE 0 END;
 
-  INSERT INTO daily_results (
+  INSERT INTO public.daily_results (
     user_id,
     game_date,
     guesses,
@@ -191,6 +205,7 @@ BEGIN
     best_distance,
     shield_bonus,
     map_bonus,
+    municipalities_bonus,
     main_score,
     bonus_score,
     total_score,
@@ -206,6 +221,7 @@ BEGIN
     best_distance_result,
     win_try IS NOT NULL AND final_shield_bonus,
     win_try IS NOT NULL AND final_map_bonus,
+    final_municipalities_bonus,
     main_score_result,
     bonus_score_result,
     main_score_result + bonus_score_result,
@@ -215,7 +231,7 @@ BEGIN
 
   RETURN saved_result;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
 
 DROP FUNCTION IF EXISTS get_monthly_leaderboard(DATE, DATE);
 
@@ -303,6 +319,7 @@ RETURNS TABLE (
 $$ LANGUAGE sql SECURITY DEFINER;
 
 GRANT EXECUTE ON FUNCTION get_monthly_leaderboard(DATE, DATE) TO anon, authenticated;
-GRANT EXECUTE ON FUNCTION submit_daily_result(DATE, JSONB, BOOLEAN, BOOLEAN) TO authenticated;
+REVOKE ALL ON FUNCTION public.submit_daily_result(DATE, JSONB, BOOLEAN, BOOLEAN, BOOLEAN) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.submit_daily_result(DATE, JSONB, BOOLEAN, BOOLEAN, BOOLEAN) TO authenticated;
 
 NOTIFY pgrst, 'reload schema';

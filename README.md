@@ -82,6 +82,7 @@ Este projeto é desenvolvido com as seguintes tecnologias:
 
 4. **Configure o banco de dados**:
    - Execute o script `database-setup.sql` no seu projeto Supabase para criar as tabelas necessárias.
+   - Numa instalação já existente, aplique também as migrações pendentes de `supabase/migrations/` antes de publicar uma nova versão da aplicação.
 
 5. **Execute o projeto em modo de desenvolvimento**:
    ```bash

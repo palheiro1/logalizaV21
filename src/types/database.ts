@@ -85,6 +85,7 @@ export interface Database {
           best_distance: number | null
           shield_bonus: boolean
           map_bonus: boolean
+          municipalities_bonus: boolean
           main_score: number
           bonus_score: number
           total_score: number
@@ -102,6 +103,7 @@ export interface Database {
           best_distance?: number | null
           shield_bonus?: boolean
           map_bonus?: boolean
+          municipalities_bonus?: boolean
           main_score?: number
           bonus_score?: number
           total_score?: number
@@ -119,6 +121,7 @@ export interface Database {
           best_distance?: number | null
           shield_bonus?: boolean
           map_bonus?: boolean
+          municipalities_bonus?: boolean
           main_score?: number
           bonus_score?: number
           total_score?: number
@@ -162,6 +165,7 @@ export interface Database {
           submitted_guesses: Json
           submitted_shield_bonus?: boolean
           submitted_map_bonus?: boolean
+          submitted_municipalities_bonus?: boolean
         }
         Returns: {
           id: string
@@ -174,6 +178,7 @@ export interface Database {
           best_distance: number | null
           shield_bonus: boolean
           map_bonus: boolean
+          municipalities_bonus: boolean
           main_score: number
           bonus_score: number
           total_score: number
