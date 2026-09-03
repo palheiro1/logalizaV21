@@ -25,6 +25,7 @@ import { DateTime } from "luxon";
 import { AudioPilotPlayer } from "./AudioPilotPlayer";
 import { AudioSampleReveal } from "./AudioSampleReveal";
 import { MunicipalitiesPhase } from "./MunicipalitiesPhase";
+import { recoverMissedChampionshipResults } from "../services/championshipRecovery";
 
 interface GameProps {
   settingsData: SettingsData;
@@ -150,6 +151,35 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     key: string;
     promise: ReturnType<typeof statsService.syncDailyResultToSupabase>;
   } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function recoverMissedResults() {
+      if (!userId) {
+        return;
+      }
+
+      const recoveredCount = await recoverMissedChampionshipResults(userId);
+      if (cancelled || recoveredCount === 0) {
+        return;
+      }
+
+      const leaderboard = await statsService.getMonthlyLeaderboard(
+        dayString,
+        100
+      );
+      if (!cancelled) {
+        setMonthlyLeaderboard(leaderboard);
+      }
+    }
+
+    recoverMissedResults();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [dayString, userId]);
 
   useEffect(() => {
     const stored = localStorage.getItem(`guessedShield-${dayString}`);
