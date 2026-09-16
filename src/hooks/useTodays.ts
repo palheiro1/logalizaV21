@@ -201,10 +201,10 @@ function buildImagePool(): ImagePoolEntry[] {
   return entries;
 }
 
-function buildMultimediaPool(): PoolEntry[] {
+function buildMultimediaPool(samples: AudioSample[] = audioSamples): PoolEntry[] {
   return [
     ...buildImagePool(),
-    ...audioSamples.map(
+    ...samples.map(
       ({ id, comarcaCode }): AudioPoolEntry => ({
         kind: "audio",
         code: comarcaCode,
@@ -260,6 +260,62 @@ function selectFromPool(
 
 const MULTIMEDIA_POOL_START = "2026-08-31";
 const MULTIMEDIA_POOL_SEED = "logaliza-v21-multimedia";
+const AUDIO_CADENCE_START = "2026-09-18";
+export const AUDIO_CADENCE_DAYS = 6;
+const AUDIO_CADENCE_SEED = "logaliza-v21-audio-cadence";
+const CADENCED_IMAGE_SEED = "logaliza-v21-cadenced-images";
+
+// This exact catalogue preserves the already-published daily selections from
+// the multimedia launch until the fixed-cadence rotation begins.
+const LEGACY_AUDIO_SAMPLE_IDS = [
+  "ago-001",
+  "ago-076",
+  "ago-026",
+  "ago-061",
+  "ago-119",
+  "ago-024",
+  "ago-149",
+  "ago-113",
+  "ccg-385",
+  "ccg-388",
+];
+
+function selectAudioForRotation(audioIndex: number): DailyContentSelection {
+  const cycle = Math.floor(audioIndex / audioSamples.length);
+  const indexInCycle = mod(audioIndex, audioSamples.length);
+  const cycleSamples = shuffleArray(
+    audioSamples,
+    `${AUDIO_CADENCE_SEED}-cycle-${cycle}`
+  );
+  const audioSample = cycleSamples[indexInCycle];
+  const country = (countriesWithImage as unknown as Country[]).find(
+    ({ code }) => code === audioSample.comarcaCode
+  ) as Country;
+
+  return {
+    country,
+    imageNumber: AVAILABLE_IMAGE_NUMBERS[0],
+    audioSample,
+  };
+}
+
+function selectFromCadencedRotation(dayString: string): DailyContentSelection {
+  const days = diffDays(AUDIO_CADENCE_START, dayString);
+  const audioIndex = Math.floor(days / AUDIO_CADENCE_DAYS);
+
+  if (mod(days, AUDIO_CADENCE_DAYS) === 0) {
+    return selectAudioForRotation(audioIndex);
+  }
+
+  const precedingAudioDays = audioIndex + 1;
+  const imageIndex = days - precedingAudioDays;
+  return selectFromPool(
+    buildImagePool(),
+    imageIndex,
+    CADENCED_IMAGE_SEED,
+    false
+  );
+}
 
 export function getGlobalContentForDay(
   dayString: string
@@ -270,9 +326,16 @@ export function getGlobalContentForDay(
     return selectFromPool(pool, days, GLOBAL_POOL_SEED, false);
   }
 
-  const pool = buildMultimediaPool();
-  const days = diffDays(MULTIMEDIA_POOL_START, dayString);
-  return selectFromPool(pool, days, MULTIMEDIA_POOL_SEED, true);
+  if (dayString < AUDIO_CADENCE_START) {
+    const legacyAudioSamples = LEGACY_AUDIO_SAMPLE_IDS.map(
+      (id) => getAudioSampleById(id) as AudioSample
+    );
+    const pool = buildMultimediaPool(legacyAudioSamples);
+    const days = diffDays(MULTIMEDIA_POOL_START, dayString);
+    return selectFromPool(pool, days, MULTIMEDIA_POOL_SEED, true);
+  }
+
+  return selectFromCadencedRotation(dayString);
 }
 
 // Exported utility: simulate next pictures for upcoming days without mutating storage

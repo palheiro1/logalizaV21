@@ -5,22 +5,24 @@ interface AudioSampleRevealProps {
   sample: AudioSample;
   countryName: string;
   won: boolean;
+  review?: boolean;
 }
 
 export function AudioSampleReveal({
   sample,
   countryName,
   won,
+  review = false,
 }: AudioSampleRevealProps) {
   return (
     <section className="mt-3 overflow-hidden rounded-xl border-2 border-gray-200 dark:border-gray-700">
       <div
         className={`p-4 text-center text-white ${
-          won ? "bg-green-600" : "bg-red-600"
+          review ? "bg-blue-600" : won ? "bg-green-600" : "bg-red-600"
         }`}
       >
         <p className="text-sm font-bold uppercase tracking-widest">
-          {won ? "Acertache!" : "A voz era de"}
+          {review ? "Amostra de" : won ? "Acertache!" : "A voz era de"}
         </p>
         <h3 className="mt-1 text-2xl font-extrabold uppercase">
           {countryName}

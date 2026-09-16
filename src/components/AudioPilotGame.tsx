@@ -91,6 +91,8 @@ export function AudioPilotGame({ settingsData }: AudioPilotGameProps) {
   const { t, i18n } = useTranslation();
   const countryInputRef = useRef<HTMLInputElement>(null);
   const [sampleIndex, setSampleIndex] = useState(getInitialSampleIndex);
+  const reviewMode =
+    new URLSearchParams(window.location.search).get("revisao") === "1";
   const sample = audioSamples[sampleIndex];
   const country = useMemo(
     () =>
@@ -184,8 +186,8 @@ export function AudioPilotGame({ settingsData }: AudioPilotGameProps) {
   return (
     <main className="mx-2 flex flex-grow flex-col">
       <div className="mt-4 flex items-center justify-between">
-        <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-red-800 dark:bg-red-950 dark:text-red-200">
-          Piloto sonoro
+        <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-800 dark:bg-blue-950 dark:text-blue-200">
+          {reviewMode ? "Revisão sonora" : "Piloto sonoro"}
         </span>
         <span className="text-sm text-gray-500 dark:text-gray-400">
           Amostra {sampleIndex + 1} de {audioSamples.length}
@@ -193,25 +195,35 @@ export function AudioPilotGame({ settingsData }: AudioPilotGameProps) {
       </div>
 
       <h2 className="mt-4 text-center text-2xl font-extrabold">
-        De que comarca é esta voz?
+        {reviewMode ? "Colecção de vozes" : "De que comarca é esta voz?"}
       </h2>
       <p className="mx-auto mt-2 max-w-md text-center text-sm text-gray-600 dark:text-gray-300">
-        Escuita a fala e procura o sotaque, a entoaçom e os traços dialectais.
-        Tens quatro tentativas.
+        {reviewMode
+          ? "Escuita cada recorte e percorre as amostras com os controlos inferiores."
+          : "Escuita a fala e procura o sotaque, a entoaçom e os traços dialectais. Tens quatro tentativas."}
       </p>
 
       <AudioPilotPlayer key={sample.id} sample={sample} />
 
-      <Guesses
-        targetCountry={country}
-        rowCount={MAX_TRY_COUNT}
-        guesses={guesses}
-        countryInputRef={countryInputRef}
-        settingsData={settingsData}
-      />
+      {!reviewMode && (
+        <Guesses
+          targetCountry={country}
+          rowCount={MAX_TRY_COUNT}
+          guesses={guesses}
+          countryInputRef={countryInputRef}
+          settingsData={settingsData}
+        />
+      )}
 
       <div className="my-2">
-        {!gameEnded ? (
+        {reviewMode ? (
+          <AudioSampleReveal
+            sample={sample}
+            countryName={countryName}
+            won={false}
+            review
+          />
+        ) : !gameEnded ? (
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <CountryInput
@@ -237,7 +249,7 @@ export function AudioPilotGame({ settingsData }: AudioPilotGameProps) {
         )}
       </div>
 
-      {gameEnded && (
+      {(reviewMode || gameEnded) && (
         <div className="mt-3 grid grid-cols-2 gap-2">
           <button
             type="button"
@@ -253,13 +265,15 @@ export function AudioPilotGame({ settingsData }: AudioPilotGameProps) {
           >
             Seguinte →
           </button>
-          <button
-            type="button"
-            className="col-span-2 rounded p-2 text-sm underline"
-            onClick={resetSample}
-          >
-            Recomeçar esta amostra
-          </button>
+          {!reviewMode && (
+            <button
+              type="button"
+              className="col-span-2 rounded p-2 text-sm underline"
+              onClick={resetSample}
+            >
+              Recomeçar esta amostra
+            </button>
+          )}
         </div>
       )}
 
