@@ -41,7 +41,7 @@ function getStoredBonusAttemptResult(key: string): BonusAttemptResult | null {
 }
 
 function getDevelopmentPreviewDayShift(): number {
-  if (process.env.NODE_ENV !== "development") {
+  if (!import.meta.env.DEV) {
     return 0;
   }
 

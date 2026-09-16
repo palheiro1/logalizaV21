@@ -1,13 +1,16 @@
 import { Guess } from "../domain/guess";
 import { recoverMissedChampionshipResults } from "./championshipRecovery";
 import { statsService } from "./statsService";
+import { vi } from "vitest";
 
-jest.mock("./statsService", () => ({
+vi.mock("./statsService", () => ({
   statsService: {
-    getDailyResultFromSupabase: jest.fn(),
-    syncDailyResultToSupabase: jest.fn(),
+    getDailyResultFromSupabase: vi.fn(),
+    syncDailyResultToSupabase: vi.fn(),
   },
 }));
+
+const jest = vi;
 
 const hit: Guess = { name: "A Coruña", distance: 0, direction: "N" };
 const miss: Guess = { name: "Vigo", distance: 12000, direction: "NE" };

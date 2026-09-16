@@ -1,10 +1,5 @@
-type ListagemLigazonsType = {
-  [key: string]: {
-    [key: number]: string;
-  };
-};
-
-const listagemLigazons: ListagemLigazonsType = {
+/** @type {Record<string, Record<number, string>>} */
+const listagemLigazons = {
   ancares: {
     1: "https://estreleira.gal/ancares",
     2: "https://gl.wikipedia.org/wiki/O_Mustallar",

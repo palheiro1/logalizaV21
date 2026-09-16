@@ -5,7 +5,9 @@ function normalizeUrl(url: string): string {
 }
 
 export const APP_URL = normalizeUrl(
-  process.env.REACT_APP_PUBLIC_APP_URL ?? DEFAULT_APP_URL
+  import.meta.env.VITE_PUBLIC_APP_URL ??
+    import.meta.env.REACT_APP_PUBLIC_APP_URL ??
+    DEFAULT_APP_URL
 );
 
 export function getAuthRedirectUrl(): string {

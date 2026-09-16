@@ -17,10 +17,7 @@ ReactDOM.render(
 // Use the framework-independent SDK because this app uses React 17.
 injectSpeedInsights();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://cra.link/PWA
-// serviceWorkerRegistration.register();
+// Remove registrations left by older versions of the application.
 serviceWorkerRegistration.unregister();
 
 // If you want to start measuring performance in your app, pass a function

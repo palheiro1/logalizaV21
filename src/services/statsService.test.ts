@@ -1,13 +1,16 @@
 import { supabase } from "../lib/supabase";
 import { statsService } from "./statsService";
 import { Guess } from "../domain/guess";
+import { vi } from "vitest";
 
-jest.mock("../lib/supabase", () => ({
+vi.mock("../lib/supabase", () => ({
   supabase: {
-    from: jest.fn(),
-    rpc: jest.fn(),
+    from: vi.fn(),
+    rpc: vi.fn(),
   },
 }));
+
+const jest = vi;
 
 const hit = (): Guess => ({
   name: "Hit",
