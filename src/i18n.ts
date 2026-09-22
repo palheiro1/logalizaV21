@@ -1,6 +1,9 @@
 import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
+
+// The AGAL translation is kept under `pt` because its reintegrationist spelling
+// follows the Galician-Portuguese orthographic system.
+export const GAME_LANGUAGE = "pt";
 
 export const translations = {
   en: {
@@ -830,14 +833,15 @@ export const translations = {
 
 i18n
   .use(initReactI18next)
-  .use(LanguageDetector)
   .init({
     compatibilityJSON: 'v3',
     resources: translations,
+    lng: GAME_LANGUAGE,
+    supportedLngs: [GAME_LANGUAGE],
     interpolation: {
       escapeValue: false,
     },
-    fallbackLng: "en",
+    fallbackLng: GAME_LANGUAGE,
   });
 
 export default i18n;
