@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="gl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#d8eef7" />
+    <title>Mapa das comarcas da Galiza · LoGaliza</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; color: #17324a; background: #f4f8fa; font: 16px/1.45 system-ui, sans-serif; }
+      header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; padding: 0.8rem 1rem; }
+      h1 { margin: 0; font-size: clamp(1.15rem, 3vw, 1.6rem); }
+      a { color: #125783; }
+      .controls { display: flex; align-items: center; gap: 0.5rem; }
+      button { min-width: 44px; min-height: 44px; border: 1px solid #9bb5c4; border-radius: 0.5rem; color: inherit; background: white; font: inherit; cursor: pointer; }
+      button:disabled { opacity: 0.4; cursor: default; }
+      .map-frame { width: 100%; max-height: calc(100dvh - 146px); overflow: auto; background: #c6e9f4; overscroll-behavior: contain; }
+      .map-frame img { display: block; width: 100%; max-width: none; height: auto; }
+      footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; padding: 0.7rem 1rem; font-size: 0.9rem; }
+      footer p { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Mapa das comarcas da Galiza</h1>
+      <div class="controls" aria-label="Ampliação do mapa">
+        <button id="zoom-out" type="button" aria-label="Reduzir mapa" disabled>−</button>
+        <span id="zoom-label" aria-live="polite">1×</span>
+        <button id="zoom-in" type="button" aria-label="Ampliar mapa">+</button>
+      </div>
+    </header>
+    <main class="map-frame" id="map-frame" aria-label="Mapa navegável das comarcas">
+      <img id="map" src="/maps/mapa-das-comarcas.webp" alt="Mapa colorido das comarcas da Galiza, com nomes de comarcas e municípios" width="6000" height="4242" />
+    </main>
+    <footer>
+      <p>Amplia e desloca o mapa para ler os nomes.</p>
+      <a href="/maps/mapa-das-comarcas.pdf" target="_blank" rel="noopener noreferrer">Abrir PDF vetorial (30 MB)</a>
+    </footer>
+    <script>
+      const frame = document.getElementById('map-frame');
+      const map = document.getElementById('map');
+      const zoomOut = document.getElementById('zoom-out');
+      const zoomIn = document.getElementById('zoom-in');
+      const zoomLabel = document.getElementById('zoom-label');
+      let zoom = 1;
+
+      function setZoom(next) {
+        const target = Math.max(1, Math.min(16, next));
+        if (target === zoom) return;
+        const factor = target / zoom;
+        const centerX = frame.scrollLeft + frame.clientWidth / 2;
+        const centerY = frame.scrollTop + frame.clientHeight / 2;
+        zoom = target;
+        map.style.width = `${zoom * 100}%`;
+        zoomLabel.textContent = `${zoom}×`;
+        zoomOut.disabled = zoom === 1;
+        zoomIn.disabled = zoom === 16;
+        requestAnimationFrame(() => {
+          frame.scrollLeft = centerX * factor - frame.clientWidth / 2;
+          frame.scrollTop = centerY * factor - frame.clientHeight / 2;
+        });
+      }
+
+      zoomOut.addEventListener('click', () => setZoom(zoom / 2));
+      zoomIn.addEventListener('click', () => setZoom(zoom * 2));
+    </script>
+  </body>
+</html>

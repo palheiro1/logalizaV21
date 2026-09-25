@@ -691,7 +691,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
                 <div className="flex justify-center mt-4">
                   <a
                     className="underline text-center mx-8"
-                    href="/maps/mapa-das-comarcas.pdf"
+                    href="/maps/mapa-das-comarcas.html"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
