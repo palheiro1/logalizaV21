@@ -4,7 +4,8 @@ import { vi } from "vitest";
 import { AuthProvider, useAuth } from "./AuthContext";
 import { supabase } from "../lib/supabase";
 import { statsService } from "../services/statsService";
-import { loadAllGuesses } from "../domain/guess";
+import { loadAllGuesses, saveGuesses } from "../domain/guess";
+import { gameStorageKey } from "../domain/gameStorage";
 import { calculateStatsData, getStatsData, saveStatsBaseline } from "../domain/stats";
 
 vi.mock("../lib/supabase", () => ({
@@ -103,4 +104,24 @@ test("keeps a saved daily result pending when the aggregate write was interrupte
   render(<AuthProvider><AccountView /></AuthProvider>);
   await screen.findByText("original:original");
   expect(getStatsData("original")).toMatchObject({ played: 2, currentStreak: 2 });
+});
+
+test("applies server removals to acknowledged history while preserving offline progress and other accounts", async () => {
+  const copied = { "2026-09-02": [hit], "2026-09-10": [hit] };
+  for (const [day, guesses] of Object.entries(copied)) saveGuesses(day, guesses, "original");
+  saveGuesses("2026-10-06", [hit], "original");
+  saveGuesses("2026-09-02", [hit], "secondary");
+  localStorage.setItem(gameStorageKey("guessedShield-2026-09-02", "original"), "true");
+  saveStatsBaseline("original", { stats: calculateStatsData(copied), guesses: copied, updatedAt: "before-repair" });
+  vi.mocked(statsService.loadAccountHistory).mockResolvedValue({
+    guesses: { "2026-09-10": [hit] },
+    stats: { played: 1, current_streak: 1, max_streak: 1, win_ratio: 1, average_best_distance: 0,
+      guess_distribution: { "1": 1 }, updated_at: "after-repair" } as any,
+  });
+  render(<AuthProvider><AccountView /></AuthProvider>);
+  await screen.findByText("original:original");
+  expect(loadAllGuesses("original")).toEqual({ "2026-09-10": [hit], "2026-10-06": [hit] });
+  expect(loadAllGuesses("secondary")).toEqual({ "2026-09-02": [hit] });
+  expect(localStorage.getItem(gameStorageKey("guessedShield-2026-09-02", "original"))).toBeNull();
+  expect(getStatsData("original").played).toBe(2);
 });

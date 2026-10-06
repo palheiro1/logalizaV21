@@ -329,7 +329,8 @@ export const statsService = {
 
   async syncStatsToSupabase(userId: string, stats: StatsData): Promise<UserStats | null> {
     // Do not overwrite existing history if account hydration has failed.
-    if (!loadStatsBaseline(userId)) return null
+    const baseline = loadStatsBaseline(userId)
+    if (!baseline) return null
     const guessesSnapshot = loadAllGuesses(userId)
     const accessToken = await getWriteAccessToken(userId)
     if (!accessToken) return null
@@ -346,6 +347,13 @@ export const statsService = {
       console.error('Error checking existing stats:', fetchError)
       return null
     }
+
+    const latestStats = existing?.[0]
+    const snapshotMatches = (latestStats?.updated_at ?? '') === baseline.updatedAt
+    const initialZeroStats = !baseline.updatedAt && baseline.stats.played === 0 && latestStats?.played === 0
+    // A server repair or another device may have changed these statistics.
+    // The old local snapshot must not overwrite the newer server version.
+    if (!snapshotMatches && !initialZeroStats) return null
 
     const statsRecord = {
       user_id: userId,
@@ -365,6 +373,7 @@ export const statsService = {
         .from('user_stats')
         .update(statsRecord)
         .eq('id', existing[0].id)
+        .eq('updated_at', existing[0].updated_at)
         .setHeader('Authorization', `Bearer ${accessToken}`)
         .select()
         .single()

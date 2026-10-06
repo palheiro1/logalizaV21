@@ -4,7 +4,8 @@ import { supabase } from '../lib/supabase'
 import { statsService, statsDataFromUserStats, UserProfile } from '../services/statsService'
 import { calculateStatsData, loadStatsBaseline, saveStatsBaseline } from '../domain/stats'
 import { loadAllGuesses } from '../domain/guess'
-import { claimGuestGame, gameStorageKey } from '../domain/gameStorage'
+import { claimGuestGame, DAILY_GAME_KEYS, gameStorageKey } from '../domain/gameStorage'
+import { calculateDailyScore } from '../domain/scoring'
 import { DateTime } from 'luxon'
 
 interface AuthContextType {
@@ -98,13 +99,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // result must still count as new relative to our acknowledged snapshot.
         const baselineGuesses = previousBaseline && previousBaseline.updatedAt === history.stats?.updated_at
           ? previousBaseline.guesses : history.guesses
+        const localGuesses = loadAllGuesses(accountId)
+        if (previousBaseline && history.stats && previousBaseline.updatedAt !== history.stats.updated_at &&
+            history.stats.played < previousBaseline.stats.played) {
+          // An acknowledged completed game removed on the server is a repair,
+          // not offline progress to upload again. Keep unacknowledged games.
+          for (const [day, guesses] of Object.entries(previousBaseline.guesses)) {
+            if (!(day in history.guesses) && calculateDailyScore(guesses, false, false).completed) {
+              delete localGuesses[day]
+              for (const key of DAILY_GAME_KEYS) {
+                localStorage.removeItem(gameStorageKey(`${key}-${day}`, accountId))
+              }
+            }
+          }
+        }
         saveStatsBaseline(accountId, {
           stats: history.stats ? statsDataFromUserStats(history.stats) : calculateStatsData(baselineGuesses),
           guesses: baselineGuesses,
           updatedAt: history.stats?.updated_at ?? ''
         })
         localStorage.setItem(gameStorageKey('guesses', accountId), JSON.stringify({
-          ...loadAllGuesses(accountId), ...history.guesses
+          ...localGuesses, ...history.guesses
         }))
         claimGuestGame(accountId, DateTime.now().setZone("Europe/Madrid").toISODate())
         setHistoryReady(true)

@@ -1,7 +1,7 @@
 import { supabase } from "../lib/supabase";
 import { statsService } from "./statsService";
-import { Guess } from "../domain/guess";
-import { calculateStatsData, saveStatsBaseline } from "../domain/stats";
+import { Guess, saveGuesses } from "../domain/guess";
+import { calculateStatsData, getStatsData, loadStatsBaseline, saveStatsBaseline } from "../domain/stats";
 import { vi } from "vitest";
 
 vi.mock("../lib/supabase", () => ({
@@ -134,6 +134,38 @@ describe("statsService championship methods", () => {
     expect(statsQuery.eq).toHaveBeenCalledWith("user_id", "user-1");
     expect(statsQuery.order).toHaveBeenCalledWith("updated_at", { ascending: false });
     expect(range.mock.calls).toEqual([[0, 499], [500, 999]]);
+  });
+
+  it("does not overwrite a server correction with stale local statistics", async () => {
+    const stats = { ...calculateStatsData({}), played: 100 };
+    saveStatsBaseline("user-1", { stats, guesses: {}, updatedAt: "before-repair" });
+    const latest = authorizedBuilder(Promise.resolve({ data: [{ id: "stats-1", played: 1, updated_at: "after-repair" }], error: null }));
+    const query = { select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis(),
+      order: vi.fn().mockReturnThis(), limit: vi.fn().mockReturnValue(latest), update: vi.fn() };
+    (supabase.from as jest.Mock).mockReturnValue(query);
+    expect(await statsService.syncStatsToSupabase("user-1", stats)).toBeNull();
+    expect(query.update).not.toHaveBeenCalled();
+    expect(supabase.from).toHaveBeenCalledTimes(1);
+  });
+
+  it("saves a new game against the matching server snapshot without counting it twice", async () => {
+    const oldDate = "2026-10-05T08:00:00.000Z";
+    const oldGuesses = { "2026-10-05": [hit()] };
+    saveStatsBaseline("user-1", { stats: calculateStatsData(oldGuesses), guesses: oldGuesses, updatedAt: oldDate });
+    saveGuesses("2026-10-05", [hit()], "user-1");
+    saveGuesses("2026-10-06", [hit()], "user-1");
+    const latest = authorizedBuilder(Promise.resolve({ data: [{ id: "stats-1", played: 1, updated_at: oldDate }], error: null }));
+    const query = { select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis(),
+      order: vi.fn().mockReturnThis(), limit: vi.fn().mockReturnValue(latest) };
+    const mutation = authorizedBuilder({ eq: vi.fn().mockReturnThis(), select: vi.fn().mockReturnThis(),
+      single: vi.fn().mockResolvedValue({ data: { id: "stats-1", played: 2, updated_at: "2026-10-06T08:00:00.000Z" }, error: null }) });
+    const update = vi.fn().mockReturnValue(mutation);
+    (supabase.from as jest.Mock).mockReturnValueOnce(query).mockReturnValueOnce({ update });
+    expect(await statsService.syncStatsToSupabase("user-1", getStatsData("user-1"))).toMatchObject({ played: 2 });
+    expect(mutation.eq).toHaveBeenCalledWith("updated_at", oldDate);
+    expect(update).toHaveBeenCalledWith(expect.objectContaining({ played: 2, current_streak: 2, user_id: "user-1" }));
+    expect(loadStatsBaseline("user-1")?.stats.played).toBe(2);
+    expect(getStatsData("user-1").played).toBe(2);
   });
 
   it("submits the municipalities bonus after a completed loss", async () => {
