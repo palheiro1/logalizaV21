@@ -1,6 +1,7 @@
 import { Guess } from "../domain/guess";
 import { MAX_TRY_COUNT } from "../domain/scoring";
 import { statsService } from "./statsService";
+import { gameStorageKey } from "../domain/gameStorage";
 
 const MISSED_RESULT_DATES = ["2026-08-31", "2026-09-01", "2026-09-02"];
 const RECOVERY_KEY_PREFIX = "championshipRecovery-2026-08-31-councils-v1";
@@ -8,10 +9,11 @@ const RECOVERY_KEY_PREFIX = "championshipRecovery-2026-08-31-councils-v1";
 type RecoveryStorage = Pick<Storage, "getItem" | "setItem">;
 
 function readStoredGuesses(
-  storage: RecoveryStorage
+  storage: RecoveryStorage,
+  userId: string
 ): Record<string, Guess[]> | null {
   try {
-    const stored = storage.getItem("guesses");
+    const stored = storage.getItem(gameStorageKey("guesses", userId));
     const parsed = stored ? JSON.parse(stored) : {};
     return parsed && typeof parsed === "object"
       ? (parsed as Record<string, Guess[]>)
@@ -46,7 +48,7 @@ export async function recoverMissedChampionshipResults(
     return 0;
   }
 
-  const guessesByDate = readStoredGuesses(storage);
+  const guessesByDate = readStoredGuesses(storage, userId);
   if (!guessesByDate) {
     return 0;
   }
@@ -76,9 +78,9 @@ export async function recoverMissedChampionshipResults(
         userId,
         gameDate,
         guesses,
-        readStoredBoolean(storage, `guessedShield-${gameDate}`),
-        readStoredBoolean(storage, `guessedMap-${gameDate}`),
-        readStoredBoolean(storage, `guessedMunicipalities-${gameDate}`)
+        readStoredBoolean(storage, gameStorageKey(`guessedShield-${gameDate}`, userId)),
+        readStoredBoolean(storage, gameStorageKey(`guessedMap-${gameDate}`, userId)),
+        readStoredBoolean(storage, gameStorageKey(`guessedMunicipalities-${gameDate}`, userId))
       );
 
       if (syncedResult) {

@@ -25,6 +25,8 @@ import { DateTime } from "luxon";
 import { AudioPilotPlayer } from "./AudioPilotPlayer";
 import { AudioSampleReveal } from "./AudioSampleReveal";
 import { MunicipalitiesPhase } from "./MunicipalitiesPhase";
+import { gameStorageKey, readGameStorage } from "../domain/gameStorage";
+import { getStatsData } from "../domain/stats";
 import { recoverMissedChampionshipResults } from "../services/championshipRecovery";
 
 interface GameProps {
@@ -54,10 +56,18 @@ function getDevelopmentPreviewDayShift(): number {
     : 0;
 }
 
-export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) {
+export function Game(props: GameProps) {
+  const { user, loading } = useAuth();
+  const day = getDayString(props.settingsData.shiftDayCount + getDevelopmentPreviewDayShift());
+  if (loading) return null;
+  return <AccountGame key={`${user?.id ?? "guest"}:${day}`} {...props} />;
+}
+
+function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) {
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { user, historyReady } = useAuth();
   const userId = user?.id;
+  const storageKey = useCallback((key: string) => gameStorageKey(key, userId), [userId]);
   const previewDayShift = getDevelopmentPreviewDayShift();
   const dayString = useMemo(
     () => getDayString(settingsData.shiftDayCount + previewDayShift),
@@ -116,23 +126,23 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   const mapImage = countryImageFolder ? `${countryImageFolder}/mapa.png` : null;
 
   const [currentGuess, setCurrentGuess] = useState("");
-  const [hideImageMode, setHideImageMode] = useMode("hideImageMode", dayString, settingsData.noImageMode);
-  const [rotationMode, setRotationMode] = useMode("rotationMode", dayString, settingsData.rotationMode);
+  const [hideImageMode, setHideImageMode] = useMode("hideImageMode", dayString, settingsData.noImageMode, userId);
+  const [rotationMode, setRotationMode] = useMode("rotationMode", dayString, settingsData.rotationMode, userId);
 
   const [guessedShield, setGuessedShield] = useState(() => {
-    const stored = localStorage.getItem(`guessedShield-${dayString}`);
+    const stored = readGameStorage(`guessedShield-${dayString}`, userId);
     return stored ? JSON.parse(stored) : false;
   });
   const [guessedMap, setGuessedMap] = useState(() => {
-    const stored = localStorage.getItem(`guessedMap-${dayString}`);
+    const stored = readGameStorage(`guessedMap-${dayString}`, userId);
     return stored ? JSON.parse(stored) : false;
   });
   const [guessedMunicipalities, setGuessedMunicipalities] = useState(() => {
-    const stored = localStorage.getItem(`guessedMunicipalities-${dayString}`);
+    const stored = readGameStorage(`guessedMunicipalities-${dayString}`, userId);
     return stored ? JSON.parse(stored) : false;
   });
-  const shieldAttemptStorageKey = `shieldAttemptResult-${dayString}`;
-  const municipalitiesAttemptStorageKey = `municipalitiesAttemptResult-${dayString}`;
+  const shieldAttemptStorageKey = storageKey(`shieldAttemptResult-${dayString}`);
+  const municipalitiesAttemptStorageKey = storageKey(`municipalitiesAttemptResult-${dayString}`);
   const [shieldAttemptResult, setShieldAttemptResult] =
     useState<BonusAttemptResult | null>(() =>
       getStoredBonusAttemptResult(shieldAttemptStorageKey)
@@ -182,34 +192,31 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   }, [dayString, userId]);
 
   useEffect(() => {
-    const stored = localStorage.getItem(`guessedShield-${dayString}`);
+    const stored = readGameStorage(`guessedShield-${dayString}`, userId);
     setGuessedShield(stored ? JSON.parse(stored) : false);
-    const storedMap = localStorage.getItem(`guessedMap-${dayString}`);
+    const storedMap = readGameStorage(`guessedMap-${dayString}`, userId);
     setGuessedMap(storedMap ? JSON.parse(storedMap) : false);
-    const storedMunicipalities = localStorage.getItem(
-      `guessedMunicipalities-${dayString}`
-    );
+    const storedMunicipalities = readGameStorage(`guessedMunicipalities-${dayString}`, userId);
     setGuessedMunicipalities(
       storedMunicipalities ? JSON.parse(storedMunicipalities) : false
     );
-    setShieldAttemptResult(getStoredBonusAttemptResult(`shieldAttemptResult-${dayString}`));
+    setShieldAttemptResult(getStoredBonusAttemptResult(shieldAttemptStorageKey));
     setMunicipalitiesAttemptResult(
-      getStoredBonusAttemptResult(`municipalitiesAttemptResult-${dayString}`)
+      getStoredBonusAttemptResult(municipalitiesAttemptStorageKey)
     );
   }, [dayString]);
 
   useEffect(() => {
-    localStorage.setItem(`guessedShield-${dayString}`, JSON.stringify(guessedShield));
+    localStorage.setItem(storageKey(`guessedShield-${dayString}`), JSON.stringify(guessedShield));
   }, [guessedShield, dayString]);
   
   // Persist guessedMap in localStorage
   useEffect(() => {
-    localStorage.setItem(`guessedMap-${dayString}`, JSON.stringify(guessedMap));
+    localStorage.setItem(storageKey(`guessedMap-${dayString}`), JSON.stringify(guessedMap));
   }, [guessedMap, dayString]);
 
   useEffect(() => {
-    localStorage.setItem(
-      `guessedMunicipalities-${dayString}`,
+    localStorage.setItem(storageKey(`guessedMunicipalities-${dayString}`),
       JSON.stringify(guessedMunicipalities)
     );
   }, [guessedMunicipalities, dayString]);
@@ -275,26 +282,26 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   const [showNewPhase, setShowNewPhase] = useState(false);
   const [hasParticipatedInNewPhase, setHasParticipatedInNewPhase] = useState(() => {
-    const storedValue = localStorage.getItem(`hasParticipatedInNewPhase-${dayString}`);
+    const storedValue = readGameStorage(`hasParticipatedInNewPhase-${dayString}`, userId);
     return storedValue ? JSON.parse(storedValue) : false;
   });
 
   const [showMapPhase, setShowMapPhase] = useState(false);
   const [hasParticipatedInMapPhase, setHasParticipatedInMapPhase] = useState(() => {
-    const storedValue = localStorage.getItem(`hasParticipatedInMapPhase-${dayString}`);
+    const storedValue = readGameStorage(`hasParticipatedInMapPhase-${dayString}`, userId);
     return storedValue ? JSON.parse(storedValue) : false;
   });
   const [showMunicipalitiesPhase, setShowMunicipalitiesPhase] = useState(false);
 
   useEffect(() => {
-    const storedShieldAttempt = localStorage.getItem(`hasParticipatedInNewPhase-${dayString}`);
+    const storedShieldAttempt = readGameStorage(`hasParticipatedInNewPhase-${dayString}`, userId);
     setHasParticipatedInNewPhase(storedShieldAttempt ? JSON.parse(storedShieldAttempt) : false);
-    const storedMapAttempt = localStorage.getItem(`hasParticipatedInMapPhase-${dayString}`);
+    const storedMapAttempt = readGameStorage(`hasParticipatedInMapPhase-${dayString}`, userId);
     setHasParticipatedInMapPhase(storedMapAttempt ? JSON.parse(storedMapAttempt) : false);
   }, [dayString]);
 
   useEffect(() => {
-    if (!remoteDailyResult || remoteDailyResult.game_date !== dayString) {
+    if (!remoteDailyResult || remoteDailyResult.user_id !== userId || remoteDailyResult.game_date !== dayString) {
       return;
     }
 
@@ -424,6 +431,10 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
         if (cancelled) {
           return;
         }
+        if (syncedResult && historyReady) {
+          await statsService.syncStatsToSupabase(userId, getStatsData(userId));
+        }
+        if (cancelled) return;
 
         const leaderboard = await statsService.getMonthlyLeaderboard(dayString, 100);
         if (!cancelled) {
@@ -454,6 +465,7 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
     guessedMunicipalities,
     guessedShield,
     guesses,
+    historyReady,
     userId,
   ]);
 
@@ -474,11 +486,11 @@ export function Game({ settingsData, updateSettings, onLoginClick }: GameProps) 
   }, [gameEnded, guesses]);
 
   useEffect(() => {
-    localStorage.setItem(`hasParticipatedInNewPhase-${dayString}`, JSON.stringify(hasParticipatedInNewPhase));
+    localStorage.setItem(storageKey(`hasParticipatedInNewPhase-${dayString}`), JSON.stringify(hasParticipatedInNewPhase));
   }, [hasParticipatedInNewPhase, dayString]);
 
   useEffect(() => {
-    localStorage.setItem(`hasParticipatedInMapPhase-${dayString}`, JSON.stringify(hasParticipatedInMapPhase));
+    localStorage.setItem(storageKey(`hasParticipatedInMapPhase-${dayString}`), JSON.stringify(hasParticipatedInMapPhase));
   }, [hasParticipatedInMapPhase, dayString]);
 
   const handleSubmit = useCallback(

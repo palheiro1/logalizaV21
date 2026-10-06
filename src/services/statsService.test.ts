@@ -1,16 +1,26 @@
 import { supabase } from "../lib/supabase";
 import { statsService } from "./statsService";
 import { Guess } from "../domain/guess";
+import { calculateStatsData, saveStatsBaseline } from "../domain/stats";
 import { vi } from "vitest";
 
 vi.mock("../lib/supabase", () => ({
   supabase: {
     from: vi.fn(),
     rpc: vi.fn(),
+    auth: { getSession: vi.fn() },
   },
 }));
 
 const jest = vi;
+
+function authorizedBuilder<T extends object>(builder: T) {
+  return Object.assign(builder, { setHeader: vi.fn().mockReturnThis() });
+}
+
+function rpcResponse(result: object) {
+  return authorizedBuilder(Promise.resolve(result));
+}
 
 const hit = (): Guess => ({
   name: "Hit",
@@ -27,10 +37,14 @@ const miss = (): Guess => ({
 describe("statsService championship methods", () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    localStorage.clear();
+    (supabase.auth.getSession as jest.Mock).mockResolvedValue({
+      data: { session: { user: { id: "user-1" }, access_token: "user-1-token" } }, error: null
+    });
   });
 
   it("submits a completed daily result through the official RPC", async () => {
-    (supabase.rpc as jest.Mock).mockResolvedValue({
+    (supabase.rpc as jest.Mock).mockReturnValue(rpcResponse({
       data: {
         id: "result-1",
         user_id: "user-1",
@@ -50,7 +64,7 @@ describe("statsService championship methods", () => {
         updated_at: "2026-06-19T00:00:00.000Z",
       },
       error: null,
-    });
+    }));
 
     await statsService.syncDailyResultToSupabase(
       "user-1",
@@ -69,9 +83,62 @@ describe("statsService championship methods", () => {
     });
   });
 
+  it("rejects a daily write when the active session belongs to another account", async () => {
+    (supabase.auth.getSession as jest.Mock).mockResolvedValue({
+      data: { session: { user: { id: "secondary" }, access_token: "secondary-token" } }, error: null,
+    });
+    expect(await statsService.syncDailyResultToSupabase("user-1", "2026-10-06", [hit()], true, true)).toBeNull();
+    expect(supabase.rpc).not.toHaveBeenCalled();
+    expect(supabase.from).not.toHaveBeenCalled();
+  });
+
+  it("pins a pending submission to its original session even if the account switches", async () => {
+    const response = rpcResponse({ data: { user_id: "user-1", guesses: [hit()] }, error: null });
+    (supabase.rpc as jest.Mock).mockImplementation(() => {
+      (supabase.auth.getSession as jest.Mock).mockResolvedValue({
+        data: { session: { user: { id: "secondary" }, access_token: "secondary-token" } }, error: null,
+      });
+      return response;
+    });
+    await statsService.syncDailyResultToSupabase("user-1", "2026-10-06", [hit()], false, false);
+    expect(response.setHeader).toHaveBeenCalledWith("Authorization", "Bearer user-1-token");
+  });
+
+  it("also rejects aggregate writes for an account that is no longer signed in", async () => {
+    const stats = calculateStatsData({});
+    saveStatsBaseline("user-1", { stats, guesses: {}, updatedAt: "" });
+    (supabase.auth.getSession as jest.Mock).mockResolvedValue({
+      data: { session: { user: { id: "secondary" }, access_token: "secondary-token" } }, error: null,
+    });
+    expect(await statsService.syncStatsToSupabase("user-1", stats)).toBeNull();
+    expect(supabase.from).not.toHaveBeenCalled();
+  });
+
+  it("loads a paginated account history and the latest statistics snapshot", async () => {
+    const results = Array.from({ length: 501 }, (_, index) => ({
+      game_date: new Date(Date.UTC(2025, 0, index + 1)).toISOString().slice(0, 10), guesses: [hit()],
+    }));
+    const range = vi.fn().mockResolvedValueOnce({ data: results.slice(0, 500), error: null })
+      .mockResolvedValueOnce({ data: results.slice(500), error: null });
+    const historyQuery = { eq: vi.fn().mockReturnThis(), order: vi.fn().mockReturnThis(), range };
+    const stats = { user_id: "user-1", played: 501 };
+    const statsQuery = { eq: vi.fn().mockReturnThis(), order: vi.fn().mockReturnThis(),
+      limit: vi.fn().mockReturnThis(), maybeSingle: vi.fn().mockResolvedValue({ data: stats, error: null }) };
+    (supabase.from as jest.Mock).mockImplementation(table => ({
+      select: vi.fn().mockReturnValue(table === "daily_results" ? historyQuery : statsQuery),
+    }));
+    const history = await statsService.loadAccountHistory("user-1");
+    expect(Object.keys(history.guesses)).toHaveLength(501);
+    expect(history.stats).toBe(stats);
+    expect(historyQuery.eq).toHaveBeenCalledWith("user_id", "user-1");
+    expect(statsQuery.eq).toHaveBeenCalledWith("user_id", "user-1");
+    expect(statsQuery.order).toHaveBeenCalledWith("updated_at", { ascending: false });
+    expect(range.mock.calls).toEqual([[0, 499], [500, 999]]);
+  });
+
   it("submits the municipalities bonus after a completed loss", async () => {
     const losingGuesses = [miss(), miss(), miss(), miss()];
-    (supabase.rpc as jest.Mock).mockResolvedValue({
+    (supabase.rpc as jest.Mock).mockReturnValue(rpcResponse({
       data: {
         id: "result-1",
         user_id: "user-1",
@@ -91,7 +158,7 @@ describe("statsService championship methods", () => {
         updated_at: "2026-06-19T00:00:00.000Z",
       },
       error: null,
-    });
+    }));
 
     await statsService.syncDailyResultToSupabase(
       "user-1",
@@ -112,14 +179,14 @@ describe("statsService championship methods", () => {
   });
 
   it("falls back to the legacy daily result upsert when the official RPC is missing", async () => {
-    (supabase.rpc as jest.Mock).mockResolvedValue({
+    (supabase.rpc as jest.Mock).mockReturnValue(rpcResponse({
       data: null,
       error: {
         code: "PGRST202",
         message:
           "Could not find the function public.submit_daily_result in the schema cache",
       },
-    });
+    }));
     const single = jest.fn().mockResolvedValue({
       data: {
         id: "result-1",
@@ -144,11 +211,11 @@ describe("statsService championship methods", () => {
       data: null,
       error: null,
     });
-    const eqGameDate = jest.fn(() => ({ maybeSingle }));
+    const eqGameDate = jest.fn(() => authorizedBuilder({ maybeSingle }));
     const eqUserId = jest.fn(() => ({ eq: eqGameDate }));
     const selectExisting = jest.fn(() => ({ eq: eqUserId }));
     const selectUpsert = jest.fn(() => ({ single }));
-    const upsert = jest.fn(() => ({ select: selectUpsert }));
+    const upsert = jest.fn(() => authorizedBuilder({ select: selectUpsert }));
     (supabase.from as jest.Mock)
       .mockReturnValueOnce({ select: selectExisting })
       .mockReturnValueOnce({ upsert });
@@ -191,14 +258,14 @@ describe("statsService championship methods", () => {
   });
 
   it("preserves existing bonus flags in the legacy daily result upsert", async () => {
-    (supabase.rpc as jest.Mock).mockResolvedValue({
+    (supabase.rpc as jest.Mock).mockReturnValue(rpcResponse({
       data: null,
       error: {
         code: "PGRST202",
         message:
           "Could not find the function public.submit_daily_result in the schema cache",
       },
-    });
+    }));
     const maybeSingle = jest.fn().mockResolvedValue({
       data: {
         guesses: [miss(), hit()],
@@ -212,7 +279,7 @@ describe("statsService championship methods", () => {
       },
       error: null,
     });
-    const eqGameDate = jest.fn(() => ({ maybeSingle }));
+    const eqGameDate = jest.fn(() => authorizedBuilder({ maybeSingle }));
     const eqUserId = jest.fn(() => ({ eq: eqGameDate }));
     const selectExisting = jest.fn(() => ({ eq: eqUserId }));
     const single = jest.fn().mockResolvedValue({
@@ -236,7 +303,7 @@ describe("statsService championship methods", () => {
       error: null,
     });
     const selectUpsert = jest.fn(() => ({ single }));
-    const upsert = jest.fn(() => ({ select: selectUpsert }));
+    const upsert = jest.fn(() => authorizedBuilder({ select: selectUpsert }));
     (supabase.from as jest.Mock)
       .mockReturnValueOnce({ select: selectExisting })
       .mockReturnValueOnce({ upsert });
@@ -282,7 +349,7 @@ describe("statsService championship methods", () => {
       },
       error: null,
     });
-    const eqGameDate = jest.fn(() => ({ maybeSingle }));
+    const eqGameDate = jest.fn(() => authorizedBuilder({ maybeSingle }));
     const eqUserId = jest.fn(() => ({ eq: eqGameDate }));
     const select = jest.fn(() => ({ eq: eqUserId }));
     (supabase.from as jest.Mock).mockReturnValue({ select });
@@ -305,7 +372,7 @@ describe("statsService championship methods", () => {
   });
 
   it("calls the monthly leaderboard RPC with the month start", async () => {
-    (supabase.rpc as jest.Mock).mockResolvedValue({
+    (supabase.rpc as jest.Mock).mockReturnValue(rpcResponse({
       data: [
         {
           user_id: "user-1",
@@ -325,7 +392,7 @@ describe("statsService championship methods", () => {
         },
       ],
       error: null,
-    });
+    }));
 
     const leaderboard = await statsService.getMonthlyLeaderboard(
       "2026-06-19"
@@ -345,10 +412,10 @@ describe("statsService championship methods", () => {
   });
 
   it("loads the closed previous month leaderboard for the first-day recap", async () => {
-    (supabase.rpc as jest.Mock).mockResolvedValue({
+    (supabase.rpc as jest.Mock).mockReturnValue(rpcResponse({
       data: [],
       error: null,
-    });
+    }));
 
     await statsService.getPreviousMonthlyLeaderboard("2026-06-01");
 
@@ -359,10 +426,10 @@ describe("statsService championship methods", () => {
   });
 
   it("loads December as the previous month for a January first-day recap", async () => {
-    (supabase.rpc as jest.Mock).mockResolvedValue({
+    (supabase.rpc as jest.Mock).mockReturnValue(rpcResponse({
       data: [],
       error: null,
-    });
+    }));
 
     await statsService.getPreviousMonthlyLeaderboard("2026-01-01");
 

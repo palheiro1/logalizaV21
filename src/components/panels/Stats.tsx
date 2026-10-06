@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { formatDistance } from "../../domain/geography";
 import { getStatsData } from "../../domain/stats";
+import { useAuth } from "../../contexts/AuthContext";
 import { Panel } from "./Panel";
 
 interface StatsProps {
@@ -12,6 +13,7 @@ interface StatsProps {
 
 export function Stats({ isOpen, close, distanceUnit }: StatsProps) {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const {
     played,
     winRatio,
@@ -19,7 +21,7 @@ export function Stats({ isOpen, close, distanceUnit }: StatsProps) {
     maxStreak,
     averageBestDistance,
     guessDistribution,
-  } = getStatsData();
+  } = getStatsData(user?.id);
 
   const maxDistribution = Math.max(...Object.values(guessDistribution));
   const distributionBase = maxDistribution || 1;

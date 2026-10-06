@@ -1,6 +1,7 @@
 import { Guess } from "../domain/guess";
 import { recoverMissedChampionshipResults } from "./championshipRecovery";
 import { statsService } from "./statsService";
+import { gameStorageKey } from "../domain/gameStorage";
 import { vi } from "vitest";
 
 vi.mock("./statsService", () => ({
@@ -28,15 +29,25 @@ describe("recoverMissedChampionshipResults", () => {
     jest.resetAllMocks();
   });
 
+  it("does not recover another account's games or legacy unowned history", async () => {
+    const storage = createStorage({
+      guesses: JSON.stringify({ "2026-09-01": [hit] }),
+      [gameStorageKey("guesses", "original")]: JSON.stringify({ "2026-09-02": [hit] }),
+    });
+    expect(await recoverMissedChampionshipResults("secondary", storage)).toBe(0);
+    expect(statsService.getDailyResultFromSupabase).not.toHaveBeenCalled();
+    expect(statsService.syncDailyResultToSupabase).not.toHaveBeenCalled();
+  });
+
   it("recovers only completed missing results and preserves stored bonuses", async () => {
     const storage = createStorage({
-      guesses: JSON.stringify({
+      [gameStorageKey("guesses", "user-1")]: JSON.stringify({
         "2026-09-01": [miss, hit],
         "2026-09-02": [miss],
       }),
-      "guessedShield-2026-09-01": "true",
-      "guessedMap-2026-09-01": "false",
-      "guessedMunicipalities-2026-09-01": "true",
+      [gameStorageKey("guessedShield-2026-09-01", "user-1")]: "true",
+      [gameStorageKey("guessedMap-2026-09-01", "user-1")]: "false",
+      [gameStorageKey("guessedMunicipalities-2026-09-01", "user-1")]: "true",
     });
     (statsService.getDailyResultFromSupabase as jest.Mock).mockResolvedValue(
       null
@@ -65,7 +76,7 @@ describe("recoverMissedChampionshipResults", () => {
 
   it("does not overwrite a result that already exists", async () => {
     const storage = createStorage({
-      guesses: JSON.stringify({ "2026-09-01": [hit] }),
+      [gameStorageKey("guesses", "user-1")]: JSON.stringify({ "2026-09-01": [hit] }),
     });
     (statsService.getDailyResultFromSupabase as jest.Mock).mockResolvedValue({
       id: "existing-result",
@@ -83,7 +94,7 @@ describe("recoverMissedChampionshipResults", () => {
 
   it("leaves recovery pending when Supabase cannot save a missing result", async () => {
     const storage = createStorage({
-      guesses: JSON.stringify({ "2026-09-01": [hit] }),
+      [gameStorageKey("guesses", "user-1")]: JSON.stringify({ "2026-09-01": [hit] }),
     });
     (statsService.getDailyResultFromSupabase as jest.Mock).mockResolvedValue(
       null

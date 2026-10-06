@@ -6,8 +6,7 @@ import { Guess, loadAllGuesses, saveGuesses } from "../domain/guess";
 import { countriesWithImage } from "./../environment";
 import { useAuth } from "../contexts/AuthContext";
 import { DailyResult, statsService } from "../services/statsService";
-import { getStatsData } from "../domain/stats";
-import { MAX_TRY_COUNT } from "../domain/scoring";
+import { gameStorageKey } from "../domain/gameStorage";
 import {
   AudioSample,
   audioSamples,
@@ -55,7 +54,7 @@ export function useTodays(dayString: string): [
     useState<DailyResult | null>(null);
 
   const addGuess = useCallback(
-    async (newGuess: Guess) => {
+    (newGuess: Guess) => {
       if (todays == null) {
         return;
       }
@@ -63,29 +62,15 @@ export function useTodays(dayString: string): [
       const newGuesses = [...todays.guesses, newGuess];
 
       setTodays((prev) => ({ country: prev.country, guesses: newGuesses }));
-      saveGuesses(dayString, newGuesses);
-
-      // Sync stats to Supabase when game is completed (won or max tries reached)
-      // Only if user is logged in
-      if (userId) {
-        const isGameCompleted =
-          newGuess.distance === 0 || newGuesses.length >= MAX_TRY_COUNT;
-        if (isGameCompleted) {
-          try {
-            const currentStats = getStatsData();
-            await statsService.syncStatsToSupabase(userId, currentStats);
-          } catch (error) {
-            console.error("useTodays: Error syncing stats to Supabase:", error);
-          }
-        }
-      }
+      saveGuesses(dayString, newGuesses, userId);
+      if (!userId) localStorage.setItem(gameStorageKey(`guestPlayed-${dayString}`), "true");
     },
     [dayString, todays, userId]
   );
 
   useEffect(() => {
     let cancelled = false;
-    const guesses = loadAllGuesses()[dayString] ?? [];
+    const guesses = loadAllGuesses(userId)[dayString] ?? [];
     const selection = getGlobalContentForDay(dayString);
     const country = selection.country;
     setTodays({ country, guesses });
@@ -100,13 +85,13 @@ export function useTodays(dayString: string): [
         userId,
         dayString
       );
-      if (cancelled || !dailyResult) {
+      if (cancelled || !dailyResult || dailyResult.user_id !== userId || dailyResult.game_date !== dayString) {
         return;
       }
 
       setRemoteDailyResult(dailyResult);
       setTodays({ country, guesses: dailyResult.guesses });
-      saveGuesses(dayString, dailyResult.guesses);
+      saveGuesses(dayString, dailyResult.guesses, userId);
     }
 
     hydrateFromSupabase();

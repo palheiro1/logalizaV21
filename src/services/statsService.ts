@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase'
-import { StatsData } from '../domain/stats'
-import { Guess } from '../domain/guess'
+import { StatsData, loadStatsBaseline, saveStatsBaseline } from '../domain/stats'
+import { Guess, loadAllGuesses } from '../domain/guess'
 import {
   calculateDailyScore,
   MAP_BONUS_POINTS,
@@ -87,6 +87,24 @@ interface SupabaseErrorLike {
   message?: string
 }
 
+export function statsDataFromUserStats(stats: UserStats): StatsData {
+  return {
+    played: Number(stats.played),
+    currentStreak: Number(stats.current_streak),
+    maxStreak: Number(stats.max_streak),
+    winRatio: Number(stats.win_ratio),
+    averageBestDistance: Number(stats.average_best_distance),
+    guessDistribution: Object.fromEntries(
+      [1, 2, 3, 4].map(key => [key, Number(stats.guess_distribution[String(key)] ?? 0)])
+    ) as StatsData['guessDistribution']
+  }
+}
+
+async function getWriteAccessToken(userId: string): Promise<string | null> {
+  const { data: { session }, error } = await supabase.auth.getSession()
+  return !error && session?.user.id === userId ? session.access_token : null
+}
+
 function isGuess(value: unknown): value is Guess {
   if (typeof value !== 'object' || value == null) {
     return false
@@ -126,13 +144,15 @@ async function syncDailyResultWithLegacyUpsert(
   guessedShield: boolean,
   guessedMap: boolean,
   guessedMunicipalities: boolean,
-  score: ReturnType<typeof calculateDailyScore>
+  score: ReturnType<typeof calculateDailyScore>,
+  accessToken: string
 ): Promise<DailyResult | null> {
   const { data: existingResult, error: existingError } = await supabase
     .from('daily_results')
     .select('guesses,completed,won,tries_count,best_distance,shield_bonus,map_bonus,municipalities_bonus,main_score')
     .eq('user_id', userId)
     .eq('game_date', gameDate)
+    .setHeader('Authorization', `Bearer ${accessToken}`)
     .maybeSingle()
 
   if (existingError && existingError.code !== 'PGRST116') {
@@ -176,6 +196,7 @@ async function syncDailyResultWithLegacyUpsert(
   const { data, error } = await supabase
     .from('daily_results')
     .upsert(dailyResult, { onConflict: 'user_id,game_date' })
+    .setHeader('Authorization', `Bearer ${accessToken}`)
     .select()
     .single()
 
@@ -307,6 +328,11 @@ export const statsService = {
   },
 
   async syncStatsToSupabase(userId: string, stats: StatsData): Promise<UserStats | null> {
+    // Do not overwrite existing history if account hydration has failed.
+    if (!loadStatsBaseline(userId)) return null
+    const guessesSnapshot = loadAllGuesses(userId)
+    const accessToken = await getWriteAccessToken(userId)
+    if (!accessToken) return null
     // First check if user already has stats
     const { data: existing, error: fetchError } = await supabase
       .from('user_stats')
@@ -314,6 +340,7 @@ export const statsService = {
       .eq('user_id', userId)
       .order('updated_at', { ascending: false })
       .limit(1)
+      .setHeader('Authorization', `Bearer ${accessToken}`)
 
     if (fetchError && fetchError.code !== 'PGRST116') {
       console.error('Error checking existing stats:', fetchError)
@@ -338,6 +365,7 @@ export const statsService = {
         .from('user_stats')
         .update(statsRecord)
         .eq('id', existing[0].id)
+        .setHeader('Authorization', `Bearer ${accessToken}`)
         .select()
         .single()
 
@@ -351,6 +379,7 @@ export const statsService = {
       const { data, error } = await supabase
         .from('user_stats')
         .insert([statsRecord])
+        .setHeader('Authorization', `Bearer ${accessToken}`)
         .select()
         .single()
 
@@ -361,6 +390,11 @@ export const statsService = {
       result = data
     }
 
+    saveStatsBaseline(userId, {
+      stats,
+      guesses: guessesSnapshot,
+      updatedAt: result.updated_at
+    })
     return result
   },
 
@@ -369,7 +403,9 @@ export const statsService = {
       .from('user_stats')
       .select('*')
       .eq('user_id', userId)
-      .single()
+      .order('updated_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
 
     if (error) {
       console.error('Error loading stats from Supabase:', error)
@@ -377,6 +413,29 @@ export const statsService = {
     }
 
     return data
+  },
+
+  async loadAccountHistory(userId: string): Promise<{
+    guesses: Record<string, Guess[]>,
+    stats: UserStats | null
+  }> {
+    const statsPromise = supabase.from('user_stats').select('*')
+      .eq('user_id', userId).order('updated_at', { ascending: false })
+      .limit(1).maybeSingle()
+    const guesses: Record<string, Guess[]> = {}
+    const pageSize = 500
+    for (let offset = 0; ; offset += pageSize) {
+      const { data, error } = await supabase.from('daily_results').select('game_date,guesses')
+        .eq('user_id', userId).order('game_date').range(offset, offset + pageSize - 1)
+      if (error) throw error
+      for (const result of data ?? []) {
+        guesses[result.game_date] = Array.isArray(result.guesses) ? result.guesses.filter(isGuess) : []
+      }
+      if (!data || data.length < pageSize) break
+    }
+    const { data: stats, error } = await statsPromise
+    if (error) throw error
+    return { guesses, stats }
   },
 
   async syncDailyResultToSupabase(
@@ -398,6 +457,9 @@ export const statsService = {
       return null
     }
 
+    const accessToken = await getWriteAccessToken(userId)
+    if (!accessToken) return null
+
     const { data, error } = await supabase.rpc('submit_daily_result', {
       target_game_date: gameDate,
       submitted_guesses: guesses as unknown as Json,
@@ -405,7 +467,7 @@ export const statsService = {
       submitted_map_bonus: score.won && guessedMap,
       submitted_municipalities_bonus:
         score.completed && guessedMunicipalities
-    })
+    }).setHeader('Authorization', `Bearer ${accessToken}`)
 
     if (error) {
       if (isMissingSubmitDailyResultRpc(error)) {
@@ -416,7 +478,8 @@ export const statsService = {
           guessedShield,
           guessedMap,
           guessedMunicipalities,
-          score
+          score,
+          accessToken
         )
       }
 
