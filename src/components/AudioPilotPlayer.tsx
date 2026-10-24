@@ -19,6 +19,7 @@ function formatTime(seconds: number): string {
 
 export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const playbackAttempt = useRef(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasEnded, setHasEnded] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -36,17 +37,30 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
       return;
     }
 
+    playbackAttempt.current += 1;
     audio.pause();
     audio.load();
     setIsPlaying(false);
     setHasEnded(false);
     setElapsed(0);
     setError(false);
-  }, [sample.id]);
+
+    return () => {
+      playbackAttempt.current += 1;
+      audio.pause();
+    };
+  }, [sample.id, sample.audioUrl]);
+
+  const handleError = useCallback(() => {
+    playbackAttempt.current += 1;
+    audioRef.current?.pause();
+    setIsPlaying(false);
+    setError(true);
+  }, []);
 
   const stopAtClipEnd = useCallback(() => {
     const audio = audioRef.current;
-    if (!audio) {
+    if (!audio || hasEnded) {
       return;
     }
 
@@ -60,7 +74,7 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
       setHasEnded(true);
       setElapsed(clipDuration);
     }
-  }, [clipDuration, sample.clipEnd, sample.clipStart]);
+  }, [clipDuration, hasEnded, sample.clipEnd, sample.clipStart]);
 
   const togglePlayback = useCallback(async () => {
     const audio = audioRef.current;
@@ -68,31 +82,44 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
       return;
     }
 
+    const attempt = ++playbackAttempt.current;
     if (!audio.paused) {
       audio.pause();
       setIsPlaying(false);
       return;
     }
 
-    if (
-      hasEnded ||
-      audio.currentTime < sample.clipStart ||
-      audio.currentTime >= sample.clipEnd
-    ) {
-      audio.currentTime = sample.clipStart;
-      setElapsed(0);
-      setHasEnded(false);
-    }
-
     try {
       setError(false);
+      // play() alone cannot recover an element whose media resource failed.
+      // Reload on a user gesture; loadedmetadata will seek to the clip start.
+      if (error || audio.error) {
+        audio.load();
+        setElapsed(0);
+        setHasEnded(false);
+      }
+
+      if (
+        audio.readyState >= HTMLMediaElement.HAVE_METADATA &&
+        (hasEnded ||
+          audio.currentTime < sample.clipStart ||
+          audio.currentTime >= sample.clipEnd)
+      ) {
+        audio.currentTime = sample.clipStart;
+        setElapsed(0);
+        setHasEnded(false);
+      }
+
       await audio.play();
-      setIsPlaying(true);
+      if (attempt === playbackAttempt.current) {
+        setIsPlaying(true);
+      }
     } catch (_error) {
-      setError(true);
-      setIsPlaying(false);
+      if (attempt === playbackAttempt.current) {
+        handleError();
+      }
     }
-  }, [hasEnded, sample.clipEnd, sample.clipStart]);
+  }, [error, handleError, hasEnded, sample.clipEnd, sample.clipStart]);
 
   return (
     <section
@@ -104,12 +131,16 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
         preload="metadata"
         src={sample.audioUrl}
         onLoadedMetadata={({ currentTarget }) => {
-          currentTarget.currentTime = sample.clipStart;
+          try {
+            currentTarget.currentTime = sample.clipStart;
+          } catch (_error) {
+            handleError();
+          }
         }}
         onTimeUpdate={stopAtClipEnd}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
-        onError={() => setError(true)}
+        onError={handleError}
       />
 
       <div className="flex flex-col items-center">
@@ -122,14 +153,16 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
           onClick={togglePlayback}
           className="flex h-16 w-16 flex-none items-center justify-center rounded-full bg-blue-600 text-2xl text-white shadow-md transition hover:bg-blue-700 active:scale-95 dark:bg-blue-600 dark:hover:bg-blue-500"
           aria-label={
-            isPlaying
+            error
+              ? "Tentar carregar o áudio novamente"
+              : isPlaying
               ? "Pausar a amostra"
               : hasEnded
               ? "Ouvir novamente"
               : "Ouvir a amostra"
           }
         >
-          {isPlaying ? "❚❚" : hasEnded ? "↻" : "▶"}
+          {isPlaying ? "❚❚" : hasEnded || error ? "↻" : "▶"}
         </button>
 
         <div className="mt-4 w-full">
@@ -153,9 +186,11 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
       </div>
 
       {error && (
-        <p className="mt-3 rounded bg-red-100 p-2 text-sm text-red-800 dark:bg-red-950 dark:text-red-200">
-          Nom foi possível carregar o áudio. Verifica a ligaçom e tenta
-          novamente.
+        <p
+          role="alert"
+          className="mt-3 rounded bg-red-100 p-2 text-sm text-red-800 dark:bg-red-950 dark:text-red-200"
+        >
+          O áudio está indisponível. Podes tentar carregá-lo novamente.
         </p>
       )}
     </section>
