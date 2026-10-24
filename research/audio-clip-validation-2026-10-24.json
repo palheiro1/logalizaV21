@@ -1247,7 +1247,18 @@
           "collection48": true,
           "error": null
         },
-        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque.",
+        "productionBrowser": {
+          "id": "aelg-sotelo",
+          "src": "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 89.389389,
+          "collection48": true,
+          "license": false,
+          "error": null
+        }
       }
     },
     {
@@ -1290,7 +1301,18 @@
           "collection48": true,
           "error": null
         },
-        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque.",
+        "productionBrowser": {
+          "id": "aelg-miguel-anxo",
+          "src": "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 256.24,
+          "collection48": true,
+          "license": false,
+          "error": null
+        }
       }
     },
     {
@@ -1332,7 +1354,18 @@
           "collection48": true,
           "error": null
         },
-        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque.",
+        "productionBrowser": {
+          "id": "aelg-novoneyra",
+          "src": "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 298.399637,
+          "collection48": true,
+          "license": false,
+          "error": null
+        }
       }
     },
     {
@@ -1392,7 +1425,18 @@
           "collection48": true,
           "error": null
         },
-        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque.",
+        "productionBrowser": {
+          "id": "frontespo-sela-004",
+          "src": "https://logaliza.vercel.app/audio/frontespo-sela-animais.mp3",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 19.37,
+          "collection48": true,
+          "license": true,
+          "error": null
+        }
       }
     }
   ],
@@ -1603,6 +1647,52 @@
       "repeated": true,
       "duration": 19.37,
       "collection48": true,
+      "error": null
+    }
+  ],
+  "latestProductionBrowserChecks": [
+    {
+      "id": "aelg-sotelo",
+      "src": "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 89.389389,
+      "collection48": true,
+      "license": false,
+      "error": null
+    },
+    {
+      "id": "aelg-miguel-anxo",
+      "src": "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 256.24,
+      "collection48": true,
+      "license": false,
+      "error": null
+    },
+    {
+      "id": "aelg-novoneyra",
+      "src": "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 298.399637,
+      "collection48": true,
+      "license": false,
+      "error": null
+    },
+    {
+      "id": "frontespo-sela-004",
+      "src": "https://logaliza.vercel.app/audio/frontespo-sela-animais.mp3",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 19.37,
+      "collection48": true,
+      "license": true,
       "error": null
     }
   ]

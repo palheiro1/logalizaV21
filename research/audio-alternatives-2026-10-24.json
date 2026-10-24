@@ -5318,9 +5318,58 @@
   "productionIntegration": {
     "url": "https://logaliza.vercel.app",
     "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1",
-    "state": "LOCAL_VERIFIED_PENDING_RELEASE",
-    "tests": "71 testes passaram; TypeScript e build passaram. Reprodução, paragem no limite e repetição confirmadas no navegador para os quatro recortes.",
-    "dailySchedule": "Sem mudança de ordem ou datas. Preenche os lugares futuros já reservados a TCA, CAR, COU e PAR; hoje e histórico preservados."
+    "state": "READY",
+    "tests": "71 testes passaram; TypeScript e build passaram. Os quatro recortes reproduziram, pararam no limite e repetiram no navegador local e em produção.",
+    "dailySchedule": "Sem mudança de ordem ou datas. Preenche os lugares futuros já reservados a TCA, CAR, COU e PAR; hoje e histórico preservados.",
+    "commit": "274c63865bb8336e9b9fc3b10f3606041cdc2a60",
+    "deploymentId": "dpl_7YPv1RcSV8guPKAaXtQ5SYWp2pTt",
+    "latestBrowserChecks": [
+      {
+        "id": "aelg-sotelo",
+        "src": "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
+        "playing": true,
+        "stoppedAtBoundary": true,
+        "repeated": true,
+        "duration": 89.389389,
+        "collection48": true,
+        "license": false,
+        "error": null
+      },
+      {
+        "id": "aelg-miguel-anxo",
+        "src": "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
+        "playing": true,
+        "stoppedAtBoundary": true,
+        "repeated": true,
+        "duration": 256.24,
+        "collection48": true,
+        "license": false,
+        "error": null
+      },
+      {
+        "id": "aelg-novoneyra",
+        "src": "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
+        "playing": true,
+        "stoppedAtBoundary": true,
+        "repeated": true,
+        "duration": 298.399637,
+        "collection48": true,
+        "license": false,
+        "error": null
+      },
+      {
+        "id": "frontespo-sela-004",
+        "src": "https://logaliza.vercel.app/audio/frontespo-sela-animais.mp3",
+        "playing": true,
+        "stoppedAtBoundary": true,
+        "repeated": true,
+        "duration": 19.37,
+        "collection48": true,
+        "license": true,
+        "error": null
+      }
+    ],
+    "assetVerification": "O MP3 de Sela em produção é byte a byte igual ao excerto revisto; SHA-256 f9591aa176a12ef76b1a7a4a919b4cdb9d0635b944e9ad94ed5fc07f72d4e647."
   },
   "gapResearch": [
     {
