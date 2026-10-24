@@ -9,7 +9,8 @@ import { DailyResult, statsService } from "../services/statsService";
 import { gameStorageKey } from "../domain/gameStorage";
 import {
   AudioSample,
-  audioSamples,
+  publishedAudioSamples,
+  getActiveAudioSampleForComarca,
   getAudioSampleById,
 } from "../domain/audioSamples";
 
@@ -63,7 +64,11 @@ export function useTodays(dayString: string): [
 
       setTodays((prev) => ({ country: prev.country, guesses: newGuesses }));
       saveGuesses(dayString, newGuesses, userId);
-      if (!userId) localStorage.setItem(gameStorageKey(`guestPlayed-${dayString}`), "true");
+      if (!userId)
+        localStorage.setItem(
+          gameStorageKey(`guestPlayed-${dayString}`),
+          "true"
+        );
     },
     [dayString, todays, userId]
   );
@@ -85,7 +90,12 @@ export function useTodays(dayString: string): [
         userId,
         dayString
       );
-      if (cancelled || !dailyResult || dailyResult.user_id !== userId || dailyResult.game_date !== dayString) {
+      if (
+        cancelled ||
+        !dailyResult ||
+        dailyResult.user_id !== userId ||
+        dailyResult.game_date !== dayString
+      ) {
         return;
       }
 
@@ -186,7 +196,7 @@ function buildImagePool(): ImagePoolEntry[] {
   return entries;
 }
 
-function buildMultimediaPool(samples: AudioSample[] = audioSamples): PoolEntry[] {
+function buildMultimediaPool(samples: AudioSample[]): PoolEntry[] {
   return [
     ...buildImagePool(),
     ...samples.map(
@@ -249,6 +259,7 @@ const AUDIO_CADENCE_START = "2026-09-18";
 export const AUDIO_CADENCE_DAYS = 6;
 const AUDIO_CADENCE_SEED = "logaliza-v21-audio-cadence";
 const CADENCED_IMAGE_SEED = "logaliza-v21-cadenced-images";
+export const AUDIO_RECOVERY_START = "2026-10-24";
 
 // This exact catalogue preserves the already-published daily selections from
 // the multimedia launch until the fixed-cadence rotation begins.
@@ -265,16 +276,23 @@ const LEGACY_AUDIO_SAMPLE_IDS = [
   "ccg-388",
 ];
 
-function selectAudioForRotation(audioIndex: number): DailyContentSelection {
-  const cycle = Math.floor(audioIndex / audioSamples.length);
-  const indexInCycle = mod(audioIndex, audioSamples.length);
+function selectAudioForRotation(
+  audioIndex: number,
+  dayString: string
+): DailyContentSelection {
+  const cycle = Math.floor(audioIndex / publishedAudioSamples.length);
+  const indexInCycle = mod(audioIndex, publishedAudioSamples.length);
   const cycleSamples = shuffleArray(
-    audioSamples,
+    publishedAudioSamples,
     `${AUDIO_CADENCE_SEED}-cycle-${cycle}`
   );
-  const audioSample = cycleSamples[indexInCycle];
+  const publishedSample = cycleSamples[indexInCycle];
+  const audioSample =
+    dayString >= AUDIO_RECOVERY_START
+      ? getActiveAudioSampleForComarca(publishedSample.comarcaCode)
+      : publishedSample;
   const country = (countriesWithImage as unknown as Country[]).find(
-    ({ code }) => code === audioSample.comarcaCode
+    ({ code }) => code === publishedSample.comarcaCode
   ) as Country;
 
   return {
@@ -289,7 +307,7 @@ function selectFromCadencedRotation(dayString: string): DailyContentSelection {
   const audioIndex = Math.floor(days / AUDIO_CADENCE_DAYS);
 
   if (mod(days, AUDIO_CADENCE_DAYS) === 0) {
-    return selectAudioForRotation(audioIndex);
+    return selectAudioForRotation(audioIndex, dayString);
   }
 
   const precedingAudioDays = audioIndex + 1;

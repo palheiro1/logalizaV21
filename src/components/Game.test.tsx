@@ -42,11 +42,11 @@ beforeEach(() => {
 
 afterEach(() => vi.restoreAllMocks());
 
-test("keeps today's audio challenge playable with the same comarca's image when ILG is unavailable", async () => {
+test("keeps today's audio challenge playable with the same comarca's image when its audio source is unavailable", async () => {
   vi.spyOn(Date, "now").mockReturnValue(new Date("2026-10-24T10:00:00+02:00").getTime());
   setAccount(null);
   const { container } = render(<Game settingsData={{ ...settings, noImageMode: true, rotationMode: true }} updateSettings={vi.fn()} />);
-  await waitFor(() => expect(container.querySelector("audio")).toHaveAttribute("src", "https://ilg.usc.gal/ago/audios/120.mp3"));
+  await waitFor(() => expect(container.querySelector("audio")).toHaveAttribute("src", "https://apoi.museodopobo.gal/2953/1/MPG_NoCa_0044_001_id2953.mp3"));
   expect(screen.queryByRole("img", { name: "Pista visual alternativa da comarca" })).not.toBeInTheDocument();
 
   fireEvent.error(container.querySelector("audio")!);

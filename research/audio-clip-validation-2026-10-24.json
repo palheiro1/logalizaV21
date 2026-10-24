@@ -1,0 +1,1110 @@
+{
+  "date": "2026-10-24",
+  "scope": "35 substituições integradas; 41 comarcas com áudio ativo (34 CCG e 7 APOI). Os originais permanecem nos servidores institucionais.",
+  "methodology": [
+    "Origem municipal conferida nas fichas das instituições e na tabela territorial da app.",
+    "Intervalos ajustados usando as transcrições institucionais e ASR temporizado local; excluídas apresentações com o topónimo de origem.",
+    "Não foi realizada uma escuta humana especializada; ASR pode errar palavras. As transcrições automáticas não são publicadas nem usadas como legendas.",
+    "Recortes preservam a sequência diária de comarcas; jogos anteriores a 24-10-2026 conservam a seleção histórica.",
+    "Testes unitários da sequência completa, compatibilidade histórica e recuperação perante falha de áudio."
+  ],
+  "samples": [
+    {
+      "id": "ccg-361",
+      "comarca": "ANC",
+      "municipality": "Becerreá",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/361/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/361/a_nosa_fala_cd_3_9_o_ferreiro_e_mailo_cura.mp3",
+      "clipStart": 13.3,
+      "clipEnd": 39.7,
+      "clipDuration": 26.4,
+      "topic": "O ferreiro e mailo cura",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -15.0,
+        "peakDbfs": -1.0,
+        "fractionAboveMinus40Dbfs": 0.913,
+        "browser": {
+          "id": "ccg-361",
+          "ok": true,
+          "duration": 185.782875,
+          "start": 13.3,
+          "end": 39.7,
+          "advanced": 0.2643609999999992,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "apoi-3064",
+      "comarca": "ARC",
+      "municipality": "Arzúa",
+      "recordUrl": "https://apoi.museodopobo.gal/3064/",
+      "audioUrl": "https://apoi.museodopobo.gal/3064/1/MPG_SchSa_0020_009_b_en_Arzua_I_1_330.mp3",
+      "clipStart": 0,
+      "clipEnd": 27.8,
+      "clipDuration": 27.8,
+      "topic": "Os guardas, o rapaz e as ovelhas",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -34.0,
+        "peakDbfs": -15.9,
+        "fractionAboveMinus40Dbfs": 0.586,
+        "browser": {
+          "id": "apoi-3064",
+          "ok": true,
+          "duration": 39.161563,
+          "start": 0,
+          "end": 27.8,
+          "advanced": 0.357165,
+          "readyState": 4
+        }
+      },
+      "license": {
+        "label": "CC BY-NC 2.5 AR",
+        "url": "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      }
+    },
+    {
+      "id": "ccg-367",
+      "comarca": "ARN",
+      "municipality": "Baños de Molgas",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/367/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/367/a_nosa_fala_cd_3_14_o_linho_as_fiadas_e_os_mozos.mp3",
+      "clipStart": 15.2,
+      "clipEnd": 39.7,
+      "clipDuration": 24.5,
+      "topic": "O liño, as fiadas e os mozos",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -18.4,
+        "peakDbfs": -2.8,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-367",
+          "ok": true,
+          "duration": 249.809,
+          "start": 15.2,
+          "end": 39.7,
+          "advanced": 0.2642900000000008,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-374",
+      "comarca": "BAL",
+      "municipality": "Lobios",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/374/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/374/a_nosa_fala_cd_3_19_a_mata_do_porco.mp3",
+      "clipStart": 13,
+      "clipEnd": 41.1,
+      "clipDuration": 28.1,
+      "topic": "A mata do porco",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -23.7,
+        "peakDbfs": -6.3,
+        "fractionAboveMinus40Dbfs": 0.665,
+        "browser": {
+          "id": "ccg-374",
+          "ok": true,
+          "duration": 180.323375,
+          "start": 13,
+          "end": 41.1,
+          "advanced": 0.26425800000000166,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-382",
+      "comarca": "BAM",
+      "municipality": "Rosal (O)",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/382/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/382/a_nosa_fala_cd_2_7_a_rentabilidad_da_terra.mp3",
+      "clipStart": 16.3,
+      "clipEnd": 44.8,
+      "clipDuration": 28.5,
+      "topic": "A rendabilidade de terra",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -17.9,
+        "peakDbfs": -0.7,
+        "fractionAboveMinus40Dbfs": 0.709,
+        "browser": {
+          "id": "ccg-382",
+          "ok": true,
+          "duration": 244.1405,
+          "start": 16.3,
+          "end": 44.8,
+          "advanced": 0.26430799999999977,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-368",
+      "comarca": "BAR",
+      "municipality": "Ribeira",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/368/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/368/a_nosa_fala_cd_1_6_a_pesca_no_banco_sahariano.mp3",
+      "clipStart": 42.7,
+      "clipEnd": 72.3,
+      "clipDuration": 29.6,
+      "topic": "A pesca no banco sahariano",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -19.6,
+        "peakDbfs": -1.8,
+        "fractionAboveMinus40Dbfs": 0.791,
+        "browser": {
+          "id": "ccg-368",
+          "ok": true,
+          "duration": 520.35925,
+          "start": 42.7,
+          "end": 72.3,
+          "advanced": 0.26426099999999764,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-346",
+      "comarca": "BER",
+      "municipality": "Coristanco",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/346/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/346/a_nosa_fala_cd_1_1_a_raposa_de_morrazos.mp3",
+      "clipStart": 98.85,
+      "clipEnd": 121.85,
+      "clipDuration": 23.0,
+      "topic": "A raposa de morrazos",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -16.6,
+        "peakDbfs": -0.6,
+        "fractionAboveMinus40Dbfs": 0.809,
+        "browser": {
+          "id": "ccg-346",
+          "ok": true,
+          "duration": 635.14125,
+          "start": 98.85,
+          "end": 121.85,
+          "advanced": 0.2644290000000069,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-384",
+      "comarca": "BUR",
+      "municipality": "Fonsagrada (A)",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/384/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/384/a_nosa_fala_cd_2_9_a_companha_o_demo_e_os_velorios.mp3",
+      "clipStart": 45.4,
+      "clipEnd": 71.1,
+      "clipDuration": 25.7,
+      "topic": "A campaña, o demo e os velorios",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -18.3,
+        "peakDbfs": -1.5,
+        "fractionAboveMinus40Dbfs": 0.911,
+        "browser": {
+          "id": "ccg-384",
+          "ok": true,
+          "duration": 242.80825,
+          "start": 45.4,
+          "end": 71.1,
+          "advanced": 0.26435700000000395,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-369",
+      "comarca": "CEL",
+      "municipality": "Ramirás",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/369/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/369/a_nosa_fala_cd_3_15_a_vida_detras_da_mostrador.mp3",
+      "clipStart": 47.6,
+      "clipEnd": 68.5,
+      "clipDuration": 20.9,
+      "topic": "A vida detrás da mostrador",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -16.1,
+        "peakDbfs": -0.6,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-369",
+          "ok": true,
+          "duration": 321.75025,
+          "start": 47.6,
+          "end": 68.5,
+          "advanced": 0.26425199999999904,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-363",
+      "comarca": "CHA",
+      "municipality": "Chantada",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/363/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/363/a_nosa_fala_cd_3_11_vacacions_en_ibiza.mp3",
+      "clipStart": 14.3,
+      "clipEnd": 41.1,
+      "clipDuration": 26.8,
+      "topic": "Vacacións en Ibiza",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -21.2,
+        "peakDbfs": -2.4,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-363",
+          "ok": true,
+          "duration": 296.489875,
+          "start": 14.3,
+          "end": 41.1,
+          "advanced": 0.2643260000000005,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-364",
+      "comarca": "COM",
+      "municipality": "Teo",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/364/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/364/a_nosa_fala_cd_1_5_alguns_retallos_da_guerra_o_36.mp3",
+      "clipStart": 19.6,
+      "clipEnd": 45.2,
+      "clipDuration": 25.6,
+      "topic": "Algúns retallos da guerra do 36",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -19.6,
+        "peakDbfs": -1.8,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-364",
+          "ok": true,
+          "duration": 536.79025,
+          "start": 19.6,
+          "end": 45.2,
+          "advanced": 0.2643120000000003,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-356",
+      "comarca": "COS",
+      "municipality": "Camariñas",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/356/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/356/a_nosa_fala_cd_1_2_o_traballo_na_costa_da_morte.mp3",
+      "clipStart": 36.8,
+      "clipEnd": 58,
+      "clipDuration": 21.2,
+      "topic": "O traballo na Costa da Morte",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -21.5,
+        "peakDbfs": -3.9,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-356",
+          "ok": true,
+          "duration": 525.79275,
+          "start": 36.8,
+          "end": 58,
+          "advanced": 0.2642269999999982,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "apoi-3600",
+      "comarca": "DEC",
+      "municipality": "Vila de Cruces",
+      "recordUrl": "https://apoi.museodopobo.gal/3600/",
+      "audioUrl": "https://apoi.museodopobo.gal/3600/1/MPG_SchSa_0233_006-02_en_As_Cruces_I_1_390.mp3",
+      "clipStart": 39.5,
+      "clipEnd": 66.6,
+      "clipDuration": 27.1,
+      "topic": "O homem com duas corcovas",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -33.0,
+        "peakDbfs": -15.8,
+        "fractionAboveMinus40Dbfs": 0.491,
+        "browser": {
+          "id": "apoi-3600",
+          "ok": true,
+          "duration": 136.253129,
+          "start": 39.5,
+          "end": 66.6,
+          "advanced": 0.3571770000000001,
+          "readyState": 4
+        }
+      },
+      "license": {
+        "label": "CC BY-NC 2.5 AR",
+        "url": "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      }
+    },
+    {
+      "id": "ccg-357",
+      "comarca": "LUG",
+      "municipality": "Lugo",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/357/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/357/a_nosa_fala_cd_3_7_o_crego_e_o_cativo.mp3",
+      "clipStart": 14,
+      "clipEnd": 33,
+      "clipDuration": 19,
+      "topic": "O crego e o cativo",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -19.2,
+        "peakDbfs": -1.5,
+        "fractionAboveMinus40Dbfs": 0.916,
+        "browser": {
+          "id": "ccg-357",
+          "ok": true,
+          "duration": 175.8825,
+          "start": 14,
+          "end": 33,
+          "advanced": 0.26437800000000067,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-406",
+      "comarca": "LIM",
+      "municipality": "Rairiz de Veiga",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/406/5",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/406/cultura_popular_cd_2_6_o_cura_e_os_pantalons.mp3",
+      "clipStart": 0.2,
+      "clipEnd": 28.9,
+      "clipDuration": 28.7,
+      "topic": "O cura e os pantalóns",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -21.3,
+        "peakDbfs": -5.3,
+        "fractionAboveMinus40Dbfs": 0.962,
+        "browser": {
+          "id": "ccg-406",
+          "ok": true,
+          "duration": 68.693333,
+          "start": 0.2,
+          "end": 28.9,
+          "advanced": 0.35716499999999995,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-351",
+      "comarca": "MAR",
+      "municipality": "Cervo",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/351/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/351/a_nosa_fala_cd_3_2_o_valor_das_necoras_e_dos_centolos_de_antano.mp3",
+      "clipStart": 14.4,
+      "clipEnd": 37.4,
+      "clipDuration": 23.0,
+      "topic": "O valor das nécoras e dos centolos de antano",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -17.5,
+        "peakDbfs": -1.7,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-351",
+          "ok": true,
+          "duration": 213.342125,
+          "start": 14.4,
+          "end": 37.4,
+          "advanced": 0.26427099999999903,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-371",
+      "comarca": "MON",
+      "municipality": "Castrelo do Val",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/371/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/371/a_nosa_fala_cd_3_17_os_estudiantes_e_as_papas.mp3",
+      "clipStart": 30,
+      "clipEnd": 56.9,
+      "clipDuration": 26.9,
+      "topic": "Os estudiantes e as papas",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -17.7,
+        "peakDbfs": -1.6,
+        "fractionAboveMinus40Dbfs": 0.829,
+        "browser": {
+          "id": "ccg-371",
+          "ok": true,
+          "duration": 174.8115,
+          "start": 30,
+          "end": 56.9,
+          "advanced": 0.26429199999999753,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-377",
+      "comarca": "MOR",
+      "municipality": "Marín",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/377/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/377/a_nosa_fala_cd_2_2_varios_textos.mp3",
+      "clipStart": 42.9,
+      "clipEnd": 69.8,
+      "clipDuration": 26.9,
+      "topic": "Varios textos",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -18.5,
+        "peakDbfs": -2.9,
+        "fractionAboveMinus40Dbfs": 0.9,
+        "browser": {
+          "id": "ccg-377",
+          "ok": true,
+          "duration": 352.548625,
+          "start": 42.9,
+          "end": 69.8,
+          "advanced": 0.2642809999999969,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-360",
+      "comarca": "MUR",
+      "municipality": "Noia",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/360/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/360/a_nosa_fala_cd_1_4_as_diversions_e_a_mocidade_de_antes.mp3",
+      "clipStart": 13,
+      "clipEnd": 41.34,
+      "clipDuration": 28.34,
+      "topic": "As diversións e a mocidade de antes",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -16.6,
+        "peakDbfs": -0.6,
+        "fractionAboveMinus40Dbfs": 0.901,
+        "browser": {
+          "id": "ccg-360",
+          "ok": true,
+          "duration": 281.0515,
+          "start": 13,
+          "end": 41.34,
+          "advanced": 0.26430500000000023,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-355",
+      "comarca": "ORD",
+      "municipality": "Oroso",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/355/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/355/a_nosa_fala_cd_3_6_varios_textos.mp3",
+      "clipStart": 16,
+      "clipEnd": 45.5,
+      "clipDuration": 29.5,
+      "topic": "Varios textos",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -16.1,
+        "peakDbfs": -0.4,
+        "fractionAboveMinus40Dbfs": 0.827,
+        "browser": {
+          "id": "ccg-355",
+          "ok": true,
+          "duration": 130.690625,
+          "start": 16,
+          "end": 45.5,
+          "advanced": 0.2642649999999982,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-350",
+      "comarca": "ORT",
+      "municipality": "Cedeira",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/350/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/350/a_nosa_fala_cd_3_1_os_milagres_de_santo_andre_de_teixido.mp3",
+      "clipStart": 60.7,
+      "clipEnd": 78.1,
+      "clipDuration": 17.4,
+      "topic": "Os milagres de santo André de Teixido",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -17.7,
+        "peakDbfs": -1.3,
+        "fractionAboveMinus40Dbfs": 0.839,
+        "browser": {
+          "id": "ccg-350",
+          "ok": true,
+          "duration": 223.6605,
+          "start": 60.7,
+          "end": 78.1,
+          "advanced": 0.26427000000000334,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "apoi-2953",
+      "comarca": "PON",
+      "municipality": "Poio",
+      "recordUrl": "https://apoi.museodopobo.gal/2953/",
+      "audioUrl": "https://apoi.museodopobo.gal/2953/1/MPG_NoCa_0044_001_id2953.mp3",
+      "clipStart": 26.5,
+      "clipEnd": 51.8,
+      "clipDuration": 25.3,
+      "topic": "O cura e as perdizes",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -8.7,
+        "peakDbfs": -0.3,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "apoi-2953",
+          "ok": true,
+          "duration": 170.684063,
+          "start": 26.5,
+          "end": 51.8,
+          "advanced": 0.3571269999999984,
+          "readyState": 4
+        }
+      },
+      "license": {
+        "label": "CC BY-NC 2.5 AR",
+        "url": "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      }
+    },
+    {
+      "id": "ccg-417",
+      "comarca": "RIB",
+      "municipality": "Cenlle",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/417/5",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/417/cultura_popular_cd_2_10_o_pollino_e_o_cepillo.mp3",
+      "clipStart": 0,
+      "clipEnd": 24.5,
+      "clipDuration": 24.5,
+      "topic": "O pollino e o cepillo",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -23.5,
+        "peakDbfs": -4.9,
+        "fractionAboveMinus40Dbfs": 0.678,
+        "browser": {
+          "id": "ccg-417",
+          "ok": true,
+          "duration": 436.92,
+          "start": 0,
+          "end": 24.5,
+          "advanced": 0.357105,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-375",
+      "comarca": "SAL",
+      "municipality": "Cambados",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/375/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/375/a_nosa_fala_cd1_8_o_marisqueo_na_ria_da_arousa.mp3",
+      "clipStart": 13.3,
+      "clipEnd": 38.3,
+      "clipDuration": 25.0,
+      "topic": "O marisqueo na Ría da Arousa",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -18.8,
+        "peakDbfs": -1.2,
+        "fractionAboveMinus40Dbfs": 0.864,
+        "browser": {
+          "id": "ccg-375",
+          "ok": true,
+          "duration": 532.871875,
+          "start": 13.3,
+          "end": 38.3,
+          "advanced": 0.26428299999999894,
+          "readyState": 3
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-362",
+      "comarca": "TAV",
+      "municipality": "Forcarei",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/362/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/362/a_nosa_fala_cd_3_10_as_ruadas.mp3",
+      "clipStart": 12.4,
+      "clipEnd": 40.5,
+      "clipDuration": 28.1,
+      "topic": "As ruadas",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -17.8,
+        "peakDbfs": -1.3,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-362",
+          "ok": true,
+          "duration": 211.748625,
+          "start": 12.4,
+          "end": 40.5,
+          "advanced": 0.26433799999999863,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-365",
+      "comarca": "TLE",
+      "municipality": "Sober",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/365/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/365/a_nosa_fala_cd_3_12_o_vinho_de_amandi.mp3",
+      "clipStart": 36.4,
+      "clipEnd": 62.6,
+      "clipDuration": 26.2,
+      "topic": "O viño de Amandi",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -18.1,
+        "peakDbfs": -3.3,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-365",
+          "ok": true,
+          "duration": 302.44575,
+          "start": 36.4,
+          "end": 62.6,
+          "advanced": 0.2643989999999974,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-359",
+      "comarca": "TME",
+      "municipality": "Melide",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/359/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/359/a_nosa_fala_cd_3_8_os_novos_inventos.mp3",
+      "clipStart": 13.9,
+      "clipEnd": 41.5,
+      "clipDuration": 27.6,
+      "topic": "Os novos inventos",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -15.5,
+        "peakDbfs": -0.0,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "ccg-359",
+          "ok": true,
+          "duration": 138.81475,
+          "start": 13.9,
+          "end": 41.5,
+          "advanced": 0.26431499999999986,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "apoi-2952",
+      "comarca": "TMO",
+      "municipality": "A Lama",
+      "recordUrl": "https://apoi.museodopobo.gal/2952/",
+      "audioUrl": "https://apoi.museodopobo.gal/2952/1/MPG_NoCa_0039_004_id2952.mp3",
+      "clipStart": 20.5,
+      "clipEnd": 45.1,
+      "clipDuration": 24.6,
+      "topic": "A mulher comilona",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -19.2,
+        "peakDbfs": -0.3,
+        "fractionAboveMinus40Dbfs": 1.0,
+        "browser": {
+          "id": "apoi-2952",
+          "ok": true,
+          "duration": 259.970563,
+          "start": 20.5,
+          "end": 45.1,
+          "advanced": 0.35716599999999943,
+          "readyState": 4
+        }
+      },
+      "license": {
+        "label": "CC BY-NC 2.5 AR",
+        "url": "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      }
+    },
+    {
+      "id": "ccg-383",
+      "comarca": "TNA",
+      "municipality": "Vegadeo",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/383/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/383/a_nosa_fala_cd_2_8_os_movementos_asociativos_no_campo.mp3",
+      "clipStart": 36.7,
+      "clipEnd": 61.5,
+      "clipDuration": 24.8,
+      "topic": "Os movementos asociativos no campo",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -15.1,
+        "peakDbfs": -0.5,
+        "fractionAboveMinus40Dbfs": 0.823,
+        "browser": {
+          "id": "ccg-383",
+          "ok": true,
+          "duration": 242.416375,
+          "start": 36.7,
+          "end": 61.5,
+          "advanced": 0.2642579999999981,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-366",
+      "comarca": "TTR",
+      "municipality": "Chandrexa de Queixa",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/366/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/366/a_nosa_fala_cd_3_13_o_crego_de_pareisás.mp3",
+      "clipStart": 23,
+      "clipEnd": 50.5,
+      "clipDuration": 27.5,
+      "topic": "O crego de Pareisás",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -16.0,
+        "peakDbfs": -0.7,
+        "fractionAboveMinus40Dbfs": 0.891,
+        "browser": {
+          "id": "ccg-366",
+          "ok": true,
+          "duration": 82.70375,
+          "start": 23,
+          "end": 50.5,
+          "advanced": 0.26430500000000023,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "apoi-724",
+      "comarca": "TRA",
+      "municipality": "Fene",
+      "recordUrl": "https://apoi.museodopobo.gal/724/",
+      "audioUrl": "https://apoi.museodopobo.gal/724/1/MPG_NoCa_0035_004_id724.mp3",
+      "clipStart": 4,
+      "clipEnd": 28,
+      "clipDuration": 24,
+      "topic": "O Espírito Santo comeu-no o gato",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -25.6,
+        "peakDbfs": -5.5,
+        "fractionAboveMinus40Dbfs": 0.662,
+        "browser": {
+          "id": "apoi-724",
+          "ok": true,
+          "duration": 168.881625,
+          "start": 4,
+          "end": 28,
+          "advanced": 0.35720999999999936,
+          "readyState": 4
+        }
+      },
+      "license": {
+        "label": "CC BY-NC 2.5 AR",
+        "url": "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      }
+    },
+    {
+      "id": "apoi-709",
+      "comarca": "VDO",
+      "municipality": "O Barco de Valdeorras",
+      "recordUrl": "https://apoi.museodopobo.gal/709/",
+      "audioUrl": "https://apoi.museodopobo.gal/709/1/MPG_NoCa_0013_007_id709.mp3",
+      "clipStart": 0.6,
+      "clipEnd": 25.9,
+      "clipDuration": 25.3,
+      "topic": "A raposa e o galo",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -33.8,
+        "peakDbfs": -10.0,
+        "fractionAboveMinus40Dbfs": 0.502,
+        "browser": {
+          "id": "apoi-709",
+          "ok": true,
+          "duration": 131.813875,
+          "start": 0.6,
+          "end": 25.9,
+          "advanced": 0.35716099999999995,
+          "readyState": 4
+        }
+      },
+      "license": {
+        "label": "CC BY-NC 2.5 AR",
+        "url": "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      }
+    },
+    {
+      "id": "apoi-721",
+      "comarca": "VIG",
+      "municipality": "Baiona",
+      "recordUrl": "https://apoi.museodopobo.gal/721/",
+      "audioUrl": "https://apoi.museodopobo.gal/721/3/MPG_NoCa_0006_001_id721.mp3",
+      "clipStart": 8.6,
+      "clipEnd": 37.9,
+      "clipDuration": 29.3,
+      "topic": "As almas em pena",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -20.7,
+        "peakDbfs": -0.6,
+        "fractionAboveMinus40Dbfs": 0.812,
+        "browser": {
+          "id": "apoi-721",
+          "ok": true,
+          "duration": 140.930612,
+          "start": 8.6,
+          "end": 37.9,
+          "advanced": 0.3571539999999995,
+          "readyState": 4
+        }
+      },
+      "license": {
+        "label": "CC BY-NC 2.5 AR",
+        "url": "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      }
+    },
+    {
+      "id": "ccg-347",
+      "comarca": "VIA",
+      "municipality": "Mezquita (A)",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/347/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/347/a_nosa_fala_cd_2_14_as_coplas_dos_mangantes.mp3",
+      "clipStart": 31.7,
+      "clipEnd": 59.2,
+      "clipDuration": 27.5,
+      "topic": "As coplas dos mangantes (versos)",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -14.8,
+        "peakDbfs": -1.1,
+        "fractionAboveMinus40Dbfs": 0.811,
+        "browser": {
+          "id": "ccg-347",
+          "ok": true,
+          "duration": 305.606625,
+          "start": 31.7,
+          "end": 59.2,
+          "advanced": 0.26428599999999847,
+          "readyState": 4
+        }
+      },
+      "license": null
+    },
+    {
+      "id": "ccg-354",
+      "comarca": "TCH",
+      "municipality": "Castro de Rei",
+      "recordUrl": "https://mapasonoro.consellodacultura.gal/pezas/index/354/2",
+      "audioUrl": "https://mapasonoro.consellodacultura.gal/files/peza/url/354/a_nosa_fala_cd_3_5_un_conto_de_meigas.mp3",
+      "clipStart": 16,
+      "clipEnd": 36.15,
+      "clipDuration": 20.15,
+      "topic": "Un conto de meigas",
+      "review": {
+        "method": "Transcrição institucional confrontada com reconhecimento de fala temporizado (Whisper large-v3-turbo); descodificação PCM e medição de sinal. Não é uma audição humana certificada.",
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "rmsDbfs": -15.0,
+        "peakDbfs": -0.3,
+        "fractionAboveMinus40Dbfs": 0.756,
+        "browser": {
+          "id": "ccg-354",
+          "ok": true,
+          "duration": 104.071875,
+          "start": 16,
+          "end": 36.15,
+          "advanced": 0.26430300000000173,
+          "readyState": 4
+        }
+      },
+      "license": null
+    }
+  ],
+  "rejected": [
+    {
+      "id": "apoi-2901",
+      "comarca": "ULH",
+      "reason": "A fala inicial menciona Fonte de Uz; a maior parte do resto é cantada. Não foi selecionado um excerto narrativo adequado."
+    },
+    {
+      "id": "ccg-385",
+      "reason": "Substituído por ccg-361, de Becerreá: Candín pertence a BEZ segundo o mapa da app e não deve representar ANC."
+    },
+    {
+      "id": "ccg-353",
+      "reason": "Substituído por ccg-354, com recorte de fala mais adequado para TCH."
+    },
+    {
+      "id": "ccg-381",
+      "reason": "Substituído por ccg-382, do Rosal, para BAM."
+    }
+  ],
+  "specialCases": [
+    {
+      "id": "ccg-346",
+      "note": "Introdução editorial longa; fala local começa depois de 94 s. Recorte começa em 98.85 s."
+    },
+    {
+      "id": "ccg-347",
+      "note": "Versos recitados, não conversa espontânea; evita a introdução e nomes locais."
+    },
+    {
+      "id": "ccg-350",
+      "note": "Recorte de 17.4 s entre referências geográficas; termina antes de Santiago."
+    },
+    {
+      "id": "apoi-3064",
+      "note": "PDF e página divergem no nome do informante; identifica-se apenas homem de 72 anos, sem escolher um nome incerto."
+    }
+  ],
+  "remainingMapComarcas": [
+    "CAB",
+    "CAR",
+    "COR",
+    "COU",
+    "EUM",
+    "MAS",
+    "PAR",
+    "TCA",
+    "ULH",
+    "VDI"
+  ],
+  "testResults": {
+    "unitTests": 68,
+    "unitTestFiles": 12,
+    "browserFilesPassed": 35,
+    "browserFilesFailed": 0,
+    "playerStopsAtClipEnd": true,
+    "playerReplay": true,
+    "apoiAttributionVisible": true,
+    "oldPilotLinkResolvesSameComarca": true,
+    "typecheck": "passed",
+    "productionBuild": "passed"
+  }
+}

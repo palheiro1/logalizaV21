@@ -36,7 +36,12 @@ function getInitialSampleIndex(): number {
     "amostra"
   );
   const requestedSample = getAudioSampleById(requestedId);
-  return requestedSample ? audioSamples.indexOf(requestedSample) : 0;
+  const index = audioSamples.findIndex(
+    (sample) =>
+      sample.id === requestedId ||
+      sample.comarcaCode === requestedSample?.comarcaCode
+  );
+  return Math.max(0, index);
 }
 
 function loadPilotGuesses(sampleId: string): Guess[] {

@@ -1,4 +1,6 @@
-export type AudioSampleSource = "ago" | "a-nosa-fala" | "mapa-sonoro";
+import { reviewedAudioReplacements } from "./audioReplacements";
+
+export type AudioSampleSource = "ago" | "a-nosa-fala" | "mapa-sonoro" | "apoi";
 
 export interface AudioSample {
   id: string;
@@ -17,6 +19,7 @@ export interface AudioSample {
   clipStart: number;
   clipEnd: number;
   transcriptExcerpt: string;
+  license?: { label: string; url: string };
 }
 
 const AGO_AUDIO_BASE = "https://ilg.usc.gal/ago/audios";
@@ -53,7 +56,7 @@ function agoSample(audioId: number, metadata: AgoSampleMetadata): AudioSample {
  * Curated pilot catalogue. Audio remains on the institutions' servers and the
  * player only exposes the selected interval until the answer is revealed.
  */
-export const audioSamples: AudioSample[] = [
+export const publishedAudioSamples: AudioSample[] = [
   {
     id: "ago-001",
     comarcaCode: "BAM",
@@ -268,7 +271,7 @@ export const audioSamples: AudioSample[] = [
     id: "ccg-1501",
     comarcaCode: "CAL",
     audioUrl: `${CCG_BASE}/files/peza/url/1501/ASG_SCSA_CD-0229_04.mp3`,
-    recordUrl: `${CCG_BASE}/pezas/index/1501/2`,
+    recordUrl: `${CCG_BASE}/pezas/index/1501/13`,
     source: "mapa-sonoro",
     sourceLabel: "Cancioneiro popular galego — CCG / ASG",
     sourceRecord: "Peça 1501",
@@ -462,7 +465,7 @@ export const audioSamples: AudioSample[] = [
     id: "ccg-436",
     comarcaCode: "OUR",
     audioUrl: `${CCG_BASE}/files/peza/url/436/cultura_popular_cd_2_20_a_cobra_e_o_leite.mp3`,
-    recordUrl: `${CCG_BASE}/pezas/index/436/2`,
+    recordUrl: `${CCG_BASE}/pezas/index/436/5`,
     source: "mapa-sonoro",
     sourceLabel: "A cultura popular de tradição oral — CCG",
     sourceRecord: "Peça 436",
@@ -727,12 +730,30 @@ const legacyAudioSamples: AudioSample[] = [
   },
 ];
 
+// Keep the published order as the daily schedule. Replacing recordings must not
+// reshuffle comarcas or change the answer to a game that someone has started.
+const replacementsByComarca = new Map(
+  reviewedAudioReplacements.map((sample) => [sample.comarcaCode, sample])
+);
+
+export const audioSamples: AudioSample[] = publishedAudioSamples
+  .map((sample) => replacementsByComarca.get(sample.comarcaCode) ?? sample)
+  .filter((sample) => sample.source !== "ago");
+
+export function getActiveAudioSampleForComarca(
+  code: string
+): AudioSample | undefined {
+  return audioSamples.find((sample) => sample.comarcaCode === code);
+}
+
 export function getAudioSampleById(id: string | null): AudioSample | undefined {
   if (!id) {
     return undefined;
   }
 
-  return [...audioSamples, ...legacyAudioSamples].find(
-    (sample) => sample.id === id
-  );
+  return [
+    ...audioSamples,
+    ...publishedAudioSamples,
+    ...legacyAudioSamples,
+  ].find((sample) => sample.id === id);
 }

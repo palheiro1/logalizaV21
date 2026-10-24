@@ -31,10 +31,29 @@ export function AudioSampleReveal({
 
       <div className="space-y-3 bg-white p-4 text-sm dark:bg-slate-800">
         <p>
-          Esta é a fala de <strong>{sample.speaker.toLowerCase()}</strong>,
-          gravada em <strong>{sample.locality}</strong> ({sample.municipality})
-          em {sample.recordedAt}.
+          Esta é a fala de{" "}
+          <strong>
+            {sample.speaker.replace(/^(Homem|Mulher)/, (word) =>
+              word.toLowerCase()
+            )}
+          </strong>
+          , gravada em <strong>{sample.locality}</strong> ({sample.municipality}
+          ) em {sample.recordedAt}.
         </p>
+        {sample.license && (
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Licença:{" "}
+            <a
+              className="underline"
+              href={sample.license.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {sample.license.label}
+            </a>
+            . Excerto da gravaçom original.
+          </p>
+        )}
         <p className="text-xs text-gray-500 dark:text-gray-400">
           Fonte: {sample.sourceLabel}, {sample.sourceRecord}. Gravaçom de{" "}
           {sample.recorder}. Uma voz individual nom representa toda a fala da

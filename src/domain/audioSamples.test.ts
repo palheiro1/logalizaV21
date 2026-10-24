@@ -1,8 +1,13 @@
 import { galicianComarcas } from "./comarcas.position";
-import { audioSamples, getAudioSampleById } from "./audioSamples";
+import {
+  audioSamples,
+  publishedAudioSamples,
+  getActiveAudioSampleForComarca,
+  getAudioSampleById,
+} from "./audioSamples";
 
-describe("audio pilot catalogue", () => {
-  test("contains one unique record for every comarca with an available source", () => {
+describe("audio catalogue", () => {
+  test("offers one accessible recording per covered comarca", () => {
     const ids = audioSamples.map(({ id }) => id);
     const coveredCodes = audioSamples.map(({ comarcaCode }) => comarcaCode);
     const validCodes = new Set(galicianComarcas.map(({ code }) => code));
@@ -12,11 +17,25 @@ describe("audio pilot catalogue", () => {
       .sort();
 
     expect(new Set(ids).size).toBe(ids.length);
-    expect(audioSamples).toHaveLength(49);
+    expect(audioSamples).toHaveLength(41);
     expect(new Set(coveredCodes).size).toBe(audioSamples.length);
-    expect(missingCodes).toEqual(["CAB", "VDI"]);
+    expect(missingCodes).toEqual([
+      "CAB",
+      "CAR",
+      "COR",
+      "COU",
+      "EUM",
+      "MAS",
+      "PAR",
+      "TCA",
+      "ULH",
+      "VDI",
+    ]);
     expect(
       audioSamples.every(({ comarcaCode }) => validCodes.has(comarcaCode))
+    ).toBe(true);
+    expect(
+      audioSamples.every(({ audioUrl }) => !audioUrl.includes("ilg.usc."))
     ).toBe(true);
   });
 
@@ -30,36 +49,43 @@ describe("audio pilot catalogue", () => {
     }
   });
 
-  test("finds a sample by its stable id", () => {
-    expect(getAudioSampleById("ccg-388")?.comarcaCode).toBe("SEA");
+  test("retains old recordings for historical dates without offering them in the pilot", () => {
+    expect(publishedAudioSamples).toHaveLength(49);
+    expect(getAudioSampleById("ago-120")?.comarcaCode).toBe("PON");
     expect(getAudioSampleById("ago-149")?.comarcaCode).toBe("VIA");
     expect(getAudioSampleById("missing")).toBeUndefined();
+    expect(audioSamples.some(({ id }) => id === "ago-120")).toBe(false);
+    expect(getActiveAudioSampleForComarca("PON")?.id).toBe("apoi-2953");
+    expect(getActiveAudioSampleForComarca("EUM")).toBeUndefined();
   });
 
-  test("uses the reviewed replacements for the four weak recordings", () => {
-    const activeIds = new Set(audioSamples.map(({ id }) => id));
-
-    expect(activeIds.has("ago-011")).toBe(false);
-    expect(activeIds.has("ago-044")).toBe(false);
-    expect(activeIds.has("ago-070")).toBe(false);
-    expect(activeIds.has("ago-102")).toBe(false);
-    expect(activeIds.has("ccg-1501")).toBe(true);
-    expect(activeIds.has("ago-083")).toBe(true);
-    expect(activeIds.has("ccg-436")).toBe(true);
-    expect(activeIds.has("ccg-386")).toBe(true);
+  test("uses recordings whose municipalities match the game's Ancares and Terra Chá", () => {
+    expect(getActiveAudioSampleForComarca("ANC")?.municipality).toBe(
+      "Becerreá"
+    );
+    expect(getActiveAudioSampleForComarca("TCH")?.municipality).toBe(
+      "Castro de Rei"
+    );
+    expect(audioSamples.some(({ id }) => id === "ccg-385")).toBe(false);
   });
 
-  test("skips the spoken editorial introductions and place-name openings", () => {
-    for (const id of [
-      "ago-001",
-      "ago-168",
-      "ago-088",
-      "ccg-379",
-      "ccg-385",
-      "ccg-387",
-      "ccg-388",
-    ]) {
-      expect(getAudioSampleById(id)?.clipStart).toBeGreaterThanOrEqual(13);
+  test("preserves attribution and the license for every APOI recording", () => {
+    const apoiSamples = audioSamples.filter(({ source }) => source === "apoi");
+    expect(apoiSamples).toHaveLength(7);
+    for (const sample of apoiSamples) {
+      expect(sample.license?.label).toBe("CC BY-NC 2.5 AR");
+      expect(sample.license?.url).toBe(
+        "https://creativecommons.org/licenses/by-nc/2.5/ar/"
+      );
+      expect(sample.recorder).not.toBe("");
+      expect(sample.sourceRecord).toContain("coleção");
     }
+  });
+
+  test("excludes the long editorial opening and the local place-name introductions", () => {
+    expect(getAudioSampleById("ccg-346")!.clipStart).toBeGreaterThan(94);
+    expect(getAudioSampleById("ccg-354")!.clipStart).toBeGreaterThan(14.7);
+    expect(getAudioSampleById("ccg-383")!.clipStart).toBeGreaterThan(36.5);
+    expect(getAudioSampleById("ccg-350")!.clipEnd).toBeLessThan(79);
   });
 });
