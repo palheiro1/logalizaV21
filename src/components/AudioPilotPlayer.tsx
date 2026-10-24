@@ -9,6 +9,7 @@ import { AudioSample } from "../domain/audioSamples";
 
 interface AudioPilotPlayerProps {
   sample: AudioSample;
+  fallback?: React.ReactNode;
 }
 
 function formatTime(seconds: number): string {
@@ -17,7 +18,7 @@ function formatTime(seconds: number): string {
   return `${minutes}:${(safeSeconds % 60).toString().padStart(2, "0")}`;
 }
 
-export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
+export function AudioPilotPlayer({ sample, fallback }: AudioPilotPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasEnded, setHasEnded] = useState(false);
@@ -42,7 +43,7 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
     setHasEnded(false);
     setElapsed(0);
     setError(false);
-  }, [sample.id]);
+  }, [sample.id, sample.audioUrl]);
 
   const stopAtClipEnd = useCallback(() => {
     const audio = audioRef.current;
@@ -74,17 +75,21 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
       return;
     }
 
-    if (
-      hasEnded ||
-      audio.currentTime < sample.clipStart ||
-      audio.currentTime >= sample.clipEnd
-    ) {
-      audio.currentTime = sample.clipStart;
-      setElapsed(0);
-      setHasEnded(false);
-    }
-
     try {
+      // A failed media element needs a fresh request before play can recover.
+      if (error || audio.error) {
+        audio.load();
+      }
+      if (
+        error ||
+        hasEnded ||
+        audio.currentTime < sample.clipStart ||
+        audio.currentTime >= sample.clipEnd
+      ) {
+        audio.currentTime = sample.clipStart;
+        setElapsed(0);
+        setHasEnded(false);
+      }
       setError(false);
       await audio.play();
       setIsPlaying(true);
@@ -92,7 +97,7 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
       setError(true);
       setIsPlaying(false);
     }
-  }, [hasEnded, sample.clipEnd, sample.clipStart]);
+  }, [error, hasEnded, sample.clipEnd, sample.clipStart]);
 
   return (
     <section
@@ -109,12 +114,17 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
         onTimeUpdate={stopAtClipEnd}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
-        onError={() => setError(true)}
+        onError={() => {
+          setError(true);
+          setIsPlaying(false);
+        }}
       />
 
       <div className="flex flex-col items-center">
         <p className="mb-4 text-lg font-bold text-blue-950 dark:text-blue-50">
-          A que comarca corresponde este sotaque?
+          {error && fallback
+            ? "A que comarca corresponde esta imagem?"
+            : "A que comarca corresponde este sotaque?"}
         </p>
 
         <button
@@ -124,12 +134,14 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
           aria-label={
             isPlaying
               ? "Pausar a amostra"
+              : error
+              ? "Tentar carregar o áudio novamente"
               : hasEnded
               ? "Ouvir novamente"
               : "Ouvir a amostra"
           }
         >
-          {isPlaying ? "❚❚" : hasEnded ? "↻" : "▶"}
+          {isPlaying ? "❚❚" : error || hasEnded ? "↻" : "▶"}
         </button>
 
         <div className="mt-4 w-full">
@@ -153,10 +165,15 @@ export function AudioPilotPlayer({ sample }: AudioPilotPlayerProps) {
       </div>
 
       {error && (
-        <p className="mt-3 rounded bg-red-100 p-2 text-sm text-red-800 dark:bg-red-950 dark:text-red-200">
-          Nom foi possível carregar o áudio. Verifica a ligaçom e tenta
-          novamente.
-        </p>
+        <div className="mt-3">
+          <p role="status" className="mb-3 rounded bg-amber-100 p-2 text-sm text-amber-900 dark:bg-amber-950 dark:text-amber-200">
+            O áudio nom está disponível neste momento.{" "}
+            {fallback
+              ? "Podes continuar a jogar com esta pista visual da mesma comarca, sem perder tentativas."
+              : "Tenta carregar o áudio novamente dentro de uns instantes."}
+          </p>
+          {fallback}
+        </div>
       )}
     </section>
   );

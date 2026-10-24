@@ -110,7 +110,7 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   let imageFilename = null;
   const start = new Date("2023-01-13");
-  if (!isAudioDay && country != null && new Date() > start) {
+  if (country != null && new Date() > start) {
     imageFilename =
       getCountryFilename(i18n.resolvedLanguage, country) +
       randomImageNumber +
@@ -620,7 +620,16 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
           <div className="flex my-1">
             {audioSample ? (
               <div className="w-full">
-                <AudioPilotPlayer sample={audioSample} />
+                <AudioPilotPlayer
+                  sample={audioSample}
+                  fallback={srcImage ? (
+                    <img
+                      className="pointer-events-none mx-auto h-auto w-full"
+                      alt="Pista visual alternativa da comarca"
+                      src={srcImage}
+                    />
+                  ) : undefined}
+                />
               </div>
             ) : srcImage && mapImage ? (
               <img

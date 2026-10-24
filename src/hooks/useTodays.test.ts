@@ -45,4 +45,10 @@ describe("daily multimedia rotation", () => {
     );
     expect(getGlobalContentForDay("2026-09-17")).toBeDefined();
   });
+
+  test("preserves the published comarca and recording for the ILG outage day", () => {
+    const selection = getGlobalContentForDay("2026-10-24");
+    expect(selection.country.code).toBe("PON");
+    expect(selection.audioSample?.id).toBe("ago-120");
+  });
 });
