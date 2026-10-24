@@ -1,12 +1,13 @@
 {
   "date": "2026-10-24",
-  "scope": "35 substituições integradas; 41 comarcas com áudio ativo (34 CCG e 7 APOI). Os originais permanecem nos servidores institucionais.",
+  "scope": "38 novas gravações integradas; 44 comarcas com áudio ativo. Íbias e Corunha usam as fontes originais; o excerto Fálase é alojado localmente sob CC BY-SA 3.0.",
   "methodology": [
     "Origem municipal conferida nas fichas das instituições e na tabela territorial da app.",
     "Intervalos ajustados usando as transcrições institucionais e ASR temporizado local; excluídas apresentações com o topónimo de origem.",
     "Não foi realizada uma escuta humana especializada; ASR pode errar palavras. As transcrições automáticas não são publicadas nem usadas como legendas.",
-    "Recortes preservam a sequência diária de comarcas; jogos anteriores a 24-10-2026 conservam a seleção histórica.",
-    "Testes unitários da sequência completa, compatibilidade histórica e recuperação perante falha de áudio."
+    "Preservadas as seleções até 24-10-2026; Íbias inserido em 30-10-2026 por escolha do utilizador. A ordem relativa das comarcas seguintes e a cadência de seis dias são preservadas.",
+    "Testes unitários da sequência completa, compatibilidade histórica e recuperação perante falha de áudio.",
+    "Fálase: o MP3 do RSS inclui publicidade. A app distribui apenas o excerto licenciado de 25,45 segundos, evitando depender de tempos variáveis no podcast."
   ],
   "samples": [
     {
@@ -1044,6 +1045,139 @@
         }
       },
       "license": null
+    },
+    {
+      "id": "redmeda-ga-0003",
+      "comarca": "VDI",
+      "municipality": "Íbias",
+      "recordUrl": "https://redmeda.asturias.es/fonoteca/atlas-sonoru-de-la-llingua-asturiana/audio-y-transcripciones",
+      "audioUrl": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
+      "clipStart": 110.8,
+      "clipEnd": 131.95,
+      "clipDuration": 21.15,
+      "topic": "As crenças no trasno",
+      "review": {
+        "method": "Origem documentada, reconhecimento de fala temporizado Whisper large-v3-turbo, descodificação PCM e medição de sinal; não é escuta humana especializada.",
+        "note": "Otilia, Sena (Íbias), 62 anos em 2007. Transcrição PDF institucional e ASR temporizado concordam no tema. Excluídas as referências iniciais a galego/asturiano e a San Antolín.",
+        "sources": [
+          "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.pdf",
+          "https://redmeda.asturias.es/fonoteca/atlas-sonoru-de-la-llingua-asturiana/creditos-y-derechos"
+        ],
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "id": "redmeda-ga-0003",
+        "rmsDbfs": -21.7,
+        "peakDbfs": -1.7,
+        "fractionAboveMinus40Dbfs": 0.709,
+        "browser": {
+          "id": "redmeda-ga-0003",
+          "src": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
+          "duration": 164.252132,
+          "initial": 110.8,
+          "playing": true,
+          "stopped": true,
+          "repeated": true,
+          "error": null,
+          "creditVisible": true,
+          "collection44": true
+        }
+      },
+      "license": null,
+      "rightsNote": "Ligação ao ficheiro público no servidor da fonte; não foi identificada licença aberta para a gravação. Nenhuma cópia distribuída pela app."
+    },
+    {
+      "id": "egeria-emilio-006",
+      "comarca": "COR",
+      "municipality": "Cambre",
+      "recordUrl": "https://conversascoahistoria.egeria.gal/podcast/emilio-gonzalez-lopez/",
+      "audioUrl": "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/EmilioGonzalezLopez-006.mp3",
+      "clipStart": 8.75,
+      "clipEnd": 24.2,
+      "clipDuration": 15.45,
+      "topic": "Mudar de profissom na emigraçom",
+      "review": {
+        "method": "Origem documentada, reconhecimento de fala temporizado Whisper large-v3-turbo, descodificação PCM e medição de sinal; não é escuta humana especializada.",
+        "note": "Emilio González López, natural e criado na Corunha (UC3M). O corte oficial 06 trata da mudança de profissão; intervalo só da resposta do convidado. A emissão é de 20/07/1985; a introdução da entrevista completa situa a gravação em Cambre. Não se atribui Cambre como origem do falante.",
+        "sources": [
+          "https://humanidadesdigitales.uc3m.es/s/catedraticos/item/14888",
+          "https://conversascoahistoria.egeria.gal/oproxecto/"
+        ],
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "id": "egeria-emilio-006",
+        "rmsDbfs": -14.3,
+        "peakDbfs": -2.4,
+        "fractionAboveMinus40Dbfs": 0.949,
+        "browser": {
+          "id": "egeria-emilio-006",
+          "initial": 8.75,
+          "playing": true,
+          "stopped": true,
+          "repeated": true,
+          "readyState": 4,
+          "error": null,
+          "duration": 198.415601
+        }
+      },
+      "license": null,
+      "rightsNote": "Ligação ao ficheiro público no servidor da fonte; não foi identificada licença aberta para a gravação. Nenhuma cópia distribuída pela app."
+    },
+    {
+      "id": "falase-35",
+      "comarca": "ULH",
+      "municipality": "Palas de Rei",
+      "recordUrl": "https://praza.gal/acontece/falase-or-sen-cartos-para-o-agro-ecoloxico-e-o-asalto-a-fama-de-feijoo",
+      "audioUrl": "/audio/falase-35-ana-corredoira.mp3",
+      "clipStart": 0,
+      "clipEnd": 25.45,
+      "clipDuration": 25.45,
+      "topic": "O futuro da produçom ecológica",
+      "review": {
+        "method": "Origem documentada, reconhecimento de fala temporizado Whisper large-v3-turbo, descodificação PCM e medição de sinal; não é escuta humana especializada.",
+        "note": "Ana Corredoira, criada na granja A Cernada, Palas de Rei (entrevista Campo Galego). Voz apresentada pelo programa antes do trecho. Excluídos locutores, apresentação geográfica e anúncio. Capturas independentes coincidiram no trecho (correlação PCM 0,999999997); recorte final novamente transcrito. A data é de publicação, não uma data/local de gravação presumidos.",
+        "sources": [
+          "https://www.campogalego.es/?p=96637",
+          "https://praza.gal/sobre-praza/licenzas"
+        ],
+        "localityIntroductionExcluded": true,
+        "speechDetected": true,
+        "id": "falase-35",
+        "rmsDbfs": -18.4,
+        "peakDbfs": -0.6,
+        "fractionAboveMinus40Dbfs": 0.906,
+        "browser": {
+          "id": "falase-35",
+          "src": "http://127.0.0.1:4174/audio/falase-35-ana-corredoira.mp3",
+          "duration": 25.45,
+          "initial": 0,
+          "playing": true,
+          "stopped": true,
+          "repeated": true,
+          "error": null,
+          "creditVisible": true,
+          "collection44": true
+        }
+      },
+      "license": {
+        "label": "CC BY-SA 3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "localExcerpt": {
+        "file": "falase-35-ana-corredoira.mp3",
+        "title": "Fálase 35 — Sen cartos para o agro ecolóxico e o asalto á fama de Feijóo",
+        "author": "Praza.gal; David Lombao e Marcos Pérez Pena; voz de Ana Corredoira",
+        "published": "2023-01-19",
+        "source": "https://praza.gal/acontece/falase-or-sen-cartos-para-o-agro-ecoloxico-e-o-asalto-a-fama-de-feijoo",
+        "sourceAudioUrl": "https://www.ivoox.com/falase-35-sen-cartos-para-o-agro_mf_101604330_feed_1.mp3",
+        "sourceCapturedAt": "2026-10-24",
+        "license": {
+          "label": "CC BY-SA 3.0",
+          "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+        },
+        "licenseStatement": "https://praza.gal/sobre-praza/licenzas",
+        "changes": "LoGaliza: extraído o intervalo 402,30–427,75 s da versión capturada (incluía publicidade antes do programa); conversión a MP3 estéreo de 44,1 kHz e 128 kbps. Sen cambios de velocidade nin contido dentro do recorte. O excerto distribúese baixo CC BY-SA 3.0.",
+        "sha256": "6e450b6542004bc6d477c63e7bd6ed7cd7217e7ca7edba7f8afcaf869e60d382"
+      }
     }
   ],
   "rejected": [

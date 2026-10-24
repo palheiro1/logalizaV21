@@ -260,6 +260,11 @@ export const AUDIO_CADENCE_DAYS = 6;
 const AUDIO_CADENCE_SEED = "logaliza-v21-audio-cadence";
 const CADENCED_IMAGE_SEED = "logaliza-v21-cadenced-images";
 export const AUDIO_RECOVERY_START = "2026-10-24";
+const EXPANDED_AUDIO_ROTATION_START = "2026-10-30";
+// Versioned independently of the live catalogue: future source replacements
+// must not shuffle answers. Seven audio slots had already been published.
+const EXPANDED_AUDIO_CODES = ["VDI"];
+const EXPANDED_AUDIO_INSERTION_INDEX = 7;
 
 // This exact catalogue preserves the already-published daily selections from
 // the multimedia launch until the fixed-cadence rotation begins.
@@ -280,19 +285,31 @@ function selectAudioForRotation(
   audioIndex: number,
   dayString: string
 ): DailyContentSelection {
-  const cycle = Math.floor(audioIndex / publishedAudioSamples.length);
-  const indexInCycle = mod(audioIndex, publishedAudioSamples.length);
-  const cycleSamples = shuffleArray(
-    publishedAudioSamples,
+  const expanded = dayString >= EXPANDED_AUDIO_ROTATION_START;
+  const poolSize =
+    publishedAudioSamples.length + (expanded ? EXPANDED_AUDIO_CODES.length : 0);
+  const cycle = Math.floor(audioIndex / poolSize);
+  const indexInCycle = mod(audioIndex, poolSize);
+  const cycleCodes = shuffleArray(
+    publishedAudioSamples.map(({ comarcaCode }) => comarcaCode),
     `${AUDIO_CADENCE_SEED}-cycle-${cycle}`
   );
-  const publishedSample = cycleSamples[indexInCycle];
+  if (expanded) {
+    cycleCodes.splice(
+      EXPANDED_AUDIO_INSERTION_INDEX,
+      0,
+      ...EXPANDED_AUDIO_CODES
+    );
+  }
+  const comarcaCode = cycleCodes[indexInCycle];
   const audioSample =
     dayString >= AUDIO_RECOVERY_START
-      ? getActiveAudioSampleForComarca(publishedSample.comarcaCode)
-      : publishedSample;
+      ? getActiveAudioSampleForComarca(comarcaCode)
+      : publishedAudioSamples.find(
+          (sample) => sample.comarcaCode === comarcaCode
+        );
   const country = (countriesWithImage as unknown as Country[]).find(
-    ({ code }) => code === publishedSample.comarcaCode
+    ({ code }) => code === comarcaCode
   ) as Country;
 
   return {

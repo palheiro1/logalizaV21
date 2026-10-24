@@ -17,19 +17,16 @@ describe("audio catalogue", () => {
       .sort();
 
     expect(new Set(ids).size).toBe(ids.length);
-    expect(audioSamples).toHaveLength(41);
+    expect(audioSamples).toHaveLength(44);
     expect(new Set(coveredCodes).size).toBe(audioSamples.length);
     expect(missingCodes).toEqual([
       "CAB",
       "CAR",
-      "COR",
       "COU",
       "EUM",
       "MAS",
       "PAR",
       "TCA",
-      "ULH",
-      "VDI",
     ]);
     expect(
       audioSamples.every(({ comarcaCode }) => validCodes.has(comarcaCode))
@@ -41,7 +38,7 @@ describe("audio catalogue", () => {
 
   test("only exposes short, valid audio intervals", () => {
     for (const sample of audioSamples) {
-      expect(sample.audioUrl).toMatch(/^https:\/\//);
+      expect(sample.audioUrl).toMatch(/^(https:\/\/|\/audio\/)/);
       expect(sample.recordUrl).toMatch(/^https:\/\//);
       expect(sample.clipStart).toBeGreaterThanOrEqual(0);
       expect(sample.clipEnd).toBeGreaterThan(sample.clipStart);
@@ -80,6 +77,16 @@ describe("audio catalogue", () => {
       expect(sample.recorder).not.toBe("");
       expect(sample.sourceRecord).toContain("coleção");
     }
+  });
+
+  test("includes Íbias and preserves the provenance of the new radio excerpts", () => {
+    expect(getActiveAudioSampleForComarca("VDI")?.locality).toBe("Sena");
+    const ulhoa = getActiveAudioSampleForComarca("ULH")!;
+    expect(ulhoa.audioUrl).toBe("/audio/falase-35-ana-corredoira.mp3");
+    expect(ulhoa.license?.label).toBe("CC BY-SA 3.0");
+    expect(ulhoa.locationKind).toBe("speaker-origin");
+    expect(ulhoa.dateKind).toBe("published");
+    expect(getActiveAudioSampleForComarca("COR")?.speaker).toContain("Emilio");
   });
 
   test("excludes the long editorial opening and the local place-name introductions", () => {

@@ -3,7 +3,7 @@ import type { AudioSample } from "./audioSamples";
 // Reviewed on 2026-10-24 against the institutional transcripts and timed speech
 // recognition. Clip boundaries exclude editorial introductions and local place names.
 // See research/audio-clip-validation-2026-10-24.json for verification evidence.
-// The original audio remains on the institutions' servers.
+// Originals stay with the publishers; the licensed Fálase excerpt is hosted locally.
 export const reviewedAudioReplacements: AudioSample[] = [
   {
     id: "ccg-361",
@@ -694,5 +694,74 @@ export const reviewedAudioReplacements: AudioSample[] = [
     clipStart: 16,
     clipEnd: 36.15,
     transcriptExcerpt: "",
+  },
+  {
+    id: "redmeda-ga-0003",
+    comarcaCode: "VDI",
+    audioUrl:
+      "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
+    recordUrl:
+      "https://redmeda.asturias.es/fonoteca/atlas-sonoru-de-la-llingua-asturiana/audio-y-transcripciones",
+    source: "redmeda",
+    sourceLabel: "Atlas Sonoru — Muséu del Pueblu d’Asturies / REDMEDA",
+    sourceRecord: "Galego-asturiano, gravaçom 003",
+    municipality: "Íbias",
+    locality: "Sena",
+    speaker: "Otilia, 62 anos",
+    recordedAt: "2007",
+    recorder:
+      "Jesús Suárez López; ediçom sonora de Jesús Suárez López e René de Coupaud",
+    topic: "As crenças no trasno",
+    clipStart: 110.8,
+    clipEnd: 131.95,
+    transcriptExcerpt: "",
+  },
+  {
+    id: "egeria-emilio-006",
+    comarcaCode: "COR",
+    audioUrl:
+      "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/EmilioGonzalezLopez-006.mp3",
+    recordUrl:
+      "https://conversascoahistoria.egeria.gal/podcast/emilio-gonzalez-lopez/",
+    source: "egeria",
+    sourceLabel: "Conversas coa Historia — Colectivo Egeria",
+    sourceRecord: "Entrevista emitida em 20/07/1985, fragmento 06",
+    municipality: "Cambre",
+    locality: "Cambre",
+    speaker: "Emilio González López, natural da Corunha",
+    recordedAt: "20 de julho de 1985 (emissom radiofónica)",
+    dateKind: "published",
+    recorder: "Arquivo de Xulio Xiz; ediçom do Colectivo Egeria",
+    topic: "Mudar de profissom na emigraçom",
+    clipStart: 8.75,
+    clipEnd: 24.2,
+    transcriptExcerpt: "",
+  },
+  {
+    id: "falase-35",
+    comarcaCode: "ULH",
+    audioUrl: "/audio/falase-35-ana-corredoira.mp3",
+    recordUrl:
+      "https://praza.gal/acontece/falase-or-sen-cartos-para-o-agro-ecoloxico-e-o-asalto-a-fama-de-feijoo",
+    source: "falase",
+    sourceLabel: "Fálase — Praza.gal",
+    sourceRecord: "Episódio 35, excerto de Ana Corredoira",
+    municipality: "Palas de Rei",
+    locality: "A Cernada",
+    locationKind: "speaker-origin",
+    speaker: "Ana Corredoira, gandeira",
+    recordedAt: "19 de janeiro de 2023",
+    dateKind: "published",
+    recorder: "Praza.gal; David Lombao e Marcos Pérez Pena",
+    topic: "O futuro da produçom ecológica",
+    clipStart: 0,
+    clipEnd: 25.45,
+    transcriptExcerpt: "",
+    license: {
+      label: "CC BY-SA 3.0",
+      url: "https://creativecommons.org/licenses/by-sa/3.0/",
+    },
+    editingNote:
+      "Excerto recortado e convertido a MP3 pola LoGaliza, distribuído sob a mesma licença.",
   },
 ];

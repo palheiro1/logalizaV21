@@ -1,6 +1,13 @@
 import { reviewedAudioReplacements } from "./audioReplacements";
 
-export type AudioSampleSource = "ago" | "a-nosa-fala" | "mapa-sonoro" | "apoi";
+export type AudioSampleSource =
+  | "ago"
+  | "a-nosa-fala"
+  | "mapa-sonoro"
+  | "apoi"
+  | "redmeda"
+  | "falase"
+  | "egeria";
 
 export interface AudioSample {
   id: string;
@@ -19,6 +26,9 @@ export interface AudioSample {
   clipStart: number;
   clipEnd: number;
   transcriptExcerpt: string;
+  locationKind?: "speaker-origin";
+  dateKind?: "published";
+  editingNote?: string;
   license?: { label: string; url: string };
 }
 
@@ -730,15 +740,23 @@ const legacyAudioSamples: AudioSample[] = [
   },
 ];
 
-// Keep the published order as the daily schedule. Replacing recordings must not
-// reshuffle comarcas or change the answer to a game that someone has started.
+// Keep historical records separate from the live catalogue. The daily schedule
+// is versioned in useTodays; newly covered comarcas must also reach the pilot.
 const replacementsByComarca = new Map(
   reviewedAudioReplacements.map((sample) => [sample.comarcaCode, sample])
 );
 
-export const audioSamples: AudioSample[] = publishedAudioSamples
-  .map((sample) => replacementsByComarca.get(sample.comarcaCode) ?? sample)
-  .filter((sample) => sample.source !== "ago");
+export const audioSamples: AudioSample[] = [
+  ...publishedAudioSamples.map(
+    (sample) => replacementsByComarca.get(sample.comarcaCode) ?? sample
+  ),
+  ...reviewedAudioReplacements.filter(
+    (sample) =>
+      !publishedAudioSamples.some(
+        ({ comarcaCode }) => comarcaCode === sample.comarcaCode
+      )
+  ),
+].filter((sample) => sample.source !== "ago");
 
 export function getActiveAudioSampleForComarca(
   code: string

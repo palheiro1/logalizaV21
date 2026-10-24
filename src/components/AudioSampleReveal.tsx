@@ -37,8 +37,14 @@ export function AudioSampleReveal({
               word.toLowerCase()
             )}
           </strong>
-          , gravada em <strong>{sample.locality}</strong> ({sample.municipality}
-          ) em {sample.recordedAt}.
+          {sample.locationKind === "speaker-origin" ? ", de " : ", gravada em "}
+          <strong>{sample.locality}</strong> ({sample.municipality})
+          {sample.dateKind === "published"
+            ? ", publicada em "
+            : sample.locationKind === "speaker-origin"
+            ? ", numa gravaçom de "
+            : " em "}
+          {sample.recordedAt}.
         </p>
         {sample.license && (
           <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -51,11 +57,11 @@ export function AudioSampleReveal({
             >
               {sample.license.label}
             </a>
-            . Excerto da gravaçom original.
+            . {sample.editingNote ?? "Excerto da gravaçom original."}
           </p>
         )}
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          Fonte: {sample.sourceLabel}, {sample.sourceRecord}. Gravaçom de{" "}
+          Fonte: {sample.sourceLabel}, {sample.sourceRecord}. Créditos:{" "}
           {sample.recorder}. Uma voz individual nom representa toda a fala da
           comarca.
         </p>
@@ -65,7 +71,7 @@ export function AudioSampleReveal({
           target="_blank"
           rel="noopener noreferrer"
         >
-          Ver a ficha e a transcriçom completas ↗
+          Ver a ficha da fonte ↗
         </a>
       </div>
     </section>

@@ -79,10 +79,10 @@ describe("daily multimedia rotation", () => {
     );
   });
 
-  test("keeps every published comarca when replacing or temporarily removing its audio", () => {
+  test("keeps the published answers through today and the relative future order", () => {
     publishedFirstCycle.forEach((code, index) => {
       const date = DateTime.fromISO("2026-09-18")
-        .plus({ days: index * AUDIO_CADENCE_DAYS })
+        .plus({ days: (index + (index >= 7 ? 1 : 0)) * AUDIO_CADENCE_DAYS })
         .toISODate()!;
       expect(getGlobalContentForDay(date).country.code).toBe(code);
     });
@@ -95,8 +95,18 @@ describe("daily multimedia rotation", () => {
     expect(selection.audioSample?.comarcaCode).toBe("PON");
   });
 
+  test("adds Íbias to the next slot without delaying the image rotation", () => {
+    const next = getGlobalContentForDay("2026-10-30");
+    expect(next.country.code).toBe("VDI");
+    expect(next.audioSample?.id).toBe("redmeda-ga-0003");
+    expect(getGlobalContentForDay("2026-11-05").country.code).toBe("LUG");
+    for (const date of ["2026-10-25", "2026-10-29", "2026-10-31"]) {
+      expect(getGlobalContentForDay(date).audioSample).toBeUndefined();
+    }
+  });
+
   test("uses a photograph of the scheduled comarca while its recording is unavailable", () => {
-    const selection = getGlobalContentForDay("2026-11-23");
+    const selection = getGlobalContentForDay("2026-11-29");
     expect(selection.country.code).toBe("EUM");
     expect(selection.audioSample).toBeUndefined();
     expect(selection.imageNumber).toBe(2);
@@ -104,11 +114,11 @@ describe("daily multimedia rotation", () => {
 
   test("keeps the six-day slots and never requests blocked ILG audio in a future cycle", () => {
     const cycleStart = DateTime.fromISO("2026-09-18")
-      .plus({ days: publishedAudioSamples.length * AUDIO_CADENCE_DAYS })
+      .plus({ days: (publishedAudioSamples.length + 1) * AUDIO_CADENCE_DAYS })
       .toISODate()!;
     const cycle = simulateNextPictures(
       cycleStart,
-      publishedAudioSamples.length * AUDIO_CADENCE_DAYS
+      (publishedAudioSamples.length + 1) * AUDIO_CADENCE_DAYS
     );
     const selectedAudioIds = cycle
       .map(({ audioSampleId }) => audioSampleId)
