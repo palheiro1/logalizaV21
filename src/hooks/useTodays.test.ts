@@ -45,4 +45,12 @@ describe("daily multimedia rotation", () => {
     );
     expect(getGlobalContentForDay("2026-09-17")).toBeDefined();
   });
+
+  test("preserves the published challenge during the 2026-10-24 audio outage", () => {
+    const selection = getGlobalContentForDay("2026-10-24");
+    expect(selection.audioSample?.id).toBe("ago-120");
+    expect(selection.country.code).toBe("PON");
+    expect(selection.imageNumber).toBe(2);
+    expect(selection.audioSample).toMatchObject({ clipStart: 20, clipEnd: 45 });
+  });
 });
