@@ -1,30 +1,33 @@
 {
   "title": "Alternativas de áudio para o LoGaliza",
   "date": "2026-10-24",
-  "scope": "35 novos excertos selecionados e integrados em produção. Pesquisa adicional para as dez comarcas sem áudio ativo.",
+  "scope": "38 novas gravações integradas, incluindo os três excertos de Íbias, Ulhoa e Corunha. Pesquisa aprofundada para as sete comarcas ainda sem áudio ativo.",
   "summary": {
     "mapComarcas": 51,
     "publishedHistoricalCatalogue": 49,
     "originalILGBlocked": 42,
     "originalCCG": 7,
-    "newIntegratedRecordings": 35,
-    "activeRecordings": 41,
-    "activeComarcas": 41,
+    "newIntegratedRecordings": 38,
+    "activeRecordings": 44,
+    "activeComarcas": 44,
     "activeByHost": {
       "CCG": 34,
-      "APOI": 7
+      "APOI": 7,
+      "REDMEDA": 1,
+      "Egeria": 1,
+      "LoGaliza (Praza.gal CC BY-SA)": 1
     },
-    "restoredILGComarcas": 34,
+    "restoredILGComarcas": 36,
     "replacedCCGForGeography": 1,
-    "remainingFormerCatalogueComarcas": 8,
+    "remainingFormerCatalogueComarcas": 6,
     "previouslyMissingComarcas": [
       "CAB",
       "VDI"
     ],
-    "remainingMapComarcas": 10,
-    "additionalFilesWithMP3Probe": 6,
-    "additionalFilesWithBrowserPlayback": 5,
-    "additionalComarcasWithFiles": 4,
+    "remainingMapComarcas": 7,
+    "additionalFilesWithMP3Probe": 2,
+    "additionalFilesWithBrowserPlayback": 4,
+    "additionalComarcasWithFiles": 5,
     "ccgRecordsInspected": 1423,
     "indexedInitialCandidates": 164
   },
@@ -53,11 +56,11 @@
     "Origem municipal conferida nas fichas das instituições e na tabela territorial da app.",
     "Intervalos ajustados usando as transcrições institucionais e ASR temporizado local; excluídas apresentações com o topónimo de origem.",
     "Não foi realizada uma escuta humana especializada; ASR pode errar palavras. As transcrições automáticas não são publicadas nem usadas como legendas.",
-    "Recortes preservam a sequência diária de comarcas; jogos anteriores a 24-10-2026 conservam a seleção histórica.",
+    "Preservadas as seleções até 24-10-2026; Íbias inserido em 30-10-2026 por escolha do utilizador. A ordem relativa das comarcas seguintes e a cadência de seis dias são preservadas.",
     "Testes unitários da sequência completa, compatibilidade histórica e recuperação perante falha de áudio.",
-    "35 novos ficheiros descodificados, tempos confrontados com transcrições institucionais e ASR local temporizado; ver relatório de validação.",
-    "Teste em navegador de todos os 35 novos ficheiros: duração, seek inicial/final e avanço de reprodução. Sem redistribuir os originais.",
-    "Pesquisa posterior: seis novos MP3 em quatro comarcas; cinco testados em navegador. Não integrados nesta ronda; disponibilidade de ficheiro não equivale a excerto validado."
+    "Fálase: o MP3 do RSS inclui publicidade. A app distribui apenas o excerto licenciado de 25,45 segundos, evitando depender de tempos variáveis no podcast.",
+    "Verificações PCM e ASR dos três novos recortes, seguidas por testes reais do leitor e reprodução em produção.",
+    "Quatro ficheiros MP4 da AELG reproduzidos como áudio no navegador. São candidatos da pesquisa seguinte, não excertos já integrados."
   ],
   "sourceFindings": [
     {
@@ -73,31 +76,43 @@
     {
       "name": "Atlas Sonoru — REDMEDA",
       "url": "https://redmeda.com/fonoteca/atlas-sonoru-de-la-llingua-asturiana/audio-y-transcripciones/",
-      "finding": "Nova prioridade para Vale do Íbias: três MP3 de galego-asturiano com informantes identificados e transcrições."
+      "finding": "Otilia, de Sena (Íbias), integrada. MP3 e transcrição institucional; fonte mantém os direitos das gravações."
     },
     {
       "name": "Fálase — Praza.gal",
-      "url": "https://vimeo.com/790102226",
-      "finding": "Entrevista com Ana Corredoira para Ulhoa; MP3 do RSS reproduzido, recorte ainda pendente."
+      "url": "https://praza.gal/acontece/falase-or-sen-cartos-para-o-agro-ecoloxico-e-o-asalto-a-fama-de-feijoo",
+      "finding": "Ana Corredoira integrada para Ulhoa. Excerto local de 25,45 s sob CC BY-SA 3.0, para evitar publicidade variável no podcast."
     },
     {
       "name": "Conversas coa Historia — Egeria",
       "url": "https://conversascoahistoria.egeria.gal/podcast/emilio-gonzalez-lopez/",
-      "finding": "Nova alternativa para Corunha; entrevista e cortes públicos, por avaliar."
+      "finding": "Emilio González López integrado para Corunha: recorte do fragmento oficial 06, 15,45 segundos."
+    },
+    {
+      "name": "Videoteca AELG",
+      "url": "https://aelg.gal/centro-documentacion/videoteca-de-obras",
+      "finding": "Quatro novos ficheiros com reprodução confirmada: Olegario Sotelo Blanco, Miguel Anxo Fernández, Uxío Novoneyra e Xosé Ramón Pena. Revisão dos recortes ainda pendente."
+    },
+    {
+      "name": "FRONTESPO — Sela",
+      "url": "https://www.frontespo.org/es/corpus?location=Sela",
+      "finding": "Corpus abriu no navegador; seis sessões de Antonio Lorenzo localizadas, com ligações oficiais de áudio/vídeo e transcrições."
     }
   ],
   "selectionRequirements": [
-    "Concluído: selecionar 35 intervalos de 17,4 a 29,6 segundos; retirar apresentações editoriais e referências locais identificadas.",
-    "Concluído: confirmar ficheiros, origem municipal, atribuição, reprodução e compatibilidade da sequência diária.",
-    "Próximo: rever os candidatos de Íbias, Ulhoa e Corunha, escolher os trechos e confirmar condições de utilização.",
-    "Monfero: resolver a publicidade dinâmica antes de depender de tempos fixos.",
-    "Manter a fotografia para as dez lacunas; não substituir por uma voz de comarca vizinha."
+    "Concluído: três recortes de Íbias, Ulhoa e Corunha, de 15,45 a 25,45 segundos, integrados e testados em produção.",
+    "Concluído: licença, atribuição e cópia estável de Ulhoa; origem do falante separada do local de gravação e da data de publicação.",
+    "Próximo: rever os quatro ficheiros AELG; Terra de Caldelas e Carvalhinho são as prioridades mais diretas.",
+    "Marinhas: confrontar a origem de Xosé Ramón Pena com a alternativa Onda Xove; Courel: avaliar recitação versus fala espontânea.",
+    "Paradanta: testar as ligações recuperadas do FRONTESPO; Eume: identificar falante local e evitar publicidade variável.",
+    "Manter fotografia para as sete lacunas até haver excerto adequado."
   ],
   "geographicReview": [
     "Corrigido ANC: ccg-385, de Candín (BEZ no mapa da app), foi substituído por ccg-361, de Becerreá.",
     "Cerdedo-Cotobade exige identificação da freguesia porque o município atual abrange duas comarcas do mapa do jogo.",
     "CAB e VDI já não tinham áudio antes da falha do ILG.",
-    "Corporales/Truchas não contam como CAB; o Corgo não é COR (Corunha). A pesquisa respeita a tabela territorial própria do jogo."
+    "Corporales/Truchas não contam como CAB; o Corgo não é COR (Corunha). A pesquisa respeita a tabela territorial própria do jogo.",
+    "Xosé Ramón Pena nasceu em Betanzos e mudou-se para a Corunha aos oito anos: origem biográfica mista, que exige avaliação antes de atribuir a voz a Marinhas."
   ],
   "coverage": [
     {
@@ -293,8 +308,8 @@
       "previousSampleId": null,
       "currentStatus": "photo",
       "nextStep": {
-        "note": "A pesquisa na fonoteca da Fundação Joaquín Díaz encontrou recolhas em Corporales e Truchas, predominantemente cantadas. Esses municípios não fazem parte da Cabreira definida no mapa da app. Não contar como cobertura: procurar Benuça, Castrilho, Enzinedo ou Ponte de Domingos Flórez e confirmar a variedade falada.",
-        "url": "https://funjdiaz.net/fonoteca-listado.php?id=915&qry=la"
+        "note": "O Instituto de Estudios Cabreireses documenta gravações de tradição oral e testemunhos locais; nova pista para procurar nas localidades do mapa da app. Ainda não foi identificado um ficheiro público de fala adequado. Manter a verificação de município e variedade: Corporales/Truchas ficam fora da Cabreira definida no jogo; La Baña/Quintanilla de Losada são pistas territoriais a investigar.",
+        "url": "https://lafueyacabreiresa.com/el-instituto-de-estudios-cabreireses-da-la-bienvenida-a-la-comarca-con-un-cartel-en-cabreires"
       }
     },
     {
@@ -335,8 +350,8 @@
       "previousSampleId": "ago-073",
       "currentStatus": "photo",
       "nextStep": {
-        "note": "Rádio Líder anunciou uma entrevista com a pulpeira carballinhesa Marina Moure Álvarez no Fala que Fala de 15-05-2025. A pesquisa adicional não localizou um ficheiro da emissão verificável.",
-        "url": "https://radiolidersantiago.com/o-cpr-vila-de-arenteiro-acolle-este-xoves-unha-nova-edicion-do-programa-fala-que-fala/"
+        "note": "Nova entrevista AELG de Miguel Anxo Fernández, nascido no Carballiño em 1955 (Enciclopédia Galega Universal). Gravada em 2022 no Liceu de Ourense; ficheiro MP4 de 4:16,2, HTTP 206 e reprodução/seek confirmados. Falta selecionar e rever o excerto. Há ainda uma conversa de Felipe Senén publicada por Roxín Roxal no YouTube, com origem carballinhesa confirmada pelo próprio autor.",
+        "url": "https://aelg.gal/centro-documentacion/autores-as/miguel-anxo-fernandez-fernandez/videoteca/entrevista/3346/1-cal-e-a-orixe-da-tua-vocacion-literaria-por-que-comezaches-a-escribir"
       }
     },
     {
@@ -417,8 +432,8 @@
     {
       "code": "COR",
       "name": "Corunha",
-      "candidateId": null,
-      "researchStatus": "pending",
+      "candidateId": "egeria-emilio-006",
+      "researchStatus": "integrated",
       "municipalities": [
         "Arteijo",
         "Avegondo",
@@ -432,11 +447,7 @@
       ],
       "previousStatus": "ilg-403",
       "previousSampleId": "ago-080",
-      "currentStatus": "photo",
-      "nextStep": {
-        "note": "Entrevista de 20-07-1985 com Emilio González López no arquivo Conversas coa Historia, do Colectivo Egeria. Origem corunhesa documentada na UC3M. MP3 de 27 minutos e cortes individuais públicos. Os primeiros 100 segundos são apresentação do entrevistador, não uma amostra validada da voz de Emilio; falta selecionar e avaliar a fala do convidado.",
-        "url": "https://conversascoahistoria.egeria.gal/podcast/emilio-gonzalez-lopez/"
-      }
+      "currentStatus": "active-audio"
     },
     {
       "code": "COS",
@@ -473,8 +484,8 @@
       "previousSampleId": "ago-095",
       "currentStatus": "photo",
       "nextStep": {
-        "note": "O Cancioneiro de Quiroga, Ribas de Sil e Montañas do Lor é sobretudo musical. Foram revistas referências do CCG à voz de Novoneyra e entrevistas antigas, sem confirmar novo MP3 de fala apropriado. O Radio Grelo tem entrevista com Uxío Novoneyra filho sobre a fundação, mas o vínculo familiar não basta para atribuir o sotaque ao Courel.",
-        "url": "https://consellodacultura.gal/fondos_documentais/web/coordinadoraendl/letras2010/uxio.php"
+        "note": "A AELG disponibiliza um MP4 de 4:58 com Uxío Novoneyra a ler a sua obra. HTTP 206, pista AAC e reprodução/seek confirmados. É recitação poética, não conversa espontânea: falta avaliar a adequação ao jogo e selecionar um recorte sem pistas geográficas. Continua a ser preferível uma entrevista de fala natural.",
+        "url": "https://aelg.gal/centro-documentacion/autores-as/uxio-novoneyra/videoteca/lectura-obra-propia/1411/os-eidos-2-letania-de-galicia-e-outros-poemas/4"
       }
     },
     {
@@ -510,7 +521,7 @@
       "previousSampleId": "ago-105",
       "currentStatus": "photo",
       "nextStep": {
-        "note": "Radio Grelo publicou em 25-09-2020 uma entrevista de cerca de 25 minutos com vizinhos de Monfero. O endpoint público entrega MP3, mas o teste recebeu publicidade antes da introdução e do início da entrevista. Tempos fixos podem deslocar-se. Confirmar falante local em galego e obter uma versão estável antes de integrar.",
+        "note": "Radio Grelo publicou em 25-09-2020 uma entrevista de cerca de 25 minutos com vizinhos de Monfero. O endpoint público entrega MP3, mas o teste recebeu publicidade antes da introdução e do início da entrevista. Tempos fixos podem deslocar-se. Confirmar falante local em galego e obter uma versão estável antes de integrar. Nova via: Ponte en Galego, do IES Breamo de Pontedeume, com entrevistas e arquivo na Rádio FilispiM. A participação num programa local não comprova a origem do falante; é necessário identificar uma voz do Eume.",
         "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008"
       }
     },
@@ -604,8 +615,8 @@
       "previousSampleId": "ago-138",
       "currentStatus": "photo",
       "nextStep": {
-        "note": "A iniciativa Mapa Sonoro: vila a vila documenta Betanzos, mas não foi localizado um novo MP3 de fala local. Há entrevistas radiofónicas recentes com María Barral sobre as festas: ainda exigem ficheiro, língua e origem do falante confirmados. A simples gravação em Betanzos não comprova o sotaque.",
-        "url": "https://consellodacultura.gal/evento.php?id=201263"
+        "note": "Xosé Ramón Pena tem entrevista AELG de 2009 (5:25,9), gravada no MARCO de Vigo, com reprodução/seek confirmados. Nasceu em Betanzos, mas a própria biografia diz que se mudou para a Corunha aos oito anos: não contar automaticamente como sotaque de Marinhas. Alternativa mais local: María Barral em Onda Xove Betanzos (06-11-2023), MP3 confirmado no RSS; falta verificar fala, publicidade, recorte e condições.",
+        "url": "https://aelg.gal/centro-documentacion/autores-as/xose-ramon-pena/videoteca/entrevista/549/1-por-que-comecei-a-escribir"
       }
     },
     {
@@ -730,8 +741,8 @@
       "previousSampleId": "ago-045",
       "currentStatus": "photo",
       "nextStep": {
-        "note": "FRONTESPO documenta quatro entrevistas em Sela (Arbo). A referência em vídeo de Antonio Lorenzo foi localizada, mas o antigo Vimeo 204049417 devolveu 404 no oEmbed; o acesso normal ao corpus devolveu 403 e o repositório Madroño apresentou Access Denied. Não foi confirmado um MP3 público funcional.",
-        "url": "https://www.frontespo.org/es/blog/puntos-de-encuesta-del-corpus-oral-de-la-frontera-hispano-portuguesa"
+        "note": "O acesso normal pelo navegador funcionou, apesar do 403 observado na consulta anterior. A pesquisa por Sela mostra seis sessões de Antonio Lorenzo com ligações oficiais para YouTube e duas pistas SoundCloud por sessão. A sessão Animais (ESPO01001-004, 30-01-2016, 21:22) tem transcrições PDF/ELAN e DOI. Falta confirmar a reprodução nas plataformas e obter um endereço estável adequado ao leitor da app; não é ainda um excerto validado.",
+        "url": "https://www.frontespo.org/es/corpus?location=Sela"
       }
     },
     {
@@ -879,8 +890,8 @@
       "previousSampleId": "ago-110",
       "currentStatus": "photo",
       "nextStep": {
-        "note": "Olegario Sotelo Blanco nasceu em Quintela de Mazaira, Castro de Caldelas (biografia AELG). Existe uma ficha CCG de entrevista de 1988, mas é descrição de suporte físico, sem MP3 público confirmado. A antiga entrevista televisiva de 2017 é outra pista; não foi validado um excerto utilizável.",
-        "url": "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco"
+        "note": "Nova entrevista de Olegario Sotelo Blanco na AELG: gravada em 2012 na Livraria Couceiro, Compostela; 89,4 segundos, áudio AAC e reprodução/seek confirmados. A origem em Quintela de Mazaira, Castro de Caldelas, está documentada. Prioridade alta: escolher um recorte de fala sem topónimos e rever atribuição e condições da fonte.",
+        "url": "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco/videoteca/entrevista/1710/1-por-que-comecei-a-escribir"
       }
     },
     {
@@ -999,8 +1010,8 @@
     {
       "code": "ULH",
       "name": "Ulhoa",
-      "candidateId": null,
-      "researchStatus": "pending",
+      "candidateId": "falase-35",
+      "researchStatus": "integrated",
       "municipalities": [
         "Antas de Ulha",
         "Monterroso",
@@ -1008,11 +1019,7 @@
       ],
       "previousStatus": "ilg-403",
       "previousSampleId": "ago-079",
-      "currentStatus": "photo",
-      "nextStep": {
-        "note": "Ana Corredoira, criada na Granxa A Cernada, Palas de Rei: entrevista no Fálase 35, de Praza.gal (19-01-2023). O RSS oficial fornece um MP3 de 23:26. Falta isolar a voz da entrevistada, rever o trecho e confirmar condições de utilização. O candidato anterior APOI 2901 foi descartado por topónimo inicial e predomínio de canto.",
-        "url": "https://www.ivoox.com/falase-35-sen-cartos-para-o-agro-audios-mp3_rf_101604330_1.html"
-      }
+      "currentStatus": "active-audio"
     },
     {
       "code": "VDO",
@@ -1037,19 +1044,15 @@
     {
       "code": "VDI",
       "name": "Vale do Íbias",
-      "candidateId": null,
-      "researchStatus": "pending",
+      "candidateId": "redmeda-ga-0003",
+      "researchStatus": "integrated",
       "municipalities": [
         "Íbias",
         "Deganho"
       ],
       "previousStatus": "no-catalogue-audio",
       "previousSampleId": null,
-      "currentStatus": "photo",
-      "nextStep": {
-        "note": "Três vozes documentadas em galego-asturiano de Íbias: Inés (Folgueiras), Celso Otero Díaz, 74 anos (Valdeferreiros), e Otilia, 62 anos (Sena), recolhidas por Jesús Suárez López em 2007. Cada peça tem MP3 e transcrição PDF. Evitar a introdução geográfica; falta definir e validar o recorte final e as condições de utilização. A duração anunciada na página nem sempre coincide com a do ficheiro.",
-        "url": "https://redmeda.com/fonoteca/atlas-sonoru-de-la-llingua-asturiana/audio-y-transcripciones/"
-      }
+      "currentStatus": "active-audio"
     },
     {
       "code": "VIA",
@@ -2583,6 +2586,66 @@
       "newIntegration": false,
       "selectionNote": "Gravação CCG já existente, conservada.",
       "license": null
+    },
+    {
+      "id": "redmeda-ga-0003",
+      "comarca": "VDI",
+      "origin": "REDMEDA",
+      "title": "As crenças no trasno",
+      "audioUrl": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
+      "recordUrl": "https://redmeda.asturias.es/fonoteca/atlas-sonoru-de-la-llingua-asturiana/audio-y-transcripciones",
+      "municipality": "Íbias",
+      "locality": "Sena",
+      "speaker": "Otilia, 62 anos",
+      "clipStart": 110.8,
+      "clipEnd": 131.95,
+      "newIntegration": true,
+      "latestIntegration": true,
+      "selectionNote": "Integrado e reprodução confirmada em produção.",
+      "license": null,
+      "dateKind": null,
+      "locationKind": null
+    },
+    {
+      "id": "egeria-emilio-006",
+      "comarca": "COR",
+      "origin": "Egeria",
+      "title": "Mudar de profissom na emigraçom",
+      "audioUrl": "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/EmilioGonzalezLopez-006.mp3",
+      "recordUrl": "https://conversascoahistoria.egeria.gal/podcast/emilio-gonzalez-lopez/",
+      "municipality": "Cambre",
+      "locality": "Cambre",
+      "speaker": "Emilio González López, natural da Corunha",
+      "clipStart": 8.75,
+      "clipEnd": 24.2,
+      "newIntegration": true,
+      "latestIntegration": true,
+      "selectionNote": "Integrado e reprodução confirmada em produção.",
+      "license": null,
+      "dateKind": "published",
+      "locationKind": null
+    },
+    {
+      "id": "falase-35",
+      "comarca": "ULH",
+      "origin": "Praza.gal / LoGaliza",
+      "title": "O futuro da produçom ecológica",
+      "audioUrl": "https://logaliza.vercel.app/audio/falase-35-ana-corredoira.mp3",
+      "recordUrl": "https://praza.gal/acontece/falase-or-sen-cartos-para-o-agro-ecoloxico-e-o-asalto-a-fama-de-feijoo",
+      "municipality": "Palas de Rei",
+      "locality": "A Cernada",
+      "speaker": "Ana Corredoira, gandeira",
+      "clipStart": 0,
+      "clipEnd": 25.45,
+      "newIntegration": true,
+      "latestIntegration": true,
+      "selectionNote": "Integrado e reprodução confirmada em produção.",
+      "license": {
+        "label": "CC BY-SA 3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "dateKind": "published",
+      "locationKind": "speaker-origin"
     }
   ],
   "conditional": [],
@@ -5122,152 +5185,377 @@
   "productionIntegration": {
     "url": "https://logaliza.vercel.app",
     "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1",
-    "commit": "cf254175ada764fe4073e0b815491806eb81ceb4",
-    "deploymentId": "dpl_14MRiravkKeNcbKG53R8mFJNYb5q",
+    "commit": "47a8511e5cedf0e7483922034d7560f737257cf3",
+    "deploymentId": "dpl_3ssrkUS1vkMpgkHVkHxmEXNeetmP",
     "state": "READY",
     "verifiedToday": "apoi-2953, Poio; reprodução confirmada em produção, sem erro de media.",
-    "tests": "68 testes; TypeScript e build passaram. Os 35 novos ficheiros reproduziram no navegador; salto e repetição do player verificados.",
-    "dailySchedule": "Preserva a comarca e a sequência publicada; desde 24-10-2026 os slots sem áudio validado usam fotografia. Jogos históricos preservados."
+    "tests": "70 testes passaram; TypeScript e build passaram. Os três novos excertos reproduziram, pararam e repetiram no leitor; reprodução confirmada também em produção.",
+    "dailySchedule": "Hoje e histórico preservados. Íbias inserido em 30-10-2026; mantém-se a ordem relativa das comarcas seguintes e a cadência de seis dias.",
+    "latestBrowserChecks": [
+      {
+        "id": "falase-35",
+        "src": "https://logaliza.vercel.app/audio/falase-35-ana-corredoira.mp3",
+        "playing": true,
+        "duration": 25.45,
+        "collection44": true,
+        "license": true,
+        "error": null
+      },
+      {
+        "id": "redmeda-ga-0003",
+        "src": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
+        "playing": true,
+        "duration": 164.252132,
+        "collection44": true,
+        "license": false,
+        "error": null
+      },
+      {
+        "id": "egeria-emilio-006",
+        "src": "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/EmilioGonzalezLopez-006.mp3",
+        "playing": true,
+        "duration": 198.415601,
+        "collection44": true,
+        "license": false,
+        "error": null
+      }
+    ]
   },
   "gapResearch": [
     {
-      "code": "VDI",
-      "status": "MP3 e reprodução confirmados",
-      "note": "Três vozes documentadas em galego-asturiano de Íbias: Inés (Folgueiras), Celso Otero Díaz, 74 anos (Valdeferreiros), e Otilia, 62 anos (Sena), recolhidas por Jesús Suárez López em 2007. Cada peça tem MP3 e transcrição PDF. Evitar a introdução geográfica; falta definir e validar o recorte final e as condições de utilização. A duração anunciada na página nem sempre coincide com a do ficheiro.",
-      "url": "https://redmeda.com/fonoteca/atlas-sonoru-de-la-llingua-asturiana/audio-y-transcripciones/",
+      "code": "TCA",
+      "status": "MP4 com áudio e reprodução confirmados",
+      "note": "Nova entrevista de Olegario Sotelo Blanco na AELG: gravada em 2012 na Livraria Couceiro, Compostela; 89,4 segundos, áudio AAC e reprodução/seek confirmados. A origem em Quintela de Mazaira, Castro de Caldelas, está documentada. Prioridade alta: escolher um recorte de fala sem topónimos e rever atribuição e condições da fonte.",
+      "url": "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco/videoteca/entrevista/1710/1-por-que-comecei-a-escribir",
       "files": [
         {
-          "id": "redmeda-ibias-1",
-          "comarca": "VDI",
-          "audioUrl": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0001.mp3",
+          "id": "aelg-sotelo",
+          "code": "TCA",
+          "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco/videoteca/entrevista/1710/1-por-que-comecei-a-escribir",
+          "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
+          "metadata": "Centro de Documentación da AELG Videoteca 1. Por que comecei a escribir? Lugar de gravación: Libraría Couceiro\n\t\t\t\t\t\t\t\t\t\t(Compostela) Ano de gravación: 2012 Sotelo Blanco, Olegario",
           "probe": {
             "status": 206,
-            "contentType": "audio/mpeg",
-            "contentRange": "bytes 0-4095/7231274",
-            "bytesRead": 4096,
-            "mp3Signature": true
+            "type": "video/mp4",
+            "range": "bytes 0-4095/9963360",
+            "mp4": true
           },
-          "decodedSeconds": 100,
-          "browser": {
-            "url": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0001.mp3",
-            "duration": 417.085102,
-            "time": 40.307299,
-            "playing": true,
-            "error": null
-          }
-        },
-        {
-          "id": "redmeda-ibias-2",
-          "comarca": "VDI",
-          "audioUrl": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0002.mp3",
-          "probe": {
-            "status": 206,
-            "contentType": "audio/mpeg",
-            "contentRange": "bytes 0-4095/5615636",
-            "bytesRead": 4096,
-            "mp3Signature": true
+          "audioTrack": {
+            "programs": [],
+            "streams": [
+              {
+                "codec_name": "aac",
+                "sample_rate": "44100",
+                "channels": 2
+              }
+            ],
+            "format": {
+              "duration": "89.389389"
+            }
           },
           "browser": {
-            "url": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0002.mp3",
-            "duration": 311.704875,
-            "time": 40.307308,
+            "id": "aelg-sotelo",
+            "duration": 89.389389,
             "playing": true,
-            "error": null
-          }
-        },
-        {
-          "id": "redmeda-ibias-3",
-          "comarca": "VDI",
-          "audioUrl": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
-          "probe": {
-            "status": 206,
-            "contentType": "audio/mpeg",
-            "contentRange": "bytes 0-4095/2811527",
-            "bytesRead": 4096,
-            "mp3Signature": true
+            "readyState": 4
           },
-          "browser": {
-            "url": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
-            "duration": 164.252132,
-            "time": 40.30766,
-            "playing": true,
-            "error": null
-          }
+          "kind": "video-with-audio",
+          "selectionStatus": "candidate-not-integrated"
         }
       ],
       "additionalSources": [
-        "https://redmeda.asturias.es/fonoteca/atlas-sonoru-de-la-llingua-asturiana/creditos-y-derechos",
-        "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0001.pdf"
+        "https://consellodacultura.gal/detalle-material.php?id=40488",
+        "https://www.torbeo.com/2017/04/el-pasado-mes-de-febrero-la-televison.html",
+        "https://soteloblanco.org/",
+        "https://soteloblanco.org/images/Videos/video-presentacion-libro-florencio-en-ourense_720.mp4"
       ]
     },
     {
-      "code": "ULH",
-      "status": "MP3 e reprodução confirmados",
-      "note": "Ana Corredoira, criada na Granxa A Cernada, Palas de Rei: entrevista no Fálase 35, de Praza.gal (19-01-2023). O RSS oficial fornece um MP3 de 23:26. Falta isolar a voz da entrevistada, rever o trecho e confirmar condições de utilização. O candidato anterior APOI 2901 foi descartado por topónimo inicial e predomínio de canto.",
-      "url": "https://www.ivoox.com/falase-35-sen-cartos-para-o-agro-audios-mp3_rf_101604330_1.html",
+      "code": "CAR",
+      "status": "MP4 com áudio e reprodução confirmados",
+      "note": "Nova entrevista AELG de Miguel Anxo Fernández, nascido no Carballiño em 1955 (Enciclopédia Galega Universal). Gravada em 2022 no Liceu de Ourense; ficheiro MP4 de 4:16,2, HTTP 206 e reprodução/seek confirmados. Falta selecionar e rever o excerto. Há ainda uma conversa de Felipe Senén publicada por Roxín Roxal no YouTube, com origem carballinhesa confirmada pelo próprio autor.",
+      "url": "https://aelg.gal/centro-documentacion/autores-as/miguel-anxo-fernandez-fernandez/videoteca/entrevista/3346/1-cal-e-a-orixe-da-tua-vocacion-literaria-por-que-comezaches-a-escribir",
       "files": [
         {
-          "id": "falase-35",
-          "comarca": "ULH",
-          "audioUrl": "https://www.ivoox.com/falase-35-sen-cartos-para-o-agro_mf_101604330_feed_1.mp3",
+          "id": "aelg-miguel-anxo",
+          "code": "CAR",
+          "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/miguel-anxo-fernandez-fernandez/videoteca/entrevista/3346/1-cal-e-a-orixe-da-tua-vocacion-literaria-por-que-comezaches-a-escribir",
+          "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
+          "metadata": "Centro de Documentación da AELG Videoteca 1. Cal é a orixe da túa vocación literaria? Por que comezaches a escribir? Lugar de gravación: Liceo de Ourense\r\n\t\t\t\t\t\t\t\t\t\t(Ourense) Ano de gravación: 2022 Fernández Fernández, Miguel Anxo",
           "probe": {
             "status": 206,
-            "contentType": "audio/mpeg",
-            "contentRange": "bytes 0-4095/11248812",
-            "bytesRead": 4096,
-            "mp3Signature": true,
-            "finalHost": "ivoox.pdn.tritondigital.com"
+            "type": "video/mp4",
+            "range": "bytes 0-4095/29233205",
+            "mp4": true
           },
           "browser": {
-            "url": "https://www.ivoox.com/falase-35-sen-cartos-para-o-agro_mf_101604330_feed_1.mp3",
-            "duration": 1405.99585,
-            "time": 40.307282,
+            "id": "aelg-miguel-anxo",
             "playing": true,
+            "duration": 256.24,
             "error": null
-          }
+          },
+          "kind": "video-with-audio",
+          "selectionStatus": "candidate-not-integrated"
         }
       ],
       "additionalSources": [
-        "https://vimeo.com/790102226",
-        "https://www.ivoox.com/pt/feed_fg_f11458826_filtro_1.xml",
-        "https://www.campogalego.es/?p=96637"
+        "https://egu.xunta.gal/gl/termo/126675/fernandez-fernandez-miguel-anxo",
+        "https://roxinroxal.gal/17-de-abril-donos-da-nosa-historia-conversa-en-lina-con-felipe-senen-lopez/",
+        "https://www.youtube.com/watch?v=4DQrAY3XGao",
+        "https://www.felipesenen.gal/index.asp?registro=5"
       ]
     },
     {
-      "code": "COR",
-      "status": "MP3 e reprodução confirmados",
-      "note": "Entrevista de 20-07-1985 com Emilio González López no arquivo Conversas coa Historia, do Colectivo Egeria. Origem corunhesa documentada na UC3M. MP3 de 27 minutos e cortes individuais públicos. Os primeiros 100 segundos são apresentação do entrevistador, não uma amostra validada da voz de Emilio; falta selecionar e avaliar a fala do convidado.",
-      "url": "https://conversascoahistoria.egeria.gal/podcast/emilio-gonzalez-lopez/",
+      "code": "COU",
+      "status": "Voz de Novoneyra localizada e reproduzida",
+      "note": "A AELG disponibiliza um MP4 de 4:58 com Uxío Novoneyra a ler a sua obra. HTTP 206, pista AAC e reprodução/seek confirmados. É recitação poética, não conversa espontânea: falta avaliar a adequação ao jogo e selecionar um recorte sem pistas geográficas. Continua a ser preferível uma entrevista de fala natural.",
+      "url": "https://aelg.gal/centro-documentacion/autores-as/uxio-novoneyra/videoteca/lectura-obra-propia/1411/os-eidos-2-letania-de-galicia-e-outros-poemas/4",
       "files": [
         {
-          "id": "egeria-emilio",
-          "comarca": "COR",
-          "audioUrl": "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/19850720-Emilio-Gonzalez-Lopez.mp3",
+          "id": "aelg-novoneyra",
+          "code": "COU",
+          "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/uxio-novoneyra/videoteca/lectura-obra-propia/1411/os-eidos-2-letania-de-galicia-e-outros-poemas/4",
+          "audioUrl": "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
+          "metadata": "Centro de Documentación da AELG Videoteca O LAXEIRO pintor dunha GALICIA Obra: Os Eidos 2. Letanía de Galicia e outros poemas Autor/a: Novoneyra, Uxío Novoneyra, Uxío",
           "probe": {
             "status": 206,
-            "contentType": "audio/mpeg",
-            "contentRange": "bytes 0-4095/53507843",
-            "bytesRead": 4096,
-            "mp3Signature": true
+            "type": "video/mp4",
+            "range": "bytes 0-4095/4594028",
+            "mp4": true
           },
-          "decodedSeconds": 100,
+          "audioTrack": {
+            "programs": [],
+            "streams": [
+              {
+                "codec_name": "aac",
+                "sample_rate": "44100",
+                "channels": 2
+              }
+            ],
+            "format": {
+              "duration": "298.399637"
+            }
+          },
           "browser": {
-            "url": "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/19850720-Emilio-Gonzalez-Lopez.mp3",
-            "duration": 1619.909206,
-            "time": 40.307267,
+            "id": "aelg-novoneyra",
+            "duration": 298.399637,
             "playing": true,
-            "error": null
+            "readyState": 4
+          },
+          "kind": "video-with-audio",
+          "selectionStatus": "candidate-not-integrated"
+        }
+      ],
+      "additionalSources": [
+        "https://culturagalega.gal/noticia.php?id=18312",
+        "https://aelg.gal/centro-documentacion/autores-as/uxio-novoneyra"
+      ]
+    },
+    {
+      "code": "MAS",
+      "status": "Entrevista reproduzida; origem requer avaliação",
+      "note": "Xosé Ramón Pena tem entrevista AELG de 2009 (5:25,9), gravada no MARCO de Vigo, com reprodução/seek confirmados. Nasceu em Betanzos, mas a própria biografia diz que se mudou para a Corunha aos oito anos: não contar automaticamente como sotaque de Marinhas. Alternativa mais local: María Barral em Onda Xove Betanzos (06-11-2023), MP3 confirmado no RSS; falta verificar fala, publicidade, recorte e condições.",
+      "url": "https://aelg.gal/centro-documentacion/autores-as/xose-ramon-pena/videoteca/entrevista/549/1-por-que-comecei-a-escribir",
+      "files": [
+        {
+          "id": "aelg-pena",
+          "code": "MAS",
+          "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/xose-ramon-pena/videoteca/entrevista/549/1-por-que-comecei-a-escribir",
+          "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1509014759244xoseramonpenaorixeliteratura_vigo.00.mp4",
+          "metadata": "Centro de Documentación da AELG Videoteca 1. Por que comecei a escribir? Lugar de gravación: Museo de Arte Contemporánea de Vigo MARCO\n\t\t\t\t\t\t\t\t\t\t(Vigo) Ano de gravación: 2009 Pena, Xosé Ramón",
+          "probe": {
+            "status": 206,
+            "type": "video/mp4",
+            "range": "bytes 0-4095/35668756",
+            "mp4": true
+          },
+          "audioTrack": {
+            "programs": [],
+            "streams": [
+              {
+                "codec_name": "aac",
+                "sample_rate": "44100",
+                "channels": 2
+              }
+            ],
+            "format": {
+              "duration": "325.880000"
+            }
+          },
+          "browser": {
+            "id": "aelg-pena",
+            "duration": 325.88,
+            "playing": true,
+            "readyState": 4
+          },
+          "kind": "video-with-audio",
+          "selectionStatus": "candidate-not-integrated"
+        },
+        {
+          "id": "onda-xove-barral",
+          "code": "MAS",
+          "recordUrl": "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+          "audioUrl": "https://www.ivoox.com/maria-barral-onda-xove-betanzos_mf_118987582_feed_1.mp3",
+          "title": "María Barral en Onda Xove Betanzos",
+          "published": "Mon, 06 Nov 2023 07:58:32 +0200",
+          "probe": {
+            "status": 206,
+            "type": "audio/mpeg",
+            "range": "bytes 0-4095/23636190",
+            "mp3": true
           }
         }
       ],
       "additionalSources": [
-        "https://humanidadesdigitales.uc3m.es/s/catedraticos/item/14888"
+        "https://cadenaser.com/galicia/2026/08/14/betanzos-celebra-las-fiestas-de-san-roque-con-el-globo-y-os-caneiros-como-grandes-protagonistas-radio-coruna/",
+        "https://aelg.gal/centro-documentacion/autores-as/xose-ramon-pena",
+        "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+        "https://feeds.ivoox.com/feed_fg_f1246754_filtro_1.xml",
+        "https://www.lavozdegalicia.es/amp/noticia/coruna/betanzos/2022/10/09/span-langgl-estudando-facer-carril-bici-betanzosspan/0003_202210H9C8991.htm"
+      ]
+    },
+    {
+      "code": "PAR",
+      "status": "FRONTESPO acessível; seis sessões localizadas",
+      "note": "O acesso normal pelo navegador funcionou, apesar do 403 observado na consulta anterior. A pesquisa por Sela mostra seis sessões de Antonio Lorenzo com ligações oficiais para YouTube e duas pistas SoundCloud por sessão. A sessão Animais (ESPO01001-004, 30-01-2016, 21:22) tem transcrições PDF/ELAN e DOI. Falta confirmar a reprodução nas plataformas e obter um endereço estável adequado ao leitor da app; não é ainda um excerto validado.",
+      "url": "https://www.frontespo.org/es/corpus?location=Sela",
+      "files": [],
+      "additionalSources": [
+        "https://www.frontespo.org/es/corpus",
+        "https://edatos.consorciomadrono.es/dataverse/FRONTESPO",
+        "https://cartaxeometrica.blogspot.com/2017/09/frontespo-documentacion-linguistica-na.html",
+        "https://www.frontespo.org/es/grabaciones/arbo-01-sela-sesion-04-animales",
+        "https://www.youtube.com/watch?v=Uin03gJPJgY",
+        "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-animales",
+        "https://doi.org/10.21950/JC2VAS"
+      ],
+      "recoveredSessions": [
+        {
+          "text": "Arbo 01 (Sela). Sesión 01. La vida de antes",
+          "url": "https://www.frontespo.org/grabaciones/arbo-01-sela-sesion-01-la-vida-de-antes"
+        },
+        {
+          "text": "Antonio Lorenzo",
+          "url": "https://www.frontespo.org/informantes/antonio-lorenzo"
+        },
+        {
+          "text": "Youtube",
+          "url": "https://www.youtube.com/watch?v=_IjlFthxFSk"
+        },
+        {
+          "text": "Soundcloud [audio videocámara]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-la-vida-de-1"
+        },
+        {
+          "text": "Soundcloud [audio grabadora]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-la-vida-de"
+        },
+        {
+          "text": "Arbo 01 (Sela). Sesión 02. Comercio y contrabando",
+          "url": "https://www.frontespo.org/grabaciones/arbo-01-sela-sesion-02-comercio-y-contrabando"
+        },
+        {
+          "text": "Antonio Lorenzo",
+          "url": "https://www.frontespo.org/informantes/antonio-lorenzo"
+        },
+        {
+          "text": "Youtube",
+          "url": "https://www.youtube.com/watch?v=YLeBEYd9SxI"
+        },
+        {
+          "text": "Soundcloud [audio videocámara]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-comercio-1"
+        },
+        {
+          "text": "Soundcloud [audio grabadora]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-comercio"
+        },
+        {
+          "text": "Arbo 01 (Sela). Sesión 03. Relación con Portugal",
+          "url": "https://www.frontespo.org/grabaciones/arbo-01-sela-sesion-03-relacion-con-portugal"
+        },
+        {
+          "text": "Antonio Lorenzo",
+          "url": "https://www.frontespo.org/informantes/antonio-lorenzo"
+        },
+        {
+          "text": "YouTube",
+          "url": "https://www.youtube.com/watch?v=0BQmukFJktw"
+        },
+        {
+          "text": "Soundcloud [audio videocámara]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-rel-con-1"
+        },
+        {
+          "text": "Soundcloud [audio grabadora]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-rel-con"
+        },
+        {
+          "text": "Arbo 01 (Sela). Sesión 04. Animales",
+          "url": "https://www.frontespo.org/grabaciones/arbo-01-sela-sesion-04-animales"
+        },
+        {
+          "text": "Antonio Lorenzo",
+          "url": "https://www.frontespo.org/informantes/antonio-lorenzo"
+        },
+        {
+          "text": "YouTube",
+          "url": "https://www.youtube.com/watch?v=Uin03gJPJgY"
+        },
+        {
+          "text": "Soundcloud [audio videocámara]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-animales-1"
+        },
+        {
+          "text": "Soundcloud [audio grabadora]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-animales"
+        },
+        {
+          "text": "Arbo 01 (Sela). Sesión 05. Plantas y productos derivados",
+          "url": "https://www.frontespo.org/grabaciones/arbo-01-sela-sesion-05-plantas-y-productos-derivados"
+        },
+        {
+          "text": "Antonio Lorenzo",
+          "url": "https://www.frontespo.org/informantes/antonio-lorenzo"
+        },
+        {
+          "text": "YouTube",
+          "url": "https://www.youtube.com/watch?v=UvZOZrasd8c"
+        },
+        {
+          "text": "Soundcloud [audio videocámara]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-plantas"
+        },
+        {
+          "text": "Soundcloud [audio grabadora]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-plantas-plantas"
+        },
+        {
+          "text": "Arbo 01 (Sela). Sesión 06. Lengua y juicios lingüísticos",
+          "url": "https://www.frontespo.org/grabaciones/arbo-01-sela-sesion-06-lengua-y-juicios-linguisticos"
+        },
+        {
+          "text": "Antonio Lorenzo",
+          "url": "https://www.frontespo.org/informantes/antonio-lorenzo"
+        },
+        {
+          "text": "YouTube",
+          "url": "https://www.youtube.com/watch?v=jNnFdh-SscY"
+        },
+        {
+          "text": "Soundcloud [audio videocámara]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-lengua-lingua-1"
+        },
+        {
+          "text": "Soundcloud [audio grabadora]",
+          "url": "https://www.soundcloud.com/user-528000993/sela-a-lorenzo-lengua-lingua"
+        }
       ]
     },
     {
       "code": "EUM",
       "status": "MP3 confirmado; publicidade dinâmica",
-      "note": "Radio Grelo publicou em 25-09-2020 uma entrevista de cerca de 25 minutos com vizinhos de Monfero. O endpoint público entrega MP3, mas o teste recebeu publicidade antes da introdução e do início da entrevista. Tempos fixos podem deslocar-se. Confirmar falante local em galego e obter uma versão estável antes de integrar.",
+      "note": "Radio Grelo publicou em 25-09-2020 uma entrevista de cerca de 25 minutos com vizinhos de Monfero. O endpoint público entrega MP3, mas o teste recebeu publicidade antes da introdução e do início da entrevista. Tempos fixos podem deslocar-se. Confirmar falante local em galego e obter uma versão estável antes de integrar. Nova via: Ponte en Galego, do IES Breamo de Pontedeume, com entrevistas e arquivo na Rádio FilispiM. A participação num programa local não comprova a origem do falante; é necessário identificar uma voz do Eume.",
       "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008",
       "files": [
         {
@@ -5286,67 +5574,21 @@
       ],
       "additionalSources": [
         "https://api.spreaker.com/v2/episodes/41115008",
-        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html"
-      ]
-    },
-    {
-      "code": "PAR",
-      "status": "Entrevistas documentadas; ficheiro pendente",
-      "note": "FRONTESPO documenta quatro entrevistas em Sela (Arbo). A referência em vídeo de Antonio Lorenzo foi localizada, mas o antigo Vimeo 204049417 devolveu 404 no oEmbed; o acesso normal ao corpus devolveu 403 e o repositório Madroño apresentou Access Denied. Não foi confirmado um MP3 público funcional.",
-      "url": "https://www.frontespo.org/es/blog/puntos-de-encuesta-del-corpus-oral-de-la-frontera-hispano-portuguesa",
-      "files": [],
-      "additionalSources": [
-        "https://www.frontespo.org/es/corpus",
-        "https://edatos.consorciomadrono.es/dataverse/FRONTESPO",
-        "https://cartaxeometrica.blogspot.com/2017/09/frontespo-documentacion-linguistica-na.html"
-      ]
-    },
-    {
-      "code": "TCA",
-      "status": "Origem confirmada; ficheiro pendente",
-      "note": "Olegario Sotelo Blanco nasceu em Quintela de Mazaira, Castro de Caldelas (biografia AELG). Existe uma ficha CCG de entrevista de 1988, mas é descrição de suporte físico, sem MP3 público confirmado. A antiga entrevista televisiva de 2017 é outra pista; não foi validado um excerto utilizável.",
-      "url": "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco",
-      "files": [],
-      "additionalSources": [
-        "https://consellodacultura.gal/detalle-material.php?id=40488",
-        "https://www.torbeo.com/2017/04/el-pasado-mes-de-febrero-la-televison.html"
-      ]
-    },
-    {
-      "code": "CAR",
-      "status": "Entrevista anunciada; emissão pendente",
-      "note": "Rádio Líder anunciou uma entrevista com a pulpeira carballinhesa Marina Moure Álvarez no Fala que Fala de 15-05-2025. A pesquisa adicional não localizou um ficheiro da emissão verificável.",
-      "url": "https://radiolidersantiago.com/o-cpr-vila-de-arenteiro-acolle-este-xoves-unha-nova-edicion-do-programa-fala-que-fala/",
-      "files": [],
-      "additionalSources": []
-    },
-    {
-      "code": "COU",
-      "status": "Acervos encontrados; fala pendente",
-      "note": "O Cancioneiro de Quiroga, Ribas de Sil e Montañas do Lor é sobretudo musical. Foram revistas referências do CCG à voz de Novoneyra e entrevistas antigas, sem confirmar novo MP3 de fala apropriado. O Radio Grelo tem entrevista com Uxío Novoneyra filho sobre a fundação, mas o vínculo familiar não basta para atribuir o sotaque ao Courel.",
-      "url": "https://consellodacultura.gal/fondos_documentais/web/coordinadoraendl/letras2010/uxio.php",
-      "files": [],
-      "additionalSources": [
-        "https://culturagalega.gal/noticia.php?id=18312"
-      ]
-    },
-    {
-      "code": "MAS",
-      "status": "Ainda sem excerto validado",
-      "note": "A iniciativa Mapa Sonoro: vila a vila documenta Betanzos, mas não foi localizado um novo MP3 de fala local. Há entrevistas radiofónicas recentes com María Barral sobre as festas: ainda exigem ficheiro, língua e origem do falante confirmados. A simples gravação em Betanzos não comprova o sotaque.",
-      "url": "https://consellodacultura.gal/evento.php?id=201263",
-      "files": [],
-      "additionalSources": [
-        "https://cadenaser.com/galicia/2026/08/14/betanzos-celebra-las-fiestas-de-san-roque-con-el-globo-y-os-caneiros-como-grandes-protagonistas-radio-coruna/"
+        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html",
+        "https://www.ivoox.com/podcast-ponteengalego_sq_f11237180_1.html",
+        "https://asgabarras.wordpress.com/",
+        "https://opaii.blogspot.com/2014/01/viquingos-no-ponte-en-galego-n-28.html"
       ]
     },
     {
       "code": "CAB",
-      "status": "Ainda sem candidato adequado",
-      "note": "A pesquisa na fonoteca da Fundação Joaquín Díaz encontrou recolhas em Corporales e Truchas, predominantemente cantadas. Esses municípios não fazem parte da Cabreira definida no mapa da app. Não contar como cobertura: procurar Benuça, Castrilho, Enzinedo ou Ponte de Domingos Flórez e confirmar a variedade falada.",
-      "url": "https://funjdiaz.net/fonoteca-listado.php?id=915&qry=la",
+      "status": "Acervo oral identificado; ficheiro pendente",
+      "note": "O Instituto de Estudios Cabreireses documenta gravações de tradição oral e testemunhos locais; nova pista para procurar nas localidades do mapa da app. Ainda não foi identificado um ficheiro público de fala adequado. Manter a verificação de município e variedade: Corporales/Truchas ficam fora da Cabreira definida no jogo; La Baña/Quintanilla de Losada são pistas territoriais a investigar.",
+      "url": "https://lafueyacabreiresa.com/el-instituto-de-estudios-cabreireses-da-la-bienvenida-a-la-comarca-con-un-cartel-en-cabreires",
       "files": [],
-      "additionalSources": []
+      "additionalSources": [
+        "https://lafueyacabreiresa.com/cabrera-protagonizara-el-capitulo-sobre-la-tradicion-oral-de-el-lliones-una-llengua-viva"
+      ]
     }
   ],
   "rejectedClips": [
@@ -5367,5 +5609,18 @@
       "id": "ccg-381",
       "reason": "Substituído por ccg-382, do Rosal, para BAM."
     }
-  ]
+  ],
+  "latestIntegration": {
+    "date": "2026-10-24",
+    "sampleIds": [
+      "redmeda-ga-0003",
+      "egeria-emilio-006",
+      "falase-35"
+    ],
+    "previousActive": 41,
+    "active": 44,
+    "newDailyComarca": "VDI",
+    "firstDay": "2026-10-30",
+    "userChoice": "Incluir nos próximos desafios, preservando hoje e o histórico."
+  }
 }

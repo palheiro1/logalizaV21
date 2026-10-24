@@ -1080,6 +1080,15 @@
           "error": null,
           "creditVisible": true,
           "collection44": true
+        },
+        "productionBrowser": {
+          "id": "redmeda-ga-0003",
+          "src": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
+          "playing": true,
+          "duration": 164.252132,
+          "collection44": true,
+          "license": false,
+          "error": null
         }
       },
       "license": null,
@@ -1117,6 +1126,15 @@
           "readyState": 4,
           "error": null,
           "duration": 198.415601
+        },
+        "productionBrowser": {
+          "id": "egeria-emilio-006",
+          "src": "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/EmilioGonzalezLopez-006.mp3",
+          "playing": true,
+          "duration": 198.415601,
+          "collection44": true,
+          "license": false,
+          "error": null
         }
       },
       "license": null,
@@ -1156,6 +1174,15 @@
           "error": null,
           "creditVisible": true,
           "collection44": true
+        },
+        "productionBrowser": {
+          "id": "falase-35",
+          "src": "https://logaliza.vercel.app/audio/falase-35-ana-corredoira.mp3",
+          "playing": true,
+          "duration": 25.45,
+          "collection44": true,
+          "license": true,
+          "error": null
         }
       },
       "license": {
