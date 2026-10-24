@@ -14,5 +14,23 @@
     "licenseStatement": "https://praza.gal/sobre-praza/licenzas",
     "changes": "LoGaliza: extraído o intervalo 402,30–427,75 s da versión capturada (incluía publicidade antes do programa); conversión a MP3 estéreo de 44,1 kHz e 128 kbps. Sen cambios de velocidade nin contido dentro do recorte. O excerto distribúese baixo CC BY-SA 3.0.",
     "sha256": "6e450b6542004bc6d477c63e7bd6ed7cd7217e7ca7edba7f8afcaf869e60d382"
+  },
+  {
+    "file": "frontespo-sela-animais.mp3",
+    "title": "Antonio Lorenzo (Sela). Animales — ESPO01001-004",
+    "author": "FRONTESPO, Universidade de Alcalá; David Rodríguez Lorenzo (entrevista); Xosé Afonso Álvarez Pérez (coordenaçom); Antonio Lorenzo (voz)",
+    "recorded": "2016-01-30",
+    "source": "https://www.frontespo.org/es/grabaciones/arbo-01-sela-sesion-04-animales",
+    "dataset": "https://doi.org/10.21950/JC2VAS",
+    "sourceAudioUrl": "https://edatos.consorciomadrono.es/api/access/datafile/2001",
+    "sourceFile": "ESPO01001T-004.wav (gravador digital)",
+    "sourceCapturedAt": "2026-10-24",
+    "license": {
+      "label": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "licenseStatement": "https://www.frontespo.org/es/condiciones-de-uso",
+    "changes": "LoGaliza: recorte 42,05–61,42 s da pista de gravador, conversión a mono MP3 de 48 kHz e 128 kbps e aumento constante de volume de 6 dB. Sen redución de ruído, síntese de voz nin cambios de velocidade ou ton. O excerto distribúese baixo CC BY-SA 4.0.",
+    "sha256": "f9591aa176a12ef76b1a7a4a919b4cdb9d0635b944e9ad94ed5fc07f72d4e647"
   }
 ]

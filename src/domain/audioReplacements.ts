@@ -3,7 +3,7 @@ import type { AudioSample } from "./audioSamples";
 // Reviewed on 2026-10-24 against the institutional transcripts and timed speech
 // recognition. Clip boundaries exclude editorial introductions and local place names.
 // See research/audio-clip-validation-2026-10-24.json for verification evidence.
-// Originals stay with the publishers; the licensed Fálase excerpt is hosted locally.
+// Originals stay with the publishers; licensed Fálase and FRONTESPO excerpts are hosted locally.
 export const reviewedAudioReplacements: AudioSample[] = [
   {
     id: "ccg-361",
@@ -763,5 +763,94 @@ export const reviewedAudioReplacements: AudioSample[] = [
     },
     editingNote:
       "Excerto recortado e convertido a MP3 pola LoGaliza, distribuído sob a mesma licença.",
+  },
+  {
+    id: "aelg-sotelo",
+    comarcaCode: "TCA",
+    audioUrl:
+      "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
+    recordUrl:
+      "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco/videoteca/entrevista/1710/1-por-que-comecei-a-escribir",
+    source: "aelg",
+    sourceLabel: "Centro de Documentación — AELG",
+    sourceRecord: "Entrevista; Livraria Couceiro, Compostela",
+    municipality: "Castro de Caldelas",
+    locality: "Quintela de Mazaira",
+    locationKind: "speaker-origin",
+    speaker: "Olegario Sotelo Blanco",
+    recordedAt: "2012",
+    recorder: "Asociación de Escritoras e Escritores en Lingua Galega",
+    topic: "A escrita na escola e nos jornais",
+    clipStart: 1.0,
+    clipEnd: 26.05,
+    transcriptExcerpt: "",
+  },
+  {
+    id: "aelg-miguel-anxo",
+    comarcaCode: "CAR",
+    audioUrl:
+      "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
+    recordUrl:
+      "https://aelg.gal/centro-documentacion/autores-as/miguel-anxo-fernandez-fernandez/videoteca/entrevista/3346/1-cal-e-a-orixe-da-tua-vocacion-literaria-por-que-comezaches-a-escribir",
+    source: "aelg",
+    sourceLabel: "Centro de Documentación — AELG",
+    sourceRecord: "Entrevista; Liceu de Ourense",
+    municipality: "Carballiño (O)",
+    locality: "O Carballiño",
+    locationKind: "speaker-origin",
+    speaker: "Miguel Anxo Fernández Fernández",
+    recordedAt: "2022",
+    recorder: "Asociación de Escritoras e Escritores en Lingua Galega",
+    topic: "A compra do primeiro livro",
+    clipStart: 98.0,
+    clipEnd: 114.7,
+    transcriptExcerpt: "",
+  },
+  {
+    id: "aelg-novoneyra",
+    comarcaCode: "COU",
+    audioUrl:
+      "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
+    recordUrl:
+      "https://aelg.gal/centro-documentacion/autores-as/uxio-novoneyra/videoteca/lectura-obra-propia/1411/os-eidos-2-letania-de-galicia-e-outros-poemas/4",
+    source: "aelg",
+    sourceLabel: "Centro de Documentación — AELG",
+    sourceRecord: "Recitaçom de obra própria; lugar de gravaçom nom indicado",
+    municipality: "Folgoso do Courel",
+    locality: "Parada",
+    locationKind: "speaker-origin",
+    speaker: "Uxío Novoneyra",
+    recordedAt: "data nom indicada na ficha",
+    recorder: "Asociación de Escritoras e Escritores en Lingua Galega",
+    topic: "O Laxeiro pintor dunha Galicia (recitaçom)",
+    clipStart: 38.0,
+    clipEnd: 57.8,
+    transcriptExcerpt: "",
+  },
+  {
+    id: "frontespo-sela-004",
+    comarcaCode: "PAR",
+    audioUrl: "/audio/frontespo-sela-animais.mp3",
+    recordUrl:
+      "https://www.frontespo.org/es/grabaciones/arbo-01-sela-sesion-04-animales",
+    source: "frontespo",
+    sourceLabel: "FRONTESPO — Universidade de Alcalá / e-cienciaDatos",
+    sourceRecord: "ESPO01001-004, pista de gravador; DOI 10.21950/JC2VAS",
+    municipality: "Arbo",
+    locality: "Sela",
+    speaker: "Antonio Lorenzo, natural de Eidos de Arriba (Sela)",
+    recordedAt: "30 de janeiro de 2016",
+    recorder:
+      "David Rodríguez Lorenzo; coordenaçom de Xosé Afonso Álvarez Pérez",
+    topic: "A cria de bois e a partilha do ganho",
+    clipStart: 0,
+    clipEnd: 19.37,
+    transcriptExcerpt: "",
+    license: {
+      label: "CC BY-SA 4.0",
+      url: "https://creativecommons.org/licenses/by-sa/4.0/",
+    },
+    editingNote:
+      "Excerto recortado e convertido a MP3 pola LoGaliza, com aumento de volume de 6 dB. Distribuído sob a mesma licença.",
   },
 ];

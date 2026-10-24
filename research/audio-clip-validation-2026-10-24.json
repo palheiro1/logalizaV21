@@ -1,13 +1,15 @@
 {
   "date": "2026-10-24",
-  "scope": "38 novas gravações integradas; 44 comarcas com áudio ativo. Íbias e Corunha usam as fontes originais; o excerto Fálase é alojado localmente sob CC BY-SA 3.0.",
+  "scope": "42 novas gravações integradas; 48 comarcas com áudio ativo. Inclui análise de qualidade da AELG e Sela.",
   "methodology": [
     "Origem municipal conferida nas fichas das instituições e na tabela territorial da app.",
     "Intervalos ajustados usando as transcrições institucionais e ASR temporizado local; excluídas apresentações com o topónimo de origem.",
     "Não foi realizada uma escuta humana especializada; ASR pode errar palavras. As transcrições automáticas não são publicadas nem usadas como legendas.",
     "Preservadas as seleções até 24-10-2026; Íbias inserido em 30-10-2026 por escolha do utilizador. A ordem relativa das comarcas seguintes e a cadência de seis dias são preservadas.",
     "Testes unitários da sequência completa, compatibilidade histórica e recuperação perante falha de áudio.",
-    "Fálase: o MP3 do RSS inclui publicidade. A app distribui apenas o excerto licenciado de 25,45 segundos, evitando depender de tempos variáveis no podcast."
+    "Fálase: o MP3 do RSS inclui publicidade. A app distribui apenas o excerto licenciado de 25,45 segundos, evitando depender de tempos variáveis no podcast.",
+    "Sela: comparação das pistas de câmara e gravador; alinhamento com transcrição institucional; verificação de picos, ganho e semelhança do sinal depois da conversão.",
+    "AELG: medições e ASR temporizado; originais externos sem edição. Pena excluído por proveniência insuficiente; Novoneyra identificado como recitação."
   ],
   "samples": [
     {
@@ -1205,6 +1207,193 @@
         "changes": "LoGaliza: extraído o intervalo 402,30–427,75 s da versión capturada (incluía publicidade antes do programa); conversión a MP3 estéreo de 44,1 kHz e 128 kbps. Sen cambios de velocidade nin contido dentro do recorte. O excerto distribúese baixo CC BY-SA 3.0.",
         "sha256": "6e450b6542004bc6d477c63e7bd6ed7cd7217e7ca7edba7f8afcaf869e60d382"
       }
+    },
+    {
+      "id": "aelg-sotelo",
+      "comarcaCode": "TCA",
+      "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
+      "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco/videoteca/entrevista/1710/1-por-que-comecei-a-escribir",
+      "source": "aelg",
+      "sourceLabel": "Centro de Documentación — AELG",
+      "sourceRecord": "Entrevista; Livraria Couceiro, Compostela",
+      "municipality": "Castro de Caldelas",
+      "locality": "Quintela de Mazaira",
+      "locationKind": "speaker-origin",
+      "speaker": "Olegario Sotelo Blanco",
+      "recordedAt": "2012",
+      "recorder": "Asociación de Escritoras e Escritores en Lingua Galega",
+      "topic": "A escrita na escola e nos jornais",
+      "clipStart": 1.0,
+      "clipEnd": 26.05,
+      "transcriptExcerpt": "",
+      "comarca": "TCA",
+      "clipDuration": 25.05,
+      "provenanceSources": [
+        "https://aelg.gal/centro-documentacion/autores-as/olegario-sotelo-blanco"
+      ],
+      "review": {
+        "rmsDbfs": -29.09,
+        "peakDbfs": -4.34,
+        "clippedSamples": 0,
+        "fractionAboveMinus40Dbfs": 0.631,
+        "quietFrameP10Dbfs": -64.96,
+        "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
+        "browser": {
+          "id": "aelg-sotelo",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 89.389389,
+          "collection48": true,
+          "error": null
+        },
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+      }
+    },
+    {
+      "id": "aelg-miguel-anxo",
+      "comarcaCode": "CAR",
+      "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
+      "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/miguel-anxo-fernandez-fernandez/videoteca/entrevista/3346/1-cal-e-a-orixe-da-tua-vocacion-literaria-por-que-comezaches-a-escribir",
+      "source": "aelg",
+      "sourceLabel": "Centro de Documentación — AELG",
+      "sourceRecord": "Entrevista; Liceu de Ourense",
+      "municipality": "Carballiño (O)",
+      "locality": "O Carballiño",
+      "locationKind": "speaker-origin",
+      "speaker": "Miguel Anxo Fernández Fernández",
+      "recordedAt": "2022",
+      "recorder": "Asociación de Escritoras e Escritores en Lingua Galega",
+      "topic": "A compra do primeiro livro",
+      "clipStart": 98.0,
+      "clipEnd": 114.7,
+      "transcriptExcerpt": "",
+      "comarca": "CAR",
+      "clipDuration": 16.7,
+      "provenanceSources": [
+        "https://egu.xunta.gal/gl/termo/126675/fernandez-fernandez-miguel-anxo",
+        "https://www.viajandoconpio.com/miguel-anxo-fernandez-en-o-carballino/"
+      ],
+      "review": {
+        "rmsDbfs": -20.61,
+        "peakDbfs": -2.35,
+        "clippedSamples": 0,
+        "fractionAboveMinus40Dbfs": 0.872,
+        "quietFrameP10Dbfs": -41.97,
+        "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
+        "browser": {
+          "id": "aelg-miguel-anxo",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 256.24,
+          "collection48": true,
+          "error": null
+        },
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+      }
+    },
+    {
+      "id": "aelg-novoneyra",
+      "comarcaCode": "COU",
+      "audioUrl": "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
+      "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/uxio-novoneyra/videoteca/lectura-obra-propia/1411/os-eidos-2-letania-de-galicia-e-outros-poemas/4",
+      "source": "aelg",
+      "sourceLabel": "Centro de Documentación — AELG",
+      "sourceRecord": "Recitaçom de obra própria; lugar de gravaçom nom indicado",
+      "municipality": "Folgoso do Courel",
+      "locality": "Parada",
+      "locationKind": "speaker-origin",
+      "speaker": "Uxío Novoneyra",
+      "recordedAt": "data nom indicada na ficha",
+      "recorder": "Asociación de Escritoras e Escritores en Lingua Galega",
+      "topic": "O Laxeiro pintor dunha Galicia (recitaçom)",
+      "clipStart": 38.0,
+      "clipEnd": 57.8,
+      "transcriptExcerpt": "",
+      "comarca": "COU",
+      "clipDuration": 19.8,
+      "provenanceSources": [
+        "https://academia.gal/letras-galegas/2010/uxio-novoneyra"
+      ],
+      "review": {
+        "rmsDbfs": -22.13,
+        "peakDbfs": -1.97,
+        "clippedSamples": 0,
+        "fractionAboveMinus40Dbfs": 0.533,
+        "quietFrameP10Dbfs": -63.72,
+        "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
+        "browser": {
+          "id": "aelg-novoneyra",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 298.399637,
+          "collection48": true,
+          "error": null
+        },
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+      }
+    },
+    {
+      "id": "frontespo-sela-004",
+      "comarcaCode": "PAR",
+      "audioUrl": "/audio/frontespo-sela-animais.mp3",
+      "recordUrl": "https://www.frontespo.org/es/grabaciones/arbo-01-sela-sesion-04-animales",
+      "source": "frontespo",
+      "sourceLabel": "FRONTESPO — Universidade de Alcalá / e-cienciaDatos",
+      "sourceRecord": "ESPO01001-004, pista de gravador; DOI 10.21950/JC2VAS",
+      "municipality": "Arbo",
+      "locality": "Sela",
+      "speaker": "Antonio Lorenzo, natural de Eidos de Arriba (Sela)",
+      "recordedAt": "30 de janeiro de 2016",
+      "recorder": "David Rodríguez Lorenzo; coordenaçom de Xosé Afonso Álvarez Pérez",
+      "topic": "A cria de bois e a partilha do ganho",
+      "clipStart": 0,
+      "clipEnd": 19.37,
+      "transcriptExcerpt": "",
+      "license": {
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "editingNote": "Excerto recortado e convertido a MP3 pola LoGaliza, com aumento de volume de 6 dB. Distribuído sob a mesma licença.",
+      "comarca": "PAR",
+      "clipDuration": 19.37,
+      "provenanceSources": [
+        "https://www.frontespo.org/es/informantes/antonio-lorenzo",
+        "https://doi.org/10.21950/JC2VAS"
+      ],
+      "review": {
+        "rmsDbfs": -23.82,
+        "peakDbfs": -1.56,
+        "clippedSamples": 0,
+        "fractionAboveMinus40Dbfs": 0.832,
+        "quietFrameP10Dbfs": -44.35,
+        "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
+        "processingValidation": {
+          "duration": 19.37,
+          "rmsDbfs": -23.82,
+          "peakDbfs": -1.56,
+          "clippedSamples": 0,
+          "measuredGainDb": 5.55,
+          "correlationWithOriginal": 0.9999246232049431
+        },
+        "sourceInterval": [
+          42.05,
+          61.42
+        ],
+        "transcriptionAlignment": "Transcrição ELAN da pista de câmara confrontada com ASR da pista de gravador; tempos ajustados à pista escolhida (as duas pistas não estão perfeitamente alinhadas).",
+        "browser": {
+          "id": "frontespo-sela-004",
+          "playing": true,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 19.37,
+          "collection48": true,
+          "error": null
+        },
+        "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+      }
     }
   ],
   "rejected": [
@@ -1267,5 +1456,154 @@
     "oldPilotLinkResolvesSameComarca": true,
     "typecheck": "passed",
     "productionBuild": "passed"
-  }
+  },
+  "latestQualityReview": {
+    "method": "Análise de sinal, ASR temporizado e reprodução no navegador. Não houve escuta humana especializada.",
+    "findings": [
+      {
+        "id": "aelg-sotelo",
+        "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
+        "metrics": {
+          "rmsDbfs": -29.09,
+          "peakDbfs": -4.34,
+          "clippedSamples": 0,
+          "fractionAboveMinus40Dbfs": 0.631,
+          "quietFrameP10Dbfs": -64.96,
+          "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
+          "browser": {
+            "id": "aelg-sotelo",
+            "playing": true,
+            "stoppedAtBoundary": true,
+            "repeated": true,
+            "duration": 89.389389,
+            "collection48": true,
+            "error": null
+          },
+          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        }
+      },
+      {
+        "id": "aelg-miguel-anxo",
+        "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
+        "metrics": {
+          "rmsDbfs": -20.61,
+          "peakDbfs": -2.35,
+          "clippedSamples": 0,
+          "fractionAboveMinus40Dbfs": 0.872,
+          "quietFrameP10Dbfs": -41.97,
+          "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
+          "browser": {
+            "id": "aelg-miguel-anxo",
+            "playing": true,
+            "stoppedAtBoundary": true,
+            "repeated": true,
+            "duration": 256.24,
+            "collection48": true,
+            "error": null
+          },
+          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        }
+      },
+      {
+        "id": "aelg-novoneyra",
+        "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
+        "metrics": {
+          "rmsDbfs": -22.13,
+          "peakDbfs": -1.97,
+          "clippedSamples": 0,
+          "fractionAboveMinus40Dbfs": 0.533,
+          "quietFrameP10Dbfs": -63.72,
+          "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
+          "browser": {
+            "id": "aelg-novoneyra",
+            "playing": true,
+            "stoppedAtBoundary": true,
+            "repeated": true,
+            "duration": 298.399637,
+            "collection48": true,
+            "error": null
+          },
+          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        }
+      },
+      {
+        "id": "frontespo-sela-004",
+        "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
+        "metrics": {
+          "rmsDbfs": -23.82,
+          "peakDbfs": -1.56,
+          "clippedSamples": 0,
+          "fractionAboveMinus40Dbfs": 0.832,
+          "quietFrameP10Dbfs": -44.35,
+          "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
+          "processingValidation": {
+            "duration": 19.37,
+            "rmsDbfs": -23.82,
+            "peakDbfs": -1.56,
+            "clippedSamples": 0,
+            "measuredGainDb": 5.55,
+            "correlationWithOriginal": 0.9999246232049431
+          },
+          "sourceInterval": [
+            42.05,
+            61.42
+          ],
+          "transcriptionAlignment": "Transcrição ELAN da pista de câmara confrontada com ASR da pista de gravador; tempos ajustados à pista escolhida (as duas pistas não estão perfeitamente alinhadas).",
+          "browser": {
+            "id": "frontespo-sela-004",
+            "playing": true,
+            "stoppedAtBoundary": true,
+            "repeated": true,
+            "duration": 19.37,
+            "collection48": true,
+            "error": null
+          },
+          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+        }
+      }
+    ],
+    "limitations": [
+      "Sotelo Blanco tem volume baixo; a fonte externa foi preservada sem edição por não se ter identificado licença aberta de redistribuição.",
+      "Medições sem saturação e ASR coerente não garantem ausência de todos os defeitos perceptivos.",
+      "Não foi classificado nenhum dos cinco candidatos como irrecuperável apenas com base nas medições; Pena foi excluído por proveniência, e a pista de câmara de Sela foi preterida pela pista de gravador."
+    ]
+  },
+  "latestLocalBrowserChecks": [
+    {
+      "id": "aelg-sotelo",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 89.389389,
+      "collection48": true,
+      "error": null
+    },
+    {
+      "id": "aelg-miguel-anxo",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 256.24,
+      "collection48": true,
+      "error": null
+    },
+    {
+      "id": "aelg-novoneyra",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 298.399637,
+      "collection48": true,
+      "error": null
+    },
+    {
+      "id": "frontespo-sela-004",
+      "playing": true,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 19.37,
+      "collection48": true,
+      "error": null
+    }
+  ]
 }

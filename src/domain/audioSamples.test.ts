@@ -17,17 +17,9 @@ describe("audio catalogue", () => {
       .sort();
 
     expect(new Set(ids).size).toBe(ids.length);
-    expect(audioSamples).toHaveLength(44);
+    expect(audioSamples).toHaveLength(48);
     expect(new Set(coveredCodes).size).toBe(audioSamples.length);
-    expect(missingCodes).toEqual([
-      "CAB",
-      "CAR",
-      "COU",
-      "EUM",
-      "MAS",
-      "PAR",
-      "TCA",
-    ]);
+    expect(missingCodes).toEqual(["CAB", "EUM", "MAS"]);
     expect(
       audioSamples.every(({ comarcaCode }) => validCodes.has(comarcaCode))
     ).toBe(true);
@@ -94,5 +86,25 @@ describe("audio catalogue", () => {
     expect(getAudioSampleById("ccg-354")!.clipStart).toBeGreaterThan(14.7);
     expect(getAudioSampleById("ccg-383")!.clipStart).toBeGreaterThan(36.5);
     expect(getAudioSampleById("ccg-350")!.clipEnd).toBeLessThan(79);
+  });
+
+  test("uses the reviewed AELG origins and the licensed stable Sela excerpt", () => {
+    const aelg = audioSamples.filter(({ source }) => source === "aelg");
+    expect(aelg.map(({ comarcaCode }) => comarcaCode).sort()).toEqual([
+      "CAR",
+      "COU",
+      "TCA",
+    ]);
+    expect(
+      aelg.every(({ locationKind }) => locationKind === "speaker-origin")
+    ).toBe(true);
+    expect(getActiveAudioSampleForComarca("COU")?.sourceRecord).toContain(
+      "Recitaçom"
+    );
+    const sela = getActiveAudioSampleForComarca("PAR")!;
+    expect(sela.audioUrl).toBe("/audio/frontespo-sela-animais.mp3");
+    expect(sela.license?.label).toBe("CC BY-SA 4.0");
+    expect(sela.editingNote).toContain("6 dB");
+    expect(getActiveAudioSampleForComarca("MAS")).toBeUndefined();
   });
 });

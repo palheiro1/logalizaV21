@@ -7,7 +7,9 @@ export type AudioSampleSource =
   | "apoi"
   | "redmeda"
   | "falase"
-  | "egeria";
+  | "egeria"
+  | "aelg"
+  | "frontespo";
 
 export interface AudioSample {
   id: string;
