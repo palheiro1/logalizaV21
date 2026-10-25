@@ -1,6 +1,6 @@
 {
   "date": "2026-10-24",
-  "scope": "42 novas gravações integradas; 48 comarcas com áudio ativo. Inclui análise de qualidade da AELG e Sela.",
+  "scope": "43 novas gravações integradas; 49 comarcas com áudio ativo. Inclui revisão de origem, publicidade e qualidade de Betanzos e avaliação de Monfero e Cabreira.",
   "methodology": [
     "Origem municipal conferida nas fichas das instituições e na tabela territorial da app.",
     "Intervalos ajustados usando as transcrições institucionais e ASR temporizado local; excluídas apresentações com o topónimo de origem.",
@@ -1438,6 +1438,117 @@
           "error": null
         }
       }
+    },
+    {
+      "id": "onda-xove-barral",
+      "comarcaCode": "MAS",
+      "audioUrl": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+      "recordUrl": "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+      "source": "onda-xove",
+      "sourceLabel": "Onda Xove Betanzos — Laboratorio de Radio",
+      "sourceRecord": "Entrevista a María Barral · podcast 118987582",
+      "municipality": "Betanzos",
+      "locality": "Betanzos",
+      "speaker": "María Barral Varela",
+      "locationKind": "speaker-origin",
+      "recordedAt": "6 de novembro de 2023",
+      "dateKind": "published",
+      "recorder": "Equipa de Onda Xove Betanzos / Laboratorio de Radio",
+      "topic": "A recuperaçom do mercado e os produtos de proximidade",
+      "clipStart": 111.25,
+      "clipEnd": 140.15,
+      "transcriptExcerpt": "",
+      "comarca": "MAS",
+      "clipDuration": 28.9,
+      "provenanceSources": [
+        "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+        "https://www.lavozdegalicia.es/amp/noticia/coruna/betanzos/2021/06/22/tozuda/0003_202106E22P56991.htm"
+      ],
+      "review": {
+        "start": 111.25,
+        "end": 140.15,
+        "duration": 28.9,
+        "sampleRate": 16000,
+        "rmsDbfs": -26.14,
+        "peakDbfs": -9.25,
+        "clippedSamples": 0,
+        "energyAbove4kHzPercent": 3.22,
+        "method": "PCM mono 16 kHz decoded from publisher static MP3; automated signal metrics and timed speech recognition, not human listening.",
+        "note": "Fala contínua sobre a recuperação do mercado, fora da abertura editorial, sem perguntas nem nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
+        "browser": {
+          "id": "onda-xove-barral",
+          "playing": true,
+          "start": 111.472002,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 1477.173311,
+          "collection49": true,
+          "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+          "error": null
+        },
+        "productionBrowser": {
+          "id": "onda-xove-barral",
+          "playing": true,
+          "start": 111.471957,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 1477.173311,
+          "collection49": true,
+          "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+          "error": null,
+          "attributionPresent": true
+        },
+        "advertising": {
+          "rejectedUrl": "https://www.ivoox.com/maria-barral-onda-xove-betanzos_mf_118987582_feed_1.mp3",
+          "problem": "A captura RSS analisada tinha cerca de 20 s de anúncio Aena antes da apresentação, deslocando o excerto.",
+          "chosenUrl": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+          "discovery": "Endereço de descarga oficial presente no HTML público do episódio, confirmado no navegador. A app guarda o endereço permanente do iVoox, não o URL final assinado e temporário do CDN.",
+          "validation": [
+            {
+              "url": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+              "status": 200,
+              "bytes": 23636190,
+              "sha256": "e9a3ed8a4122a1220ad86795ac698d27e7cfa4dee219870c4a3956f15fa083e2",
+              "etag": "\"ee731dcabac57eb6dfff9c8a72fc42bf\"",
+              "contentType": "audio/mpeg",
+              "userAgent": "Mozilla/5.0",
+              "resolvedHost": "podcastcdn-30.ivoox.com"
+            },
+            {
+              "url": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+              "status": 200,
+              "bytes": 23636190,
+              "sha256": "e9a3ed8a4122a1220ad86795ac698d27e7cfa4dee219870c4a3956f15fa083e2",
+              "etag": "\"ee731dcabac57eb6dfff9c8a72fc42bf\"",
+              "contentType": "audio/mpeg",
+              "userAgent": "LoGaliza audio validation",
+              "resolvedHost": "podcastcdn-30.ivoox.com"
+            }
+          ],
+          "originalDurationSeconds": 1477.173311,
+          "decodedFirstSeconds": 220,
+          "result": "Duas descargas completas com agentes de utilizador diferentes são byte a byte iguais; a apresentação começa em 0 s. Reprodução e saltos confirmados localmente e na produção num contexto de navegador separado.",
+          "limitation": "Disponibilidade e política do servidor externo podem mudar. A igualdade entre estes pedidos não é garantia permanente do serviço."
+        },
+        "provenance": {
+          "conclusion": "Origem e escolarização em Betanzos confirmadas. O local de nascimento não é a única evidência usada.",
+          "evidence": [
+            {
+              "url": "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+              "interval": [
+                0,
+                22
+              ],
+              "finding": "A apresentação identifica-a como betanceira e aluna dos centros Vales Villamarín e Francisco Aguiar; referência à atividade da mãe no centro histórico."
+            },
+            {
+              "url": "https://www.lavozdegalicia.es/amp/noticia/coruna/betanzos/2021/06/22/tozuda/0003_202106E22P56991.htm",
+              "finding": "Entrevista em primeira pessoa identifica Betanzos, 1973, recordações da juventude local, estudos posteriores em Santiago e trabalho como professora de uma academia."
+            }
+          ],
+          "dateNote": "6/11/2023 é a publicação no RSS. A conversa refere setembro; não foi atribuída a data de publicação à gravação."
+        }
+      }
     }
   ],
   "rejected": [
@@ -1479,17 +1590,75 @@
   ],
   "remainingMapComarcas": [
     "CAB",
-    "CAR",
-    "COR",
-    "COU",
-    "EUM",
-    "MAS",
-    "PAR",
-    "TCA",
-    "ULH",
-    "VDI"
+    "EUM"
   ],
   "testResults": {
+    "unitTests": 71,
+    "unitTestFiles": 12,
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "latestBrowserFilesPassed": 1,
+    "latestBrowserFilesFailed": 0,
+    "playerStopsAtClipEnd": true,
+    "playerReplay": true,
+    "activeComarcas": 49,
+    "historicalRotation": "preserved",
+    "testedAt": "2026-10-25"
+  },
+  "latestQualityReview": {
+    "date": "2026-10-25",
+    "method": "Medições de PCM, ASR temporizado e testes no navegador; não é escuta humana especializada.",
+    "findings": [
+      {
+        "id": "onda-xove-barral",
+        "note": "Fala contínua sobre a recuperação do mercado, fora da abertura editorial, sem perguntas nem nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
+        "metrics": {
+          "start": 111.25,
+          "end": 140.15,
+          "duration": 28.9,
+          "sampleRate": 16000,
+          "rmsDbfs": -26.14,
+          "peakDbfs": -9.25,
+          "clippedSamples": 0,
+          "energyAbove4kHzPercent": 3.22,
+          "method": "PCM mono 16 kHz decoded from publisher static MP3; automated signal metrics and timed speech recognition, not human listening."
+        }
+      }
+    ],
+    "limitations": [
+      "Mantido o volume original do ficheiro externo.",
+      "ASR e ausência de saturação não certificam todos os aspetos perceptivos da voz."
+    ]
+  },
+  "latestLocalBrowserChecks": [
+    {
+      "id": "onda-xove-barral",
+      "playing": true,
+      "start": 111.472002,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 1477.173311,
+      "collection49": true,
+      "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+      "error": null
+    }
+  ],
+  "latestProductionBrowserChecks": [
+    {
+      "id": "onda-xove-barral",
+      "playing": true,
+      "start": 111.471957,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 1477.173311,
+      "collection49": true,
+      "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+      "error": null,
+      "attributionPresent": true
+    }
+  ],
+  "lastReviewedAt": "2026-10-25",
+  "previousTestResults": {
     "unitTests": 68,
     "unitTestFiles": 12,
     "browserFilesPassed": 35,
@@ -1501,199 +1670,153 @@
     "typecheck": "passed",
     "productionBuild": "passed"
   },
-  "latestQualityReview": {
-    "method": "Análise de sinal, ASR temporizado e reprodução no navegador. Não houve escuta humana especializada.",
-    "findings": [
-      {
-        "id": "aelg-sotelo",
-        "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
-        "metrics": {
-          "rmsDbfs": -29.09,
-          "peakDbfs": -4.34,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.631,
-          "quietFrameP10Dbfs": -64.96,
+  "qualityReviewHistory": [
+    {
+      "method": "Análise de sinal, ASR temporizado e reprodução no navegador. Não houve escuta humana especializada.",
+      "findings": [
+        {
+          "id": "aelg-sotelo",
           "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
-          "browser": {
-            "id": "aelg-sotelo",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 89.389389,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
-        }
-      },
-      {
-        "id": "aelg-miguel-anxo",
-        "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
-        "metrics": {
-          "rmsDbfs": -20.61,
-          "peakDbfs": -2.35,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.872,
-          "quietFrameP10Dbfs": -41.97,
+          "metrics": {
+            "rmsDbfs": -29.09,
+            "peakDbfs": -4.34,
+            "clippedSamples": 0,
+            "fractionAboveMinus40Dbfs": 0.631,
+            "quietFrameP10Dbfs": -64.96,
+            "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
+            "browser": {
+              "id": "aelg-sotelo",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 89.389389,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
+        },
+        {
+          "id": "aelg-miguel-anxo",
           "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
-          "browser": {
-            "id": "aelg-miguel-anxo",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 256.24,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
-        }
-      },
-      {
-        "id": "aelg-novoneyra",
-        "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
-        "metrics": {
-          "rmsDbfs": -22.13,
-          "peakDbfs": -1.97,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.533,
-          "quietFrameP10Dbfs": -63.72,
+          "metrics": {
+            "rmsDbfs": -20.61,
+            "peakDbfs": -2.35,
+            "clippedSamples": 0,
+            "fractionAboveMinus40Dbfs": 0.872,
+            "quietFrameP10Dbfs": -41.97,
+            "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
+            "browser": {
+              "id": "aelg-miguel-anxo",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 256.24,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
+        },
+        {
+          "id": "aelg-novoneyra",
           "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
-          "browser": {
-            "id": "aelg-novoneyra",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 298.399637,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
-        }
-      },
-      {
-        "id": "frontespo-sela-004",
-        "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
-        "metrics": {
-          "rmsDbfs": -23.82,
-          "peakDbfs": -1.56,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.832,
-          "quietFrameP10Dbfs": -44.35,
+          "metrics": {
+            "rmsDbfs": -22.13,
+            "peakDbfs": -1.97,
+            "clippedSamples": 0,
+            "fractionAboveMinus40Dbfs": 0.533,
+            "quietFrameP10Dbfs": -63.72,
+            "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
+            "browser": {
+              "id": "aelg-novoneyra",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 298.399637,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
+        },
+        {
+          "id": "frontespo-sela-004",
           "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
-          "processingValidation": {
-            "duration": 19.37,
+          "metrics": {
             "rmsDbfs": -23.82,
             "peakDbfs": -1.56,
             "clippedSamples": 0,
-            "measuredGainDb": 5.55,
-            "correlationWithOriginal": 0.9999246232049431
-          },
-          "sourceInterval": [
-            42.05,
-            61.42
-          ],
-          "transcriptionAlignment": "Transcrição ELAN da pista de câmara confrontada com ASR da pista de gravador; tempos ajustados à pista escolhida (as duas pistas não estão perfeitamente alinhadas).",
-          "browser": {
-            "id": "frontespo-sela-004",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 19.37,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+            "fractionAboveMinus40Dbfs": 0.832,
+            "quietFrameP10Dbfs": -44.35,
+            "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
+            "processingValidation": {
+              "duration": 19.37,
+              "rmsDbfs": -23.82,
+              "peakDbfs": -1.56,
+              "clippedSamples": 0,
+              "measuredGainDb": 5.55,
+              "correlationWithOriginal": 0.9999246232049431
+            },
+            "sourceInterval": [
+              42.05,
+              61.42
+            ],
+            "transcriptionAlignment": "Transcrição ELAN da pista de câmara confrontada com ASR da pista de gravador; tempos ajustados à pista escolhida (as duas pistas não estão perfeitamente alinhadas).",
+            "browser": {
+              "id": "frontespo-sela-004",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 19.37,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
         }
-      }
-    ],
-    "limitations": [
-      "Sotelo Blanco tem volume baixo; a fonte externa foi preservada sem edição por não se ter identificado licença aberta de redistribuição.",
-      "Medições sem saturação e ASR coerente não garantem ausência de todos os defeitos perceptivos.",
-      "Não foi classificado nenhum dos cinco candidatos como irrecuperável apenas com base nas medições; Pena foi excluído por proveniência, e a pista de câmara de Sela foi preterida pela pista de gravador."
-    ]
-  },
-  "latestLocalBrowserChecks": [
-    {
-      "id": "aelg-sotelo",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 89.389389,
-      "collection48": true,
-      "error": null
-    },
-    {
-      "id": "aelg-miguel-anxo",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 256.24,
-      "collection48": true,
-      "error": null
-    },
-    {
-      "id": "aelg-novoneyra",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 298.399637,
-      "collection48": true,
-      "error": null
-    },
-    {
-      "id": "frontespo-sela-004",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 19.37,
-      "collection48": true,
-      "error": null
+      ],
+      "limitations": [
+        "Sotelo Blanco tem volume baixo; a fonte externa foi preservada sem edição por não se ter identificado licença aberta de redistribuição.",
+        "Medições sem saturação e ASR coerente não garantem ausência de todos os defeitos perceptivos.",
+        "Não foi classificado nenhum dos cinco candidatos como irrecuperável apenas com base nas medições; Pena foi excluído por proveniência, e a pista de câmara de Sela foi preterida pela pista de gravador."
+      ]
     }
   ],
-  "latestProductionBrowserChecks": [
+  "candidateReview20261025": [
     {
-      "id": "aelg-sotelo",
-      "src": "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 89.389389,
-      "collection48": true,
-      "license": false,
-      "error": null
+      "id": "onda-cero-pacucha-couto",
+      "comarca": "EUM",
+      "decision": "not-integrated-provenance-pending",
+      "candidateInterval": [
+        114.3,
+        132.8
+      ],
+      "reason": "Atividade profissional em Monfero confirmada; infância/origem não comprovada. A memória da mãe na apanha de grelos não identifica explicitamente o local. Não inferir sotaque local pelo emprego.",
+      "sources": [
+        "https://www.galiciaconfidencial.com/noticia/5785569-completo-grelo-angela-grelo-val-xestoso-tesouro-verde-baixo-ameaza-non-hai-mozos-recollelo-e-ten-apanado-man",
+        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html"
+      ]
     },
     {
-      "id": "aelg-miguel-anxo",
-      "src": "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 256.24,
-      "collection48": true,
-      "license": false,
-      "error": null
+      "id": "radio-grelo-monfero",
+      "comarca": "EUM",
+      "decision": "not-integrated",
+      "reviewedSeconds": 420,
+      "reason": "Descarga oficial continua a incluir anúncio Shopify de cerca de 28 s. Falas do presidente da câmara (160–230 s) e de Juan Manuel (290–328 s) identificadas como castelhanas em análise independente dos segmentos; não representam um recorte galego validado. Juan Manuel diz ter nascido ali, mas refere mudanças para Ferrol, Arteixo e Santiago. Não foi avaliado o resto do programa.",
+      "source": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008"
     },
     {
-      "id": "aelg-novoneyra",
-      "src": "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 298.399637,
-      "collection48": true,
-      "license": false,
-      "error": null
-    },
-    {
-      "id": "frontespo-sela-004",
-      "src": "https://logaliza.vercel.app/audio/frontespo-sela-animais.mp3",
-      "playing": true,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 19.37,
-      "collection48": true,
-      "license": true,
-      "error": null
+      "id": "edilberto-rodriguez-radio-cornella",
+      "comarca": "CAB",
+      "decision": "no-galician-excerpt-validated",
+      "reviewedSeconds": 360,
+      "reason": "Pom(b)riego/Benuza e infância local sustentadas pela entrevista Arlafolk. A conversa revista tem música de abertura, apresentadores galegos e respostas de Edilberto em castelhano. Análise independente da sua voz em 214–248 s e 300–322 s identifica castelhano; não usar a língua do apresentador para classificar a do convidado. Não foi avaliado o resto dos 18m40s.",
+      "sources": [
+        "https://arlafolk.es/entrevistas/edilberto_rodriguez.html",
+        "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html",
+        "https://archive.org/details/edilberto-rodriguez"
+      ]
     }
   ]
 }

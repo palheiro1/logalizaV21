@@ -1,15 +1,15 @@
 {
   "title": "Alternativas de áudio para o LoGaliza",
   "date": "2026-10-24",
-  "scope": "42 novas gravações integradas; 48 comarcas com áudio ativo. Revisão da AELG e Sela, qualidade sonora e pesquisa para Cabreira, Eume e Marinhas.",
+  "scope": "43 novas gravações integradas; 49 comarcas com áudio ativo. Inclui revisão de origem, publicidade e qualidade de Betanzos e avaliação de Monfero e Cabreira.",
   "summary": {
     "mapComarcas": 51,
     "publishedHistoricalCatalogue": 49,
     "originalILGBlocked": 42,
     "originalCCG": 7,
-    "newIntegratedRecordings": 42,
-    "activeRecordings": 48,
-    "activeComarcas": 48,
+    "newIntegratedRecordings": 43,
+    "activeRecordings": 49,
+    "activeComarcas": 49,
     "activeByHost": {
       "CCG": 34,
       "APOI": 7,
@@ -17,16 +17,17 @@
       "Egeria": 1,
       "LoGaliza (Praza.gal CC BY-SA)": 1,
       "AELG": 3,
-      "LoGaliza (FRONTESPO CC BY-SA)": 1
+      "LoGaliza (FRONTESPO CC BY-SA)": 1,
+      "iVoox / Onda Xove": 1
     },
-    "restoredILGComarcas": 40,
+    "restoredILGComarcas": 41,
     "replacedCCGForGeography": 1,
-    "remainingFormerCatalogueComarcas": 2,
+    "remainingFormerCatalogueComarcas": 1,
     "previouslyMissingComarcas": [
       "CAB",
       "VDI"
     ],
-    "remainingMapComarcas": 3,
+    "remainingMapComarcas": 2,
     "additionalFilesWithMP3Probe": 3,
     "additionalFilesWithBrowserPlayback": 0,
     "additionalComarcasWithFiles": 2,
@@ -62,7 +63,7 @@
     "Testes unitários da sequência completa, compatibilidade histórica e recuperação perante falha de áudio.",
     "Fálase: o MP3 do RSS inclui publicidade. A app distribui apenas o excerto licenciado de 25,45 segundos, evitando depender de tempos variáveis no podcast.",
     "Verificações PCM e ASR dos três novos recortes, seguidas por testes reais do leitor e reprodução em produção.",
-    "Quatro ficheiros MP4 da AELG reproduzidos como áudio no navegador. São candidatos da pesquisa seguinte, não excertos já integrados."
+    "Betanzos: descarga oficial estática identificada no HTML do iVoox; ficheiro comparado por SHA-256 em dois pedidos completos e recorte testado em produção. Não reutilizar o endereço RSS com publicidade nem o URL temporário assinado do CDN."
   ],
   "sourceFindings": [
     {
@@ -111,6 +112,24 @@
       "url": "https://doi.org/10.21950/JC2VAS",
       "finding": "Originais públicos e licença CC BY-SA 4.0 confirmados no repositório. Distribuído um excerto de 19,37 s da pista de gravador com ganho constante de 6 dB.",
       "checked": "2026-10-24"
+    },
+    {
+      "name": "Onda Xove Betanzos — María Barral",
+      "url": "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+      "finding": "Origem e escolarização locais confirmadas; excerto 111,25–140,15 s integrado a partir da descarga oficial estática, sem o anúncio variável do RSS.",
+      "checked": "2026-10-25"
+    },
+    {
+      "name": "Galegos no Baix — Edilberto Rodríguez",
+      "url": "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html",
+      "finding": "Entrevista e MP3 localizados em Internet Archive. Primeiros seis minutos revistos; respostas analisadas em castelhano, sem excerto galego validado.",
+      "checked": "2026-10-25"
+    },
+    {
+      "name": "Colexio de Xornalistas — Paco Sarria",
+      "url": "https://xornalistas.gal/novas-eventos/novas/paco-sarria-novo-decano-do-colexio-de-xornalistas-1",
+      "finding": "Nascimento na Ponte de Domingo Flórez em 1962 documentado. Ligação profissional posterior a Ourense. A infância e adequação à Cabreira ainda precisam de confirmação.",
+      "checked": "2026-10-25"
     }
   ],
   "selectionRequirements": [
@@ -129,7 +148,8 @@
     "Xosé Ramón Pena nasceu em Betanzos e mudou-se para a Corunha aos oito anos: origem biográfica mista, que exige avaliação antes de atribuir a voz a Marinhas.",
     "AELG: os locais indicados para TCA, CAR e COU são a origem dos falantes. As entrevistas de Sotelo Blanco e Miguel Anxo Fernández foram gravadas em Compostela e Ourense; a app distingue origem e gravação.",
     "Sela: Antonio Lorenzo nasceu em Eidos de Arriba, de pais da mesma freguesia; viveu também em Fene e Vigo e regressava a Sela aos fins de semana. Uma voz não representa toda a comarca.",
-    "Novoneyra é integrado como recitação, tal como o catálogo já admite versos em Viana; mantém-se a procura de fala espontânea para Courel."
+    "Novoneyra é integrado como recitação, tal como o catálogo já admite versos em Viana; mantém-se a procura de fala espontânea para Courel.",
+    "María Barral: Betanzos confirmado pela biografia e pela escolarização local indicada na apresentação. Pacucha Couto: ligação profissional não basta para validar o local de formação da fala. Edilberto: origem local confirmada, mas sem excerto galego validado nos seis minutos revistos."
   ],
   "coverage": [
     {
@@ -325,8 +345,8 @@
       "previousSampleId": null,
       "currentStatus": "photo",
       "nextStep": {
-        "note": "O Instituto de Estudios Cabreireses documenta gravações de tradição oral e testemunhos locais; nova pista para procurar nas localidades do mapa da app. Ainda não foi identificado um ficheiro público de fala adequado. Manter a verificação de município e variedade: Corporales/Truchas ficam fora da Cabreira definida no jogo; La Baña/Quintanilla de Losada são pistas territoriais a investigar.",
-        "url": "https://lafueyacabreiresa.com/el-instituto-de-estudios-cabreireses-da-la-bienvenida-a-la-comarca-con-un-cartel-en-cabreires"
+        "note": "A conversa de Edilberto Rodríguez em Galegos no Baix (31/03/2022) foi localizada no arquivo do próprio programa e revista até 6 minutos: origem local confirmada, mas as respostas analisadas estão em castelhano. Nova pista: Paco Sarria, nascido na Ponte de Domingo Flórez segundo o Colexio de Xornalistas, com ficheiro oficial de Onda Cero descodificado; os primeiros 90 s incluem fala galega e castelhana e vozes diferentes; falta completar a trajetória infantil, identificar cada intervenção e escolher um recorte da sua própria voz. La Baña continua sem gravação galega validada; Corporales/Truchas fica fora do mapa da app.",
+        "url": "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html"
       }
     },
     {
@@ -538,7 +558,7 @@
       "previousSampleId": "ago-105",
       "currentStatus": "photo",
       "nextStep": {
-        "note": "Radio Grelo publicou em 25-09-2020 uma entrevista de cerca de 25 minutos com vizinhos de Monfero. O endpoint público entrega MP3, mas o teste recebeu publicidade antes da introdução e do início da entrevista. Tempos fixos podem deslocar-se. Confirmar falante local em galego e obter uma versão estável antes de integrar. Nova via: Ponte en Galego, do IES Breamo de Pontedeume, com entrevistas e arquivo na Rádio FilispiM. A participação num programa local não comprova a origem do falante; é necessário identificar uma voz do Eume.",
+        "note": "O MP3 direto de Pacucha Couto tem fala galega e permite estudar o intervalo 114,3–132,8 s. A origem/infância não foi comprovada: a atividade profissional em Val Xestoso não basta. A Radio Grelo foi revista até 7 minutos: o presidente da câmara e Juan Manuel falam em castelhano nos trechos analisados, e a descarga oficial também inclui anúncio Shopify. Nenhum integrado nesta ronda.",
         "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008"
       }
     },
@@ -613,8 +633,8 @@
     {
       "code": "MAS",
       "name": "Marinhas",
-      "candidateId": null,
-      "researchStatus": "pending",
+      "candidateId": "onda-xove-barral",
+      "researchStatus": "integrated",
       "municipalities": [
         "Aranga",
         "Betanços",
@@ -630,11 +650,7 @@
       ],
       "previousStatus": "ilg-403",
       "previousSampleId": "ago-138",
-      "currentStatus": "photo",
-      "nextStep": {
-        "note": "Xosé Ramón Pena tem entrevista AELG de 2009 (5:25,9), gravada no MARCO de Vigo, com reprodução/seek confirmados. Nasceu em Betanzos, mas a própria biografia diz que se mudou para a Corunha aos oito anos: não contar automaticamente como sotaque de Marinhas. Alternativa mais local: María Barral em Onda Xove Betanzos (06-11-2023), MP3 confirmado no RSS; falta verificar fala, publicidade, recorte e condições.",
-        "url": "https://aelg.gal/centro-documentacion/autores-as/xose-ramon-pena/videoteca/entrevista/549/1-por-que-comecei-a-escribir"
-      }
+      "currentStatus": "active-audio"
     },
     {
       "code": "MON",
@@ -2718,7 +2734,7 @@
       "clipStart": 1.0,
       "clipEnd": 26.05,
       "newIntegration": true,
-      "latestIntegration": true,
+      "latestIntegration": false,
       "selectionNote": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
       "license": null,
       "locationKind": "speaker-origin"
@@ -2736,7 +2752,7 @@
       "clipStart": 98.0,
       "clipEnd": 114.7,
       "newIntegration": true,
-      "latestIntegration": true,
+      "latestIntegration": false,
       "selectionNote": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
       "license": null,
       "locationKind": "speaker-origin"
@@ -2754,7 +2770,7 @@
       "clipStart": 38.0,
       "clipEnd": 57.8,
       "newIntegration": true,
-      "latestIntegration": true,
+      "latestIntegration": false,
       "selectionNote": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
       "license": null,
       "locationKind": "speaker-origin"
@@ -2772,13 +2788,30 @@
       "clipStart": 0,
       "clipEnd": 19.37,
       "newIntegration": true,
-      "latestIntegration": true,
+      "latestIntegration": false,
       "selectionNote": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
       "license": {
         "label": "CC BY-SA 4.0",
         "url": "https://creativecommons.org/licenses/by-sa/4.0/"
       },
       "locationKind": null
+    },
+    {
+      "id": "onda-xove-barral",
+      "comarca": "MAS",
+      "origin": "Onda Xove Betanzos",
+      "title": "A recuperaçom do mercado e os produtos de proximidade",
+      "audioUrl": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+      "recordUrl": "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+      "municipality": "Betanzos",
+      "locality": "Betanzos",
+      "speaker": "María Barral Varela",
+      "clipStart": 111.25,
+      "clipEnd": 140.15,
+      "newIntegration": true,
+      "latestIntegration": true,
+      "selectionNote": "Fala contínua sobre a recuperação do mercado, fora da abertura editorial, sem perguntas nem nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
+      "locationKind": "speaker-origin"
     }
   ],
   "conditional": [],
@@ -5317,6 +5350,176 @@
   ],
   "productionIntegration": {
     "url": "https://logaliza.vercel.app",
+    "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1&amostra=onda-xove-barral",
+    "state": "READY",
+    "tests": "71 testes passaram, TypeScript e build passaram. Betanzos reproduziu, parou no limite e repetiu localmente e em produção.",
+    "dailySchedule": "Sem alteração de sequência: preenche o lugar de Marinhas previsto para 10/04/2027. Disponível já no modo de revisão; hoje e histórico preservados.",
+    "commit": "47f0fd0859f3df7c5279cf9b2e135ee8ad450ad6",
+    "deploymentId": "dpl_fRXgkfuef2vubW6oGQUZYX9kBEPx",
+    "latestBrowserChecks": [
+      {
+        "id": "onda-xove-barral",
+        "playing": true,
+        "start": 111.471957,
+        "stoppedAtBoundary": true,
+        "repeated": true,
+        "duration": 1477.173311,
+        "collection49": true,
+        "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+        "error": null,
+        "attributionPresent": true
+      }
+    ],
+    "verifiedAt": "2026-10-25"
+  },
+  "gapResearch": [
+    {
+      "code": "EUM",
+      "status": "Origem de Pacucha por confirmar; alternativa com publicidade e fala castelhana",
+      "note": "O MP3 direto de Pacucha Couto tem fala galega e permite estudar o intervalo 114,3–132,8 s. A origem/infância não foi comprovada: a atividade profissional em Val Xestoso não basta. A Radio Grelo foi revista até 7 minutos: o presidente da câmara e Juan Manuel falam em castelhano nos trechos analisados, e a descarga oficial também inclui anúncio Shopify. Nenhum integrado nesta ronda.",
+      "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008",
+      "files": [
+        {
+          "id": "radio-grelo-monfero",
+          "comarca": "EUM",
+          "audioUrl": "https://api.spreaker.com/v2/episodes/41115008/play.mp3",
+          "probe": {
+            "status": 206,
+            "contentType": "audio/mpeg",
+            "contentRange": "bytes 0-4095/25050934",
+            "bytesRead": 4096,
+            "mp3Signature": true
+          },
+          "decodedSeconds": 420
+        },
+        {
+          "id": "onda-cero-pacucha-couto",
+          "audioUrl": "https://dpvclip.ondacero.es/mp_audios4//2025/01/15/91FD0ED8-2477-498B-9BEC-458160D7E38F/91FD0ED8-2477-498B-9BEC-458160D7E38F.mp3",
+          "probe": {
+            "status": 200,
+            "decoded": true
+          },
+          "selectionStatus": "provenance-pending"
+        }
+      ],
+      "additionalSources": [
+        "https://api.spreaker.com/v2/episodes/41115008",
+        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html",
+        "https://www.ivoox.com/podcast-ponteengalego_sq_f11237180_1.html",
+        "https://asgabarras.wordpress.com/",
+        "https://opaii.blogspot.com/2014/01/viquingos-no-ponte-en-galego-n-28.html",
+        "https://www.g24.gal/-/este-ano-hai-unha-boa-producion-de-grelos-pero-preocupa-que-siga-chovendo-tanto",
+        "https://www.galiciaconfidencial.com/noticia/5785569-completo-grelo-angela-grelo-val-xestoso-tesouro-verde-baixo-ameaza-non-hai-mozos-recollelo-e-ten-apanado-man"
+      ]
+    },
+    {
+      "code": "CAB",
+      "status": "Entrevista de Pombriego revista; nova pista de Paco Sarria",
+      "note": "A conversa de Edilberto Rodríguez em Galegos no Baix (31/03/2022) foi localizada no arquivo do próprio programa e revista até 6 minutos: origem local confirmada, mas as respostas analisadas estão em castelhano. Nova pista: Paco Sarria, nascido na Ponte de Domingo Flórez segundo o Colexio de Xornalistas, com ficheiro oficial de Onda Cero descodificado; os primeiros 90 s incluem fala galega e castelhana e vozes diferentes; falta completar a trajetória infantil, identificar cada intervenção e escolher um recorte da sua própria voz. La Baña continua sem gravação galega validada; Corporales/Truchas fica fora do mapa da app.",
+      "url": "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html",
+      "files": [
+        {
+          "id": "radio-cornella-edilberto",
+          "audioUrl": "https://archive.org/download/edilberto-rodriguez/Edilberto%20Rodri%CC%81guez.mp3",
+          "recordUrl": "https://archive.org/details/edilberto-rodriguez",
+          "decodedSeconds": 360,
+          "selectionStatus": "no-galician-excerpt-validated",
+          "probe": {
+            "status": 200,
+            "decoded": true
+          }
+        },
+        {
+          "id": "onda-cero-paco-sarria",
+          "audioUrl": "https://dpvclip.ondacero.es/mp_audios4//2021/06/08/81BA513A-CCBC-4A24-B64D-35EFBA1D34A1/81BA513A-CCBC-4A24-B64D-35EFBA1D34A1.mp4",
+          "recordUrl": "https://www.ondacero.es/podcast/emisoras/ourense/mas-de-uno-ourense/cara-actualidade-mas-uno-ourense_2021060960bf56c94beb28c5198c2aa0.html",
+          "decodedSeconds": 90,
+          "selectionStatus": "speaker-origin-and-voice-attribution-pending",
+          "probe": {
+            "status": 200,
+            "decoded": true
+          },
+          "languageReview": "ASR dos primeiros 90 s: abertura e intervenção de convidado em galego, comentário intercalado em castelhano. A classificação automática global não basta para atribuir língua e sotaque ao locutor."
+        }
+      ],
+      "additionalSources": [
+        "https://lafueyacabreiresa.com/cabrera-protagonizara-el-capitulo-sobre-la-tradicion-oral-de-el-lliones-una-llengua-viva",
+        "https://lafueyacabreiresa.com/la-universidad-de-leon-recueye-testimonios-de-la-fala-cabreiresa",
+        "https://www.youtube.com/watch?v=DgLXyLE3rs8",
+        "https://www.youtube.com/watch?v=wJiVO59mW_k",
+        "https://www.youtube.com/watch?v=fzx-VK8W1Mw",
+        "https://arlafolk.es/entrevistas/edilberto_rodriguez.html",
+        "https://archive.org/details/edilberto-rodriguez",
+        "https://xornalistas.gal/novas-eventos/novas/paco-sarria-novo-decano-do-colexio-de-xornalistas-1",
+        "https://www.ondacero.es/autores/paco-sarria/",
+        "https://www.ondacero.es/podcast/emisoras/ourense/mas-de-uno-ourense/cara-actualidade-mas-uno-ourense_2021060960bf56c94beb28c5198c2aa0.html",
+        "https://www.lingua.gal/o-galego/proxectalo/areas-galegofalantes-fora-de-galicia"
+      ]
+    }
+  ],
+  "rejectedClips": [
+    {
+      "id": "apoi-2901",
+      "comarca": "ULH",
+      "reason": "A fala inicial menciona Fonte de Uz; a maior parte do resto é cantada. Não foi selecionado um excerto narrativo adequado."
+    },
+    {
+      "id": "ccg-385",
+      "reason": "Substituído por ccg-361, de Becerreá: Candín pertence a BEZ segundo o mapa da app e não deve representar ANC."
+    },
+    {
+      "id": "ccg-353",
+      "reason": "Substituído por ccg-354, com recorte de fala mais adequado para TCH."
+    },
+    {
+      "id": "ccg-381",
+      "reason": "Substituído por ccg-382, do Rosal, para BAM."
+    },
+    {
+      "id": "aelg-pena",
+      "comarca": "MAS",
+      "reason": "A origem em Betanzos é conhecida, mas a mudança para a Corunha aos oito anos e a vida posterior em Vigo tornam a atribuição dialectal às Marinhas insuficientemente sustentada. Não rejeitado por má qualidade sonora.",
+      "source": "https://aelg.gal/centro-documentacion/autores-as/xose-ramon-pena"
+    }
+  ],
+  "latestIntegration": {
+    "date": "2026-10-25",
+    "sampleIds": [
+      "onda-xove-barral"
+    ],
+    "previousActive": 48,
+    "active": 49,
+    "dailySchedule": "Sem alteração de sequência: preenche o lugar de Marinhas previsto para 10/04/2027. Disponível já no modo de revisão; hoje e histórico preservados."
+  },
+  "latestIntegrationHistory": [
+    {
+      "date": "2026-10-24",
+      "sampleIds": [
+        "redmeda-ga-0003",
+        "egeria-emilio-006",
+        "falase-35"
+      ],
+      "previousActive": 41,
+      "active": 44,
+      "newDailyComarca": "VDI",
+      "firstDay": "2026-10-30",
+      "userChoice": "Incluir nos próximos desafios, preservando hoje e o histórico."
+    },
+    {
+      "date": "2026-10-24",
+      "sampleIds": [
+        "aelg-sotelo",
+        "aelg-miguel-anxo",
+        "aelg-novoneyra",
+        "frontespo-sela-004"
+      ],
+      "previousActive": 44,
+      "active": 48,
+      "dailySchedule": "Sem mudança de ordem ou datas. Preenche os lugares futuros já reservados a TCA, CAR, COU e PAR; hoje e histórico preservados."
+    }
+  ],
+  "previousProductionIntegration": {
+    "url": "https://logaliza.vercel.app",
     "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1",
     "state": "READY",
     "tests": "71 testes passaram; TypeScript e build passaram. Os quatro recortes reproduziram, pararam no limite e repetiram no navegador local e em produção.",
@@ -5371,7 +5574,214 @@
     ],
     "assetVerification": "O MP3 de Sela em produção é byte a byte igual ao excerto revisto; SHA-256 f9591aa176a12ef76b1a7a4a919b4cdb9d0635b944e9ad94ed5fc07f72d4e647."
   },
-  "gapResearch": [
+  "qualityReview": {
+    "date": "2026-10-25",
+    "method": "Medições de PCM, ASR temporizado e testes no navegador; não é escuta humana especializada.",
+    "findings": [
+      {
+        "id": "onda-xove-barral",
+        "note": "Fala contínua sobre a recuperação do mercado, sem perguntas, música editorial ou nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
+        "metrics": {
+          "start": 111.25,
+          "end": 140.15,
+          "duration": 28.9,
+          "sampleRate": 16000,
+          "rmsDbfs": -26.14,
+          "peakDbfs": -9.25,
+          "clippedSamples": 0,
+          "energyAbove4kHzPercent": 3.22,
+          "method": "PCM mono 16 kHz decoded from publisher static MP3; automated signal metrics and timed speech recognition, not human listening."
+        }
+      }
+    ],
+    "limitations": [
+      "Mantido o volume original do ficheiro externo.",
+      "ASR e ausência de saturação não certificam todos os aspetos perceptivos da voz."
+    ]
+  },
+  "lastReviewedAt": "2026-10-25",
+  "qualityReviewHistory": [
+    {
+      "method": "Análise de sinal, ASR temporizado e reprodução no navegador. Não houve escuta humana especializada.",
+      "findings": [
+        {
+          "id": "aelg-sotelo",
+          "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
+          "metrics": {
+            "rmsDbfs": -29.09,
+            "peakDbfs": -4.34,
+            "clippedSamples": 0,
+            "fractionAboveMinus40Dbfs": 0.631,
+            "quietFrameP10Dbfs": -64.96,
+            "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
+            "browser": {
+              "id": "aelg-sotelo",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 89.389389,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
+        },
+        {
+          "id": "aelg-miguel-anxo",
+          "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
+          "metrics": {
+            "rmsDbfs": -20.61,
+            "peakDbfs": -2.35,
+            "clippedSamples": 0,
+            "fractionAboveMinus40Dbfs": 0.872,
+            "quietFrameP10Dbfs": -41.97,
+            "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
+            "browser": {
+              "id": "aelg-miguel-anxo",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 256.24,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
+        },
+        {
+          "id": "aelg-novoneyra",
+          "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
+          "metrics": {
+            "rmsDbfs": -22.13,
+            "peakDbfs": -1.97,
+            "clippedSamples": 0,
+            "fractionAboveMinus40Dbfs": 0.533,
+            "quietFrameP10Dbfs": -63.72,
+            "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
+            "browser": {
+              "id": "aelg-novoneyra",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 298.399637,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
+        },
+        {
+          "id": "frontespo-sela-004",
+          "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
+          "metrics": {
+            "rmsDbfs": -23.82,
+            "peakDbfs": -1.56,
+            "clippedSamples": 0,
+            "fractionAboveMinus40Dbfs": 0.832,
+            "quietFrameP10Dbfs": -44.35,
+            "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
+            "processingValidation": {
+              "duration": 19.37,
+              "rmsDbfs": -23.82,
+              "peakDbfs": -1.56,
+              "clippedSamples": 0,
+              "measuredGainDb": 5.55,
+              "correlationWithOriginal": 0.9999246232049431
+            },
+            "sourceInterval": [
+              42.05,
+              61.42
+            ],
+            "transcriptionAlignment": "Transcrição ELAN da pista de câmara confrontada com ASR da pista de gravador; tempos ajustados à pista escolhida (as duas pistas não estão perfeitamente alinhadas).",
+            "browser": {
+              "id": "frontespo-sela-004",
+              "playing": true,
+              "stoppedAtBoundary": true,
+              "repeated": true,
+              "duration": 19.37,
+              "collection48": true,
+              "error": null
+            },
+            "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
+          }
+        }
+      ],
+      "limitations": [
+        "Sotelo Blanco tem volume baixo; a fonte externa foi preservada sem edição por não se ter identificado licença aberta de redistribuição.",
+        "Medições sem saturação e ASR coerente não garantem ausência de todos os defeitos perceptivos.",
+        "Não foi classificado nenhum dos cinco candidatos como irrecuperável apenas com base nas medições; Pena foi excluído por proveniência, e a pista de câmara de Sela foi preterida pela pista de gravador."
+      ]
+    }
+  ],
+  "advertisingResolution": {
+    "rejectedUrl": "https://www.ivoox.com/maria-barral-onda-xove-betanzos_mf_118987582_feed_1.mp3",
+    "problem": "A captura RSS analisada tinha cerca de 20 s de anúncio Aena antes da apresentação, deslocando o excerto.",
+    "chosenUrl": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+    "discovery": "Endereço de descarga oficial presente no HTML público do episódio, confirmado no navegador. A app guarda o endereço permanente do iVoox, não o URL final assinado e temporário do CDN.",
+    "validation": [
+      {
+        "url": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+        "status": 200,
+        "bytes": 23636190,
+        "sha256": "e9a3ed8a4122a1220ad86795ac698d27e7cfa4dee219870c4a3956f15fa083e2",
+        "etag": "\"ee731dcabac57eb6dfff9c8a72fc42bf\"",
+        "contentType": "audio/mpeg",
+        "userAgent": "Mozilla/5.0",
+        "resolvedHost": "podcastcdn-30.ivoox.com"
+      },
+      {
+        "url": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+        "status": 200,
+        "bytes": 23636190,
+        "sha256": "e9a3ed8a4122a1220ad86795ac698d27e7cfa4dee219870c4a3956f15fa083e2",
+        "etag": "\"ee731dcabac57eb6dfff9c8a72fc42bf\"",
+        "contentType": "audio/mpeg",
+        "userAgent": "LoGaliza audio validation",
+        "resolvedHost": "podcastcdn-30.ivoox.com"
+      }
+    ],
+    "originalDurationSeconds": 1477.173311,
+    "decodedFirstSeconds": 220,
+    "result": "Duas descargas completas com agentes de utilizador diferentes são byte a byte iguais; a apresentação começa em 0 s. Reprodução e saltos confirmados localmente e na produção num contexto de navegador separado.",
+    "limitation": "Disponibilidade e política do servidor externo podem mudar. A igualdade entre estes pedidos não é garantia permanente do serviço."
+  },
+  "candidateReview20261025": [
+    {
+      "id": "onda-cero-pacucha-couto",
+      "comarca": "EUM",
+      "decision": "not-integrated-provenance-pending",
+      "candidateInterval": [
+        114.3,
+        132.8
+      ],
+      "reason": "Atividade profissional em Monfero confirmada; infância/origem não comprovada. A memória da mãe na apanha de grelos não identifica explicitamente o local. Não inferir sotaque local pelo emprego.",
+      "sources": [
+        "https://www.galiciaconfidencial.com/noticia/5785569-completo-grelo-angela-grelo-val-xestoso-tesouro-verde-baixo-ameaza-non-hai-mozos-recollelo-e-ten-apanado-man",
+        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html"
+      ]
+    },
+    {
+      "id": "radio-grelo-monfero",
+      "comarca": "EUM",
+      "decision": "not-integrated",
+      "reviewedSeconds": 420,
+      "reason": "Descarga oficial continua a incluir anúncio Shopify de cerca de 28 s. Falas do presidente da câmara (160–230 s) e de Juan Manuel (290–328 s) identificadas como castelhanas em análise independente dos segmentos; não representam um recorte galego validado. Juan Manuel diz ter nascido ali, mas refere mudanças para Ferrol, Arteixo e Santiago. Não foi avaliado o resto do programa.",
+      "source": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008"
+    },
+    {
+      "id": "edilberto-rodriguez-radio-cornella",
+      "comarca": "CAB",
+      "decision": "no-galician-excerpt-validated",
+      "reviewedSeconds": 360,
+      "reason": "Pom(b)riego/Benuza e infância local sustentadas pela entrevista Arlafolk. A conversa revista tem música de abertura, apresentadores galegos e respostas de Edilberto em castelhano. Análise independente da sua voz em 214–248 s e 300–322 s identifica castelhano; não usar a língua do apresentador para classificar a do convidado. Não foi avaliado o resto dos 18m40s.",
+      "sources": [
+        "https://arlafolk.es/entrevistas/edilberto_rodriguez.html",
+        "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html",
+        "https://archive.org/details/edilberto-rodriguez"
+      ]
+    }
+  ],
+  "resolvedGaps20261025": [
     {
       "code": "MAS",
       "status": "Nova entrevista em galego; publicidade variável por resolver",
@@ -5401,262 +5811,20 @@
         "https://www.lavozdegalicia.es/amp/noticia/coruna/betanzos/2022/10/09/span-langgl-estudando-facer-carril-bici-betanzosspan/0003_202210H9C8991.htm",
         "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html"
       ]
-    },
-    {
-      "code": "EUM",
-      "status": "MP3 de Onda Cero confirmado; proveniência do falante por completar",
-      "note": "Pacucha Couto, da Cooperativa Val Xestoso (Monfero), fala em galego na entrevista de 15/01/2025. Ficheiro MP3 direto e descodificação confirmados; revistos os primeiros 160 segundos. A atividade profissional em Monfero está documentada, mas não foi comprovado onde cresceu. Não atribuir automaticamente o sotaque à comarca. Próximo passo: confirmar a trajetória ou procurar outro falante local, depois escolher um trecho sem perguntas da entrevistadora nem topónimos.",
-      "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008",
-      "files": [
-        {
-          "id": "radio-grelo-monfero",
-          "comarca": "EUM",
-          "audioUrl": "https://api.spreaker.com/v2/episodes/41115008/play.mp3",
-          "probe": {
-            "status": 206,
-            "contentType": "audio/mpeg",
-            "contentRange": "bytes 0-4095/25050934",
-            "bytesRead": 4096,
-            "mp3Signature": true
-          },
-          "decodedSeconds": 100
-        },
-        {
-          "id": "onda-cero-pacucha-couto",
-          "audioUrl": "https://dpvclip.ondacero.es/mp_audios4//2025/01/15/91FD0ED8-2477-498B-9BEC-458160D7E38F/91FD0ED8-2477-498B-9BEC-458160D7E38F.mp3",
-          "probe": {
-            "status": 200,
-            "decoded": true
-          },
-          "selectionStatus": "provenance-pending"
-        }
-      ],
-      "additionalSources": [
-        "https://api.spreaker.com/v2/episodes/41115008",
-        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html",
-        "https://www.ivoox.com/podcast-ponteengalego_sq_f11237180_1.html",
-        "https://asgabarras.wordpress.com/",
-        "https://opaii.blogspot.com/2014/01/viquingos-no-ponte-en-galego-n-28.html",
-        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html",
-        "https://www.g24.gal/-/este-ano-hai-unha-boa-producion-de-grelos-pero-preocupa-que-siga-chovendo-tanto"
-      ]
-    },
-    {
-      "code": "CAB",
-      "status": "Novos testemunhos localizados; variedade linguística por confirmar",
-      "note": "Localizada a série audiovisual da Cátedra de Estudos Leoneses com Isaac Peláez, Manolo Peláez e Pablo Liñán em La Baña (Enzinedo, dentro do mapa). A fonte classifica-os como astur-leonês, pelo que não foram usados para representar fala galega. Também localizada a entrevista a Edilberto Rodríguez, de Pombriego (Benuça), mas é preciso encontrar fala e não apenas canto, e confirmar a variedade do excerto. Corporales/Truchas continua fora da comarca definida pela app.",
-      "url": "https://lafueyacabreiresa.com/el-instituto-de-estudios-cabreireses-da-la-bienvenida-a-la-comarca-con-un-cartel-en-cabreires",
-      "files": [],
-      "additionalSources": [
-        "https://lafueyacabreiresa.com/cabrera-protagonizara-el-capitulo-sobre-la-tradicion-oral-de-el-lliones-una-llengua-viva",
-        "https://lafueyacabreiresa.com/la-universidad-de-leon-recueye-testimonios-de-la-fala-cabreiresa",
-        "https://www.youtube.com/watch?v=DgLXyLE3rs8",
-        "https://www.youtube.com/watch?v=wJiVO59mW_k",
-        "https://www.youtube.com/watch?v=fzx-VK8W1Mw",
-        "https://arlafolk.es/entrevistas/edilberto_rodriguez.html"
-      ]
     }
   ],
-  "rejectedClips": [
-    {
-      "id": "apoi-2901",
-      "comarca": "ULH",
-      "reason": "A fala inicial menciona Fonte de Uz; a maior parte do resto é cantada. Não foi selecionado um excerto narrativo adequado."
-    },
-    {
-      "id": "ccg-385",
-      "reason": "Substituído por ccg-361, de Becerreá: Candín pertence a BEZ segundo o mapa da app e não deve representar ANC."
-    },
-    {
-      "id": "ccg-353",
-      "reason": "Substituído por ccg-354, com recorte de fala mais adequado para TCH."
-    },
-    {
-      "id": "ccg-381",
-      "reason": "Substituído por ccg-382, do Rosal, para BAM."
-    },
-    {
-      "id": "aelg-pena",
-      "comarca": "MAS",
-      "reason": "A origem em Betanzos é conhecida, mas a mudança para a Corunha aos oito anos e a vida posterior em Vigo tornam a atribuição dialectal às Marinhas insuficientemente sustentada. Não rejeitado por má qualidade sonora.",
-      "source": "https://aelg.gal/centro-documentacion/autores-as/xose-ramon-pena"
-    }
-  ],
-  "latestIntegration": {
-    "date": "2026-10-24",
-    "sampleIds": [
-      "aelg-sotelo",
-      "aelg-miguel-anxo",
-      "aelg-novoneyra",
-      "frontespo-sela-004"
-    ],
-    "previousActive": 44,
-    "active": 48,
-    "dailySchedule": "Sem mudança de ordem ou datas. Preenche os lugares futuros já reservados a TCA, CAR, COU e PAR; hoje e histórico preservados."
-  },
-  "latestIntegrationHistory": [
-    {
-      "date": "2026-10-24",
-      "sampleIds": [
-        "redmeda-ga-0003",
-        "egeria-emilio-006",
-        "falase-35"
-      ],
-      "previousActive": 41,
-      "active": 44,
-      "newDailyComarca": "VDI",
-      "firstDay": "2026-10-30",
-      "userChoice": "Incluir nos próximos desafios, preservando hoje e o histórico."
-    }
-  ],
-  "previousProductionIntegration": {
-    "url": "https://logaliza.vercel.app",
-    "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1",
-    "commit": "47a8511e5cedf0e7483922034d7560f737257cf3",
-    "deploymentId": "dpl_3ssrkUS1vkMpgkHVkHxmEXNeetmP",
-    "state": "READY",
-    "verifiedToday": "apoi-2953, Poio; reprodução confirmada em produção, sem erro de media.",
-    "tests": "70 testes passaram; TypeScript e build passaram. Os três novos excertos reproduziram, pararam e repetiram no leitor; reprodução confirmada também em produção.",
-    "dailySchedule": "Hoje e histórico preservados. Íbias inserido em 30-10-2026; mantém-se a ordem relativa das comarcas seguintes e a cadência de seis dias.",
-    "latestBrowserChecks": [
-      {
-        "id": "falase-35",
-        "src": "https://logaliza.vercel.app/audio/falase-35-ana-corredoira.mp3",
-        "playing": true,
-        "duration": 25.45,
-        "collection44": true,
-        "license": true,
-        "error": null
-      },
-      {
-        "id": "redmeda-ga-0003",
-        "src": "https://atlas.s3.eu-de.cloud-object-storage.appdomain.cloud/atlas_ga_0003.mp3",
-        "playing": true,
-        "duration": 164.252132,
-        "collection44": true,
-        "license": false,
-        "error": null
-      },
-      {
-        "id": "egeria-emilio-006",
-        "src": "https://conversascoahistoria.egeria.gal/wp-content/uploads/2026/03/EmilioGonzalezLopez-006.mp3",
-        "playing": true,
-        "duration": 198.415601,
-        "collection44": true,
-        "license": false,
-        "error": null
-      }
-    ]
-  },
-  "qualityReview": {
-    "method": "Análise de sinal, ASR temporizado e reprodução no navegador. Não houve escuta humana especializada.",
-    "findings": [
-      {
-        "id": "aelg-sotelo",
-        "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
-        "metrics": {
-          "rmsDbfs": -29.09,
-          "peakDbfs": -4.34,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.631,
-          "quietFrameP10Dbfs": -64.96,
-          "note": "Fala espontânea. Volume baixo, fala reconhecível na revisão automática e sem saturação na amostra descodificada. Mantido o original externo; não foi identificada licença aberta para distribuir uma versão normalizada.",
-          "browser": {
-            "id": "aelg-sotelo",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 89.389389,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
-        }
-      },
-      {
-        "id": "aelg-miguel-anxo",
-        "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
-        "metrics": {
-          "rmsDbfs": -20.61,
-          "peakDbfs": -2.35,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.872,
-          "quietFrameP10Dbfs": -41.97,
-          "note": "Fala espontânea sobre a compra de um livro. Excluídas as referências ao Carballiño presentes antes e depois do recorte. Nível de sinal adequado.",
-          "browser": {
-            "id": "aelg-miguel-anxo",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 256.24,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
-        }
-      },
-      {
-        "id": "aelg-novoneyra",
-        "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
-        "metrics": {
-          "rmsDbfs": -22.13,
-          "peakDbfs": -1.97,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.533,
-          "quietFrameP10Dbfs": -63.72,
-          "note": "Recitação, identificada como tal nos créditos. Excluídos os créditos iniciais e as pausas editoriais; não é uma conversa espontânea. Nível de sinal adequado.",
-          "browser": {
-            "id": "aelg-novoneyra",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 298.399637,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
-        }
-      },
-      {
-        "id": "frontespo-sela-004",
-        "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
-        "metrics": {
-          "rmsDbfs": -23.82,
-          "peakDbfs": -1.56,
-          "clippedSamples": 0,
-          "fractionAboveMinus40Dbfs": 0.832,
-          "quietFrameP10Dbfs": -44.35,
-          "note": "Pista de gravador com microfone externo, recortada e aumentada em 6 dB. A versão MP3 final não apresenta amostras saturadas. Mantidos ritmo, tom e conteúdo; sem redução de ruído nem voz sintética.",
-          "processingValidation": {
-            "duration": 19.37,
-            "rmsDbfs": -23.82,
-            "peakDbfs": -1.56,
-            "clippedSamples": 0,
-            "measuredGainDb": 5.55,
-            "correlationWithOriginal": 0.9999246232049431
-          },
-          "sourceInterval": [
-            42.05,
-            61.42
-          ],
-          "transcriptionAlignment": "Transcrição ELAN da pista de câmara confrontada com ASR da pista de gravador; tempos ajustados à pista escolhida (as duas pistas não estão perfeitamente alinhadas).",
-          "browser": {
-            "id": "frontespo-sela-004",
-            "playing": true,
-            "stoppedAtBoundary": true,
-            "repeated": true,
-            "duration": 19.37,
-            "collection48": true,
-            "error": null
-          },
-          "method": "Descodificação PCM, medições de sinal, reconhecimento de fala temporizado (Whisper large-v3-turbo) e ensaio do reprodutor. Sem escuta humana especializada; ASR não certifica a inteligibilidade nem o sotaque."
-        }
-      }
-    ],
-    "limitations": [
-      "Sotelo Blanco tem volume baixo; a fonte externa foi preservada sem edição por não se ter identificado licença aberta de redistribuição.",
-      "Medições sem saturação e ASR coerente não garantem ausência de todos os defeitos perceptivos.",
-      "Não foi classificado nenhum dos cinco candidatos como irrecuperável apenas com base nas medições; Pena foi excluído por proveniência, e a pista de câmara de Sela foi preterida pela pista de gravador."
+  "cabreiraResearch20261025": {
+    "reviewedAudio": "Edilberto Rodríguez — Galegos no Baix, 31/03/2022; primeiros 360 s",
+    "finding": "Origem em Pombriego confirmada. Duas respostas avaliadas isoladamente são castelhanas (214–248 s e 300–322 s). Nenhum excerto galego validado nesta revisão.",
+    "newCandidate": "Paco Sarria — nascimento na Ponte de Domingo Flórez documentado pelo Colexio de Xornalistas; ficheiro oficial de Onda Cero descodificado até 90 s. Origem infantil e atribuição das vozes por resolver.",
+    "furtherSearch": "Pesquisas dirigidas a Castroquilame, Salas da Ribeira, Yeres, Pombriego e Ponte de Domingos Flórez. A documentação linguística confirma localidades galegofalantes, mas não foi encontrado outro recorte de fala galega com origem individual validada.",
+    "sources": [
+      "https://ilg.usc.gal/sites/default/files/pdfs/alga_localidades.pdf",
+      "https://www.lingua.gal/o-galego/proxectalo/areas-galegofalantes-fora-de-galicia",
+      "https://www.lingua.gal/gl/o-galego/aprendelo/nas-comunidades-estremeiras",
+      "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html",
+      "https://archive.org/details/edilberto-rodriguez",
+      "https://xornalistas.gal/novas-eventos/novas/paco-sarria-novo-decano-do-colexio-de-xornalistas-1"
     ]
   }
 }
