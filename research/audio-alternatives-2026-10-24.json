@@ -5371,11 +5371,26 @@
   "productionIntegration": {
     "url": "https://logaliza.vercel.app",
     "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1&amostra=aelg-eva-veiga-202",
-    "state": "local-verified-awaiting-deployment",
-    "tests": "72 testes passaram; TypeScript e build passaram. Reprodução, paragem e repetição verificadas localmente.",
+    "state": "READY",
+    "tests": "72 testes passaram; TypeScript e build passaram. Eume reproduziu, parou no limite e repetiu localmente e em produção.",
     "dailySchedule": "Sem alteração da sequência: Eume ocupa o lugar previsto para 29/11/2026. Disponível desde já na revisão; Íbias em 30/10 e o histórico permanecem preservados.",
-    "latestBrowserChecks": [],
-    "verifiedAt": "2026-10-25"
+    "latestBrowserChecks": [
+      {
+        "id": "aelg-eva-veiga-202",
+        "playing": true,
+        "start": 34.82192,
+        "stoppedAtBoundary": true,
+        "repeated": true,
+        "duration": 244.92,
+        "collection50": true,
+        "src": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+        "error": null,
+        "attributionPresent": true
+      }
+    ],
+    "verifiedAt": "2026-10-25",
+    "commit": "aaa2e4abe076672ab91b8a5492d773bd45acc86c",
+    "deploymentId": "dpl_EofhuXMqhHgo3QqDQHHr4oZgrGkm"
   },
   "gapResearch": [
     {

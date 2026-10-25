@@ -1624,6 +1624,18 @@
           "src": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
           "error": null,
           "attributionPresent": true
+        },
+        "productionBrowser": {
+          "id": "aelg-eva-veiga-202",
+          "playing": true,
+          "start": 34.82192,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 244.92,
+          "collection50": true,
+          "src": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+          "error": null,
+          "attributionPresent": true
         }
       },
       "provenanceSources": [
@@ -1733,7 +1745,20 @@
       "attributionPresent": true
     }
   ],
-  "latestProductionBrowserChecks": [],
+  "latestProductionBrowserChecks": [
+    {
+      "id": "aelg-eva-veiga-202",
+      "playing": true,
+      "start": 34.82192,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 244.92,
+      "collection50": true,
+      "src": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+      "error": null,
+      "attributionPresent": true
+    }
+  ],
   "lastReviewedAt": "2026-10-25",
   "previousTestResults": {
     "unitTests": 71,
