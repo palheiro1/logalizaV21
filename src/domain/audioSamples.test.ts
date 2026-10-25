@@ -17,9 +17,9 @@ describe("audio catalogue", () => {
       .sort();
 
     expect(new Set(ids).size).toBe(ids.length);
-    expect(audioSamples).toHaveLength(49);
+    expect(audioSamples).toHaveLength(50);
     expect(new Set(coveredCodes).size).toBe(audioSamples.length);
-    expect(missingCodes).toEqual(["CAB", "EUM"]);
+    expect(missingCodes).toEqual(["CAB"]);
     expect(
       audioSamples.every(({ comarcaCode }) => validCodes.has(comarcaCode))
     ).toBe(true);
@@ -45,7 +45,7 @@ describe("audio catalogue", () => {
     expect(getAudioSampleById("missing")).toBeUndefined();
     expect(audioSamples.some(({ id }) => id === "ago-120")).toBe(false);
     expect(getActiveAudioSampleForComarca("PON")?.id).toBe("apoi-2953");
-    expect(getActiveAudioSampleForComarca("EUM")).toBeUndefined();
+    expect(getActiveAudioSampleForComarca("EUM")?.id).toBe("aelg-eva-veiga-202");
   });
 
   test("uses recordings whose municipalities match the game's Ancares and Terra Chá", () => {
@@ -93,6 +93,7 @@ describe("audio catalogue", () => {
     expect(aelg.map(({ comarcaCode }) => comarcaCode).sort()).toEqual([
       "CAR",
       "COU",
+      "EUM",
       "TCA",
     ]);
     expect(

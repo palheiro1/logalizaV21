@@ -1,6 +1,6 @@
 {
   "date": "2026-10-24",
-  "scope": "43 novas gravações integradas; 49 comarcas com áudio ativo. Inclui revisão de origem, publicidade e qualidade de Betanzos e avaliação de Monfero e Cabreira.",
+  "scope": "44 novas gravações integradas; 50 comarcas com áudio ativo. Eume recuperado com Eva Veiga; Pacucha Couto e Paco Sarria sem infância local comprovada. Cabreira continua sem excerto galego aprovado.",
   "methodology": [
     "Origem municipal conferida nas fichas das instituições e na tabela territorial da app.",
     "Intervalos ajustados usando as transcrições institucionais e ASR temporizado local; excluídas apresentações com o topónimo de origem.",
@@ -1549,6 +1549,88 @@
           "dateNote": "6/11/2023 é a publicação no RSS. A conversa refere setembro; não foi atribuída a data de publicação à gravação."
         }
       }
+    },
+    {
+      "id": "aelg-eva-veiga-202",
+      "comarcaCode": "EUM",
+      "comarca": "EUM",
+      "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+      "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/eva-veiga/videoteca/entrevista/202/1-por-que-comecei-a-escribir",
+      "source": "aelg",
+      "sourceLabel": "Centro de Documentación — AELG",
+      "sourceRecord": "Entrevista gravada na Casa do Concello da Corunha",
+      "municipality": "Pontedeume",
+      "locality": "Ombre",
+      "speaker": "Eva Veiga",
+      "locationKind": "speaker-origin",
+      "recordedAt": "2007",
+      "recorder": "Asociación de Escritoras e Escritores en Lingua Galega",
+      "topic": "A descoberta da poesia na escola",
+      "clipStart": 34.6,
+      "clipEnd": 63.95,
+      "clipDuration": 29.35,
+      "transcriptExcerpt": "",
+      "review": {
+        "id": "eva-veiga-202",
+        "clipStart": 34.6,
+        "clipEnd": 63.95,
+        "duration": 29.35,
+        "rmsDbfs": -24.67,
+        "peakDbfs": -0.8,
+        "clippedFraction": 0.0,
+        "source": {
+          "programs": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "codec_type": "video"
+            },
+            {
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2
+            }
+          ],
+          "format": {
+            "duration": "244.920000",
+            "size": "26689380"
+          }
+        },
+        "method": "Descodificação PCM mono 16 kHz, medições de sinal, ASR temporizado Whisper large-v3-turbo e teste do leitor no navegador. Não houve escuta humana especializada.",
+        "provenance": {
+          "conclusion": "Infância em Ombre, Pontedeume, confirmada na autobiografia; aos dez anos foi estudar para Mugardos. Não se apresenta a voz adulta como uma amostra dialetal imune a contactos posteriores.",
+          "sources": [
+            "https://aelg.gal/centro-documentacion/autores-as/eva-veiga",
+            "https://bvg.udc.es/ficha_autor.jsp?id=EvaVeiga"
+          ],
+          "evidence": [
+            "A própria autora descreve as histórias da avó, a casa familiar e a escola unitária de Ombre, frequentada desde os quatro anos.",
+            "A autobiografia distingue a infância em Ombre da escolarização em Mugardos desde os dez anos e dos estudos posteriores na Corunha e em Compostela.",
+            "O local de gravação indicado pela AELG é a Casa do Concello da Corunha, em 2007; não foi confundido com a origem."
+          ]
+        },
+        "content": "Recordação da reação a um poema na escola e da vontade de ser poeta. Fala contínua, sem perguntas nem topónimos no intervalo selecionado.",
+        "processing": "Original externo, sem edição nem normalização: volume moderado, pico próximo do limite mas sem saturação no recorte. Não foi identificada licença aberta que autorize redistribuir uma versão processada.",
+        "advertising": "Ficheiro MP4 direto da AELG, com entrevista desde o início; sem o redirecionamento publicitário dos podcasts analisados.",
+        "browser": {
+          "id": "aelg-eva-veiga-202",
+          "playing": true,
+          "start": 34.821982,
+          "stoppedAtBoundary": true,
+          "repeated": true,
+          "duration": 244.92,
+          "collection50": true,
+          "src": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+          "error": null,
+          "attributionPresent": true
+        }
+      },
+      "provenanceSources": [
+        "https://aelg.gal/centro-documentacion/autores-as/eva-veiga",
+        "https://bvg.udc.es/ficha_autor.jsp?id=EvaVeiga"
+      ],
+      "license": null
     }
   ],
   "rejected": [
@@ -1589,10 +1671,71 @@
     }
   ],
   "remainingMapComarcas": [
-    "CAB",
-    "EUM"
+    "CAB"
   ],
   "testResults": {
+    "unitTests": 72,
+    "unitTestFiles": 12,
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "latestBrowserFilesPassed": 1,
+    "latestBrowserFilesFailed": 0,
+    "playerStopsAtClipEnd": true,
+    "playerReplay": true,
+    "activeComarcas": 50,
+    "historicalRotation": "preserved",
+    "testedAt": "2026-10-25"
+  },
+  "latestQualityReview": {
+    "date": "2026-10-25",
+    "selected": "aelg-eva-veiga-202",
+    "metrics": {
+      "id": "eva-veiga-202",
+      "clipStart": 34.6,
+      "clipEnd": 63.95,
+      "duration": 29.35,
+      "rmsDbfs": -24.67,
+      "peakDbfs": -0.8,
+      "clippedFraction": 0.0,
+      "source": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "244.920000",
+          "size": "26689380"
+        }
+      }
+    },
+    "method": "Descodificação PCM mono 16 kHz, medições de sinal, ASR temporizado Whisper large-v3-turbo e teste do leitor no navegador. Não houve escuta humana especializada."
+  },
+  "latestLocalBrowserChecks": [
+    {
+      "id": "aelg-eva-veiga-202",
+      "playing": true,
+      "start": 34.821982,
+      "stoppedAtBoundary": true,
+      "repeated": true,
+      "duration": 244.92,
+      "collection50": true,
+      "src": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+      "error": null,
+      "attributionPresent": true
+    }
+  ],
+  "latestProductionBrowserChecks": [],
+  "lastReviewedAt": "2026-10-25",
+  "previousTestResults": {
     "unitTests": 71,
     "unitTestFiles": 12,
     "typecheck": "passed",
@@ -1604,71 +1747,6 @@
     "activeComarcas": 49,
     "historicalRotation": "preserved",
     "testedAt": "2026-10-25"
-  },
-  "latestQualityReview": {
-    "date": "2026-10-25",
-    "method": "Medições de PCM, ASR temporizado e testes no navegador; não é escuta humana especializada.",
-    "findings": [
-      {
-        "id": "onda-xove-barral",
-        "note": "Fala contínua sobre a recuperação do mercado, fora da abertura editorial, sem perguntas nem nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
-        "metrics": {
-          "start": 111.25,
-          "end": 140.15,
-          "duration": 28.9,
-          "sampleRate": 16000,
-          "rmsDbfs": -26.14,
-          "peakDbfs": -9.25,
-          "clippedSamples": 0,
-          "energyAbove4kHzPercent": 3.22,
-          "method": "PCM mono 16 kHz decoded from publisher static MP3; automated signal metrics and timed speech recognition, not human listening."
-        }
-      }
-    ],
-    "limitations": [
-      "Mantido o volume original do ficheiro externo.",
-      "ASR e ausência de saturação não certificam todos os aspetos perceptivos da voz."
-    ]
-  },
-  "latestLocalBrowserChecks": [
-    {
-      "id": "onda-xove-barral",
-      "playing": true,
-      "start": 111.472002,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 1477.173311,
-      "collection49": true,
-      "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
-      "error": null
-    }
-  ],
-  "latestProductionBrowserChecks": [
-    {
-      "id": "onda-xove-barral",
-      "playing": true,
-      "start": 111.471957,
-      "stoppedAtBoundary": true,
-      "repeated": true,
-      "duration": 1477.173311,
-      "collection49": true,
-      "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
-      "error": null,
-      "attributionPresent": true
-    }
-  ],
-  "lastReviewedAt": "2026-10-25",
-  "previousTestResults": {
-    "unitTests": 68,
-    "unitTestFiles": 12,
-    "browserFilesPassed": 35,
-    "browserFilesFailed": 0,
-    "playerStopsAtClipEnd": true,
-    "playerReplay": true,
-    "apoiAttributionVisible": true,
-    "oldPilotLinkResolvesSameComarca": true,
-    "typecheck": "passed",
-    "productionBuild": "passed"
   },
   "qualityReviewHistory": [
     {
@@ -1818,5 +1896,179 @@
         "https://archive.org/details/edilberto-rodriguez"
       ]
     }
-  ]
+  ],
+  "originReview20261025": [
+    {
+      "id": "onda-cero-pacucha-couto",
+      "speaker": "Pacucha Couto",
+      "decision": "not-integrated",
+      "originStatus": "childhood-unconfirmed",
+      "finding": "As fontes identificam a atividade na Cooperativa Val Xestoso e a produção de grelos em Monfero; não documentam onde nasceu ou cresceu. Não se deduziu a origem do emprego ou da residência.",
+      "sources": [
+        "https://www.galiciadigital.com/opinion/opinion.24404.php",
+        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html"
+      ],
+      "clipReview": {
+        "clipStart": 114.3,
+        "clipEnd": 132.8,
+        "rmsDbfs": -20.58,
+        "peakDbfs": -8.02,
+        "clippedFraction": 0,
+        "languageCaution": "A deteção automática isolada deste recorte é incerta (es 0,450). A classificação galega anterior do ficheiro completo não certifica a língua de cada intervenção; a origem por confirmar já impede a integração.",
+        "humanListening": false
+      }
+    },
+    {
+      "id": "onda-cero-paco-sarria",
+      "speaker": "Paco Sarria / Francisco Xosé González Sarria",
+      "decision": "not-integrated",
+      "originStatus": "birthplace-confirmed-childhood-unconfirmed",
+      "finding": "O Colexio de Xornalistas confirma o nascimento na Ponte de Domingo Flórez em 1962. A biografia da Onda Cero e os perfis do prémio Carracedo documentam a carreira em Ourense, mas não o lugar onde cresceu.",
+      "sources": [
+        "https://xornalistas.gal/web/uploads/novas_adxuntos/adxunto/c8f/5dd41cf301-biografias_ponentes.pdf",
+        "https://www.ondacero.es/autores/paco-sarria/",
+        "https://www.depourense.gal/es/nova/paco-sarria-recibe-el-xxxv-premio-xose-aurelio-carracedo-en-una-edicion-marcada-por-la-defensa"
+      ],
+      "clipReview": {
+        "previousOndaCero": "Os 90 s anteriores misturam vozes: o trecho galego do convidado não pode ser atribuído a Paco.",
+        "serRecordUrl": "https://cadenaser.com/emisora/2021/05/15/radio_coruna/1621082566_325579.html",
+        "serReviewedSeconds": 180,
+        "serFinding": "Entrevistado identificado na apresentação; respostas de Paco em castelhano nos intervalos analisados (aproximadamente 46,6–122,8 e 144–180 s, nesta captura). Anúncio SEAT de cerca de 22 s antes do programa; os tempos não são estáveis para integração.",
+        "rmsDbfs": -24.45,
+        "peakDbfs": -3.34,
+        "clippedFraction": 0,
+        "humanListening": false
+      }
+    },
+    {
+      "id": "aelg-eva-veiga-202",
+      "speaker": "Eva Veiga",
+      "decision": "integrated",
+      "provenance": {
+        "conclusion": "Infância em Ombre, Pontedeume, confirmada na autobiografia; aos dez anos foi estudar para Mugardos. Não se apresenta a voz adulta como uma amostra dialetal imune a contactos posteriores.",
+        "sources": [
+          "https://aelg.gal/centro-documentacion/autores-as/eva-veiga",
+          "https://bvg.udc.es/ficha_autor.jsp?id=EvaVeiga"
+        ],
+        "evidence": [
+          "A própria autora descreve as histórias da avó, a casa familiar e a escola unitária de Ombre, frequentada desde os quatro anos.",
+          "A autobiografia distingue a infância em Ombre da escolarização em Mugardos desde os dez anos e dos estudos posteriores na Corunha e em Compostela.",
+          "O local de gravação indicado pela AELG é a Casa do Concello da Corunha, em 2007; não foi confundido com a origem."
+        ]
+      },
+      "quality": {
+        "id": "eva-veiga-202",
+        "clipStart": 34.6,
+        "clipEnd": 63.95,
+        "duration": 29.35,
+        "rmsDbfs": -24.67,
+        "peakDbfs": -0.8,
+        "clippedFraction": 0.0,
+        "source": {
+          "programs": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "codec_type": "video"
+            },
+            {
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2
+            }
+          ],
+          "format": {
+            "duration": "244.920000",
+            "size": "26689380"
+          }
+        }
+      }
+    },
+    {
+      "id": "aelg-medos-romero-57",
+      "speaker": "Medos Romero",
+      "decision": "reserve-candidate",
+      "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/medos-romero/videoteca/entrevista/57/1-por-que-comecei-a-escribir",
+      "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1533109389919MedosRomero_OrixeLiteratura.mp4",
+      "finding": "Alternativa para Eume: infância rural em Somede (As Pontes) documentada; a autora também refere ter crescido entre campo e cidade. A ficha AELG indica gravação em Ferrol, em 2007. Recorte sobre histórias dos pais e avós analisado automaticamente, sem topónimos. Não acrescentado como segunda voz ativa porque o catálogo mantém uma gravação por comarca.",
+      "sources": [
+        "https://diariodeferrol.elidealgallego.com/texto-diario/mostrar/3334490/medos-romero-libro-e-unha-viaxe-interior-da-persoa-as-suas-raices",
+        "https://consellodacultura.gal/mediateca/extras/CCG_fd_pub2211_ANosaTerra_0935_20000518.pdf",
+        "https://aelg.gal/centro-documentacion/autores-as/medos-romero"
+      ],
+      "quality": {
+        "id": "medos-romero-57",
+        "clipStart": 65.95,
+        "clipEnd": 88.45,
+        "duration": 22.5,
+        "rmsDbfs": -23.9,
+        "peakDbfs": -3.25,
+        "clippedFraction": 0.0,
+        "source": {
+          "programs": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "codec_type": "video"
+            },
+            {
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2
+            }
+          ],
+          "format": {
+            "duration": "136.323696",
+            "size": "14795648"
+          }
+        }
+      }
+    },
+    {
+      "id": "ramiro-fonte-rne",
+      "speaker": "Ramiro Fonte",
+      "decision": "archive-lead-no-playable-file",
+      "finding": "CCG documenta infância e adolescência entre Pontedeume e Ferrol. A notícia de 2021 anuncia áudio de 1983, mas na biografia atual não foi encontrado um leitor ou ficheiro. As fichas RNE localizadas são descrições de suportes físicos, não áudios reproduzíveis; AELG sem vídeos próprios. Leituras por outros autores não foram atribuídas a Ramiro.",
+      "sources": [
+        "https://consellodacultura.gal/noticia.php?id=8147",
+        "https://consellodacultura.gal/album-de-galicia/detalle.php?persoa=6118",
+        "https://consellodacultura.gal/fondos_documentais/materiais/material.php?mat=40571&col=9610",
+        "https://consellodacultura.gal/fondos_documentais/materiais/material.php?mat=46123&col=9610"
+      ]
+    }
+  ],
+  "cabreiraFullInterviewReview20261025": {
+    "id": "radio-cornella-edilberto",
+    "reviewedThroughSeconds": 1120.0,
+    "method": "Revisão automática integral, juntando os 360 s já analisados ao restante ficheiro; três trechos adicionais da voz do convidado classificados separadamente. Não houve audição humana.",
+    "finding": "Não foi validado um recorte de fala galega de Edilberto. As respostas sobre pastoreio, o poema e a recordação dos avós nos trechos verificados estão em castelhano. A fala dos apresentadores não foi atribuída ao convidado.",
+    "voiceChecks": [
+      {
+        "start": 360,
+        "end": 405,
+        "detectedLanguage": "es",
+        "probability": 0.9667178392410278
+      },
+      {
+        "start": 795,
+        "end": 822,
+        "detectedLanguage": "es",
+        "probability": 0.9761550426483154
+      },
+      {
+        "start": 906,
+        "end": 950,
+        "detectedLanguage": "es",
+        "probability": 0.9975982308387756
+      }
+    ],
+    "provenance": "A memória dos avós em Silván e da vida em Pombriego no trecho 906–950 s reforça a ligação local; a língua do recorte continua a ser o obstáculo.",
+    "namedAlternativeExcluded": {
+      "name": "Nieves Fernández Vidueira",
+      "reason": "A pastora citada na conversa é de Fornelos de Cova/Quintela do Pando (Viana do Bolo), fora de CAB. Não serve para preencher Cabreira.",
+      "source": "https://consellodacultura.gal/album-de-galicia/detalle.php?persoa=28288"
+    }
+  }
 }

@@ -1,10 +1,12 @@
 import { DateTime } from "luxon";
+import { vi } from "vitest";
 import {
   AUDIO_CADENCE_DAYS,
   getGlobalContentForDay,
   simulateNextPictures,
 } from "./useTodays";
 import { audioSamples, publishedAudioSamples } from "../domain/audioSamples";
+import * as audioCatalogue from "../domain/audioSamples";
 
 // Captured from the published rotation before the ILG recovery change.
 const publishedFirstCycle = [
@@ -105,11 +107,28 @@ describe("daily multimedia rotation", () => {
     }
   });
 
-  test("uses a photograph of the scheduled comarca while its recording is unavailable", () => {
+  test("restores Eume in its existing slot without changing the answer", () => {
     const selection = getGlobalContentForDay("2026-11-29");
     expect(selection.country.code).toBe("EUM");
-    expect(selection.audioSample).toBeUndefined();
+    expect(selection.audioSample?.id).toBe("aelg-eva-veiga-202");
     expect(selection.imageNumber).toBe(2);
+  });
+
+  test("uses the scheduled comarca's photograph if its active recording is removed", () => {
+    const originalLookup = audioCatalogue.getActiveAudioSampleForComarca;
+    const lookup = vi
+      .spyOn(audioCatalogue, "getActiveAudioSampleForComarca")
+      .mockImplementation((code) =>
+        code === "EUM" ? undefined : originalLookup(code)
+      );
+    try {
+      const selection = getGlobalContentForDay("2026-11-29");
+      expect(selection.country.code).toBe("EUM");
+      expect(selection.audioSample).toBeUndefined();
+      expect(selection.imageNumber).toBe(2);
+    } finally {
+      lookup.mockRestore();
+    }
   });
 
   test("keeps the six-day slots and never requests blocked ILG audio in a future cycle", () => {

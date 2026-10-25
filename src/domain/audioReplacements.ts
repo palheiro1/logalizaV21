@@ -874,4 +874,25 @@ export const reviewedAudioReplacements: AudioSample[] = [
     clipEnd: 140.15,
     transcriptExcerpt: "",
   },
+  {
+    id: "aelg-eva-veiga-202",
+    comarcaCode: "EUM",
+    audioUrl:
+      "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+    recordUrl:
+      "https://aelg.gal/centro-documentacion/autores-as/eva-veiga/videoteca/entrevista/202/1-por-que-comecei-a-escribir",
+    source: "aelg",
+    sourceLabel: "Centro de Documentación — AELG",
+    sourceRecord: "Entrevista gravada na Casa do Concello da Corunha",
+    municipality: "Pontedeume",
+    locality: "Ombre",
+    speaker: "Eva Veiga",
+    locationKind: "speaker-origin",
+    recordedAt: "2007",
+    recorder: "Asociación de Escritoras e Escritores en Lingua Galega",
+    topic: "A descoberta da poesia na escola",
+    clipStart: 34.6,
+    clipEnd: 63.95,
+    transcriptExcerpt: "",
+  },
 ];

@@ -1,33 +1,33 @@
 {
   "title": "Alternativas de áudio para o LoGaliza",
   "date": "2026-10-24",
-  "scope": "43 novas gravações integradas; 49 comarcas com áudio ativo. Inclui revisão de origem, publicidade e qualidade de Betanzos e avaliação de Monfero e Cabreira.",
+  "scope": "44 novas gravações integradas; 50 comarcas com áudio ativo. Eume recuperado com Eva Veiga; Pacucha Couto e Paco Sarria sem infância local comprovada. Cabreira continua sem excerto galego aprovado.",
   "summary": {
     "mapComarcas": 51,
     "publishedHistoricalCatalogue": 49,
     "originalILGBlocked": 42,
     "originalCCG": 7,
-    "newIntegratedRecordings": 43,
-    "activeRecordings": 49,
-    "activeComarcas": 49,
+    "newIntegratedRecordings": 44,
+    "activeRecordings": 50,
+    "activeComarcas": 50,
     "activeByHost": {
       "CCG": 34,
       "APOI": 7,
       "REDMEDA": 1,
       "Egeria": 1,
       "LoGaliza (Praza.gal CC BY-SA)": 1,
-      "AELG": 3,
+      "AELG": 4,
       "LoGaliza (FRONTESPO CC BY-SA)": 1,
       "iVoox / Onda Xove": 1
     },
-    "restoredILGComarcas": 41,
+    "restoredILGComarcas": 42,
     "replacedCCGForGeography": 1,
-    "remainingFormerCatalogueComarcas": 1,
+    "remainingFormerCatalogueComarcas": 0,
     "previouslyMissingComarcas": [
       "CAB",
       "VDI"
     ],
-    "remainingMapComarcas": 2,
+    "remainingMapComarcas": 1,
     "additionalFilesWithMP3Probe": 3,
     "additionalFilesWithBrowserPlayback": 0,
     "additionalComarcasWithFiles": 2,
@@ -130,6 +130,12 @@
       "url": "https://xornalistas.gal/novas-eventos/novas/paco-sarria-novo-decano-do-colexio-de-xornalistas-1",
       "finding": "Nascimento na Ponte de Domingo Flórez em 1962 documentado. Ligação profissional posterior a Ourense. A infância e adequação à Cabreira ainda precisam de confirmação.",
       "checked": "2026-10-25"
+    },
+    {
+      "name": "AELG — Eva Veiga e Medos Romero",
+      "url": "https://aelg.gal/centro-documentacion/autores-as/eva-veiga/videoteca/entrevista/202/1-por-que-comecei-a-escribir",
+      "finding": "Eva Veiga integrada para Eume, com infância documentada em Ombre. Medos Romero fica como alternativa analisada; origem e local de gravação distinguidos.",
+      "checked": "2026-10-25"
     }
   ],
   "selectionRequirements": [
@@ -137,7 +143,7 @@
     "Concluído: licença, atribuição e cópia estável de Ulhoa; origem do falante separada do local de gravação e da data de publicação.",
     "Próximo: rever os quatro ficheiros AELG; Terra de Caldelas e Carvalhinho são as prioridades mais diretas.",
     "Marinhas: confrontar a origem de Xosé Ramón Pena com a alternativa Onda Xove; Courel: avaliar recitação versus fala espontânea.",
-    "Paradanta: testar as ligações recuperadas do FRONTESPO; Eume: identificar falante local e evitar publicidade variável.",
+    "Cabreira: encontrar fala galega com infância local comprovada e um ficheiro reproduzível sem publicidade variável.",
     "Manter fotografia para as sete lacunas até haver excerto adequado."
   ],
   "geographicReview": [
@@ -149,7 +155,8 @@
     "AELG: os locais indicados para TCA, CAR e COU são a origem dos falantes. As entrevistas de Sotelo Blanco e Miguel Anxo Fernández foram gravadas em Compostela e Ourense; a app distingue origem e gravação.",
     "Sela: Antonio Lorenzo nasceu em Eidos de Arriba, de pais da mesma freguesia; viveu também em Fene e Vigo e regressava a Sela aos fins de semana. Uma voz não representa toda a comarca.",
     "Novoneyra é integrado como recitação, tal como o catálogo já admite versos em Viana; mantém-se a procura de fala espontânea para Courel.",
-    "María Barral: Betanzos confirmado pela biografia e pela escolarização local indicada na apresentação. Pacucha Couto: ligação profissional não basta para validar o local de formação da fala. Edilberto: origem local confirmada, mas sem excerto galego validado nos seis minutos revistos."
+    "María Barral: Betanzos confirmado pela biografia e pela escolarização local indicada na apresentação. Pacucha Couto: ligação profissional não basta para validar o local de formação da fala. Edilberto: origem local confirmada, mas sem excerto galego validado nos seis minutos revistos.",
+    "Infância em Ombre, Pontedeume, confirmada na autobiografia; aos dez anos foi estudar para Mugardos. Não se apresenta a voz adulta como uma amostra dialetal imune a contactos posteriores."
   ],
   "coverage": [
     {
@@ -345,8 +352,8 @@
       "previousSampleId": null,
       "currentStatus": "photo",
       "nextStep": {
-        "note": "A conversa de Edilberto Rodríguez em Galegos no Baix (31/03/2022) foi localizada no arquivo do próprio programa e revista até 6 minutos: origem local confirmada, mas as respostas analisadas estão em castelhano. Nova pista: Paco Sarria, nascido na Ponte de Domingo Flórez segundo o Colexio de Xornalistas, com ficheiro oficial de Onda Cero descodificado; os primeiros 90 s incluem fala galega e castelhana e vozes diferentes; falta completar a trajetória infantil, identificar cada intervenção e escolher um recorte da sua própria voz. La Baña continua sem gravação galega validada; Corporales/Truchas fica fora do mapa da app.",
-        "url": "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html"
+        "note": "Paco Sarria: nascimento na Ponte de Domingo Flórez confirmado, infância por comprovar; entrevista da SER revista até 180 s, com respostas em castelhano e anúncio inicial. Edilberto Rodríguez: revista automaticamente a gravação completa de 18 min 40 s; verificação separada da sua voz confirma castelhano nos trechos selecionados, incluindo a recitação. Nenhum excerto galego adequado validado. A pesquisa por Pombriego, Castroquilame, Benuza e Ponte de Domingo Flórez não acrescentou outro ficheiro elegível nesta ronda.",
+        "url": "https://archive.org/details/edilberto-rodriguez"
       }
     },
     {
@@ -545,8 +552,8 @@
     {
       "code": "EUM",
       "name": "Eume",
-      "candidateId": null,
-      "researchStatus": "pending",
+      "candidateId": "aelg-eva-veiga-202",
+      "researchStatus": "integrated",
       "municipalities": [
         "Cabanas",
         "Capela",
@@ -556,11 +563,7 @@
       ],
       "previousStatus": "ilg-403",
       "previousSampleId": "ago-105",
-      "currentStatus": "photo",
-      "nextStep": {
-        "note": "O MP3 direto de Pacucha Couto tem fala galega e permite estudar o intervalo 114,3–132,8 s. A origem/infância não foi comprovada: a atividade profissional em Val Xestoso não basta. A Radio Grelo foi revista até 7 minutos: o presidente da câmara e Juan Manuel falam em castelhano nos trechos analisados, e a descarga oficial também inclui anúncio Shopify. Nenhum integrado nesta ronda.",
-        "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008"
-      }
+      "currentStatus": "active-audio"
     },
     {
       "code": "LUG",
@@ -2809,9 +2812,26 @@
       "clipStart": 111.25,
       "clipEnd": 140.15,
       "newIntegration": true,
-      "latestIntegration": true,
+      "latestIntegration": false,
       "selectionNote": "Fala contínua sobre a recuperação do mercado, fora da abertura editorial, sem perguntas nem nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
       "locationKind": "speaker-origin"
+    },
+    {
+      "id": "aelg-eva-veiga-202",
+      "comarca": "EUM",
+      "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1508162301891evaveigaorixeliteratura.00.mp4",
+      "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/eva-veiga/videoteca/entrevista/202/1-por-que-comecei-a-escribir",
+      "municipality": "Pontedeume",
+      "locality": "Ombre",
+      "speaker": "Eva Veiga",
+      "clipStart": 34.6,
+      "clipEnd": 63.95,
+      "locationKind": "speaker-origin",
+      "origin": "AELG",
+      "title": "A descoberta da poesia na escola",
+      "newIntegration": true,
+      "latestIntegration": true,
+      "selectionNote": "Infância em Ombre confirmada pela autora; escolarização posterior em Mugardos explicitada. Conversa de 29,35 s, RMS −24,67 dBFS, pico −0,80 dBFS, sem saturação no recorte. Original externo sem edição."
     }
   ],
   "conditional": [],
@@ -5350,83 +5370,61 @@
   ],
   "productionIntegration": {
     "url": "https://logaliza.vercel.app",
-    "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1&amostra=onda-xove-barral",
-    "state": "READY",
-    "tests": "71 testes passaram, TypeScript e build passaram. Betanzos reproduziu, parou no limite e repetiu localmente e em produção.",
-    "dailySchedule": "Sem alteração de sequência: preenche o lugar de Marinhas previsto para 10/04/2027. Disponível já no modo de revisão; hoje e histórico preservados.",
-    "commit": "47f0fd0859f3df7c5279cf9b2e135ee8ad450ad6",
-    "deploymentId": "dpl_fRXgkfuef2vubW6oGQUZYX9kBEPx",
-    "latestBrowserChecks": [
-      {
-        "id": "onda-xove-barral",
-        "playing": true,
-        "start": 111.471957,
-        "stoppedAtBoundary": true,
-        "repeated": true,
-        "duration": 1477.173311,
-        "collection49": true,
-        "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
-        "error": null,
-        "attributionPresent": true
-      }
-    ],
+    "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1&amostra=aelg-eva-veiga-202",
+    "state": "local-verified-awaiting-deployment",
+    "tests": "72 testes passaram; TypeScript e build passaram. Reprodução, paragem e repetição verificadas localmente.",
+    "dailySchedule": "Sem alteração da sequência: Eume ocupa o lugar previsto para 29/11/2026. Disponível desde já na revisão; Íbias em 30/10 e o histórico permanecem preservados.",
+    "latestBrowserChecks": [],
     "verifiedAt": "2026-10-25"
   },
   "gapResearch": [
     {
-      "code": "EUM",
-      "status": "Origem de Pacucha por confirmar; alternativa com publicidade e fala castelhana",
-      "note": "O MP3 direto de Pacucha Couto tem fala galega e permite estudar o intervalo 114,3–132,8 s. A origem/infância não foi comprovada: a atividade profissional em Val Xestoso não basta. A Radio Grelo foi revista até 7 minutos: o presidente da câmara e Juan Manuel falam em castelhano nos trechos analisados, e a descarga oficial também inclui anúncio Shopify. Nenhum integrado nesta ronda.",
-      "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008",
-      "files": [
-        {
-          "id": "radio-grelo-monfero",
-          "comarca": "EUM",
-          "audioUrl": "https://api.spreaker.com/v2/episodes/41115008/play.mp3",
-          "probe": {
-            "status": 206,
-            "contentType": "audio/mpeg",
-            "contentRange": "bytes 0-4095/25050934",
-            "bytesRead": 4096,
-            "mp3Signature": true
-          },
-          "decodedSeconds": 420
-        },
-        {
-          "id": "onda-cero-pacucha-couto",
-          "audioUrl": "https://dpvclip.ondacero.es/mp_audios4//2025/01/15/91FD0ED8-2477-498B-9BEC-458160D7E38F/91FD0ED8-2477-498B-9BEC-458160D7E38F.mp3",
-          "probe": {
-            "status": 200,
-            "decoded": true
-          },
-          "selectionStatus": "provenance-pending"
-        }
-      ],
-      "additionalSources": [
-        "https://api.spreaker.com/v2/episodes/41115008",
-        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html",
-        "https://www.ivoox.com/podcast-ponteengalego_sq_f11237180_1.html",
-        "https://asgabarras.wordpress.com/",
-        "https://opaii.blogspot.com/2014/01/viquingos-no-ponte-en-galego-n-28.html",
-        "https://www.g24.gal/-/este-ano-hai-unha-boa-producion-de-grelos-pero-preocupa-que-siga-chovendo-tanto",
-        "https://www.galiciaconfidencial.com/noticia/5785569-completo-grelo-angela-grelo-val-xestoso-tesouro-verde-baixo-ameaza-non-hai-mozos-recollelo-e-ten-apanado-man"
-      ]
-    },
-    {
       "code": "CAB",
-      "status": "Entrevista de Pombriego revista; nova pista de Paco Sarria",
-      "note": "A conversa de Edilberto Rodríguez em Galegos no Baix (31/03/2022) foi localizada no arquivo do próprio programa e revista até 6 minutos: origem local confirmada, mas as respostas analisadas estão em castelhano. Nova pista: Paco Sarria, nascido na Ponte de Domingo Flórez segundo o Colexio de Xornalistas, com ficheiro oficial de Onda Cero descodificado; os primeiros 90 s incluem fala galega e castelhana e vozes diferentes; falta completar a trajetória infantil, identificar cada intervenção e escolher um recorte da sua própria voz. La Baña continua sem gravação galega validada; Corporales/Truchas fica fora do mapa da app.",
+      "status": "Sem excerto galego aprovado; infância de Paco por confirmar",
+      "note": "Paco Sarria: nascimento na Ponte de Domingo Flórez confirmado, infância por comprovar; entrevista da SER revista até 180 s, com respostas em castelhano e anúncio inicial. Edilberto Rodríguez: revista automaticamente a gravação completa de 18 min 40 s; verificação separada da sua voz confirma castelhano nos trechos selecionados, incluindo a recitação. Nenhum excerto galego adequado validado. A pesquisa por Pombriego, Castroquilame, Benuza e Ponte de Domingo Flórez não acrescentou outro ficheiro elegível nesta ronda.",
       "url": "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html",
       "files": [
         {
           "id": "radio-cornella-edilberto",
           "audioUrl": "https://archive.org/download/edilberto-rodriguez/Edilberto%20Rodri%CC%81guez.mp3",
           "recordUrl": "https://archive.org/details/edilberto-rodriguez",
-          "decodedSeconds": 360,
+          "decodedSeconds": 1120,
           "selectionStatus": "no-galician-excerpt-validated",
           "probe": {
             "status": 200,
             "decoded": true
+          },
+          "review": {
+            "id": "radio-cornella-edilberto",
+            "reviewedThroughSeconds": 1120.0,
+            "method": "Revisão automática integral, juntando os 360 s já analisados ao restante ficheiro; três trechos adicionais da voz do convidado classificados separadamente. Não houve audição humana.",
+            "finding": "Não foi validado um recorte de fala galega de Edilberto. As respostas sobre pastoreio, o poema e a recordação dos avós nos trechos verificados estão em castelhano. A fala dos apresentadores não foi atribuída ao convidado.",
+            "voiceChecks": [
+              {
+                "start": 360,
+                "end": 405,
+                "detectedLanguage": "es",
+                "probability": 0.9667178392410278
+              },
+              {
+                "start": 795,
+                "end": 822,
+                "detectedLanguage": "es",
+                "probability": 0.9761550426483154
+              },
+              {
+                "start": 906,
+                "end": 950,
+                "detectedLanguage": "es",
+                "probability": 0.9975982308387756
+              }
+            ],
+            "provenance": "A memória dos avós em Silván e da vida em Pombriego no trecho 906–950 s reforça a ligação local; a língua do recorte continua a ser o obstáculo.",
+            "namedAlternativeExcluded": {
+              "name": "Nieves Fernández Vidueira",
+              "reason": "A pastora citada na conversa é de Fornelos de Cova/Quintela do Pando (Viana do Bolo), fora de CAB. Não serve para preencher Cabreira.",
+              "source": "https://consellodacultura.gal/album-de-galicia/detalle.php?persoa=28288"
+            }
           }
         },
         {
@@ -5453,7 +5451,9 @@
         "https://xornalistas.gal/novas-eventos/novas/paco-sarria-novo-decano-do-colexio-de-xornalistas-1",
         "https://www.ondacero.es/autores/paco-sarria/",
         "https://www.ondacero.es/podcast/emisoras/ourense/mas-de-uno-ourense/cara-actualidade-mas-uno-ourense_2021060960bf56c94beb28c5198c2aa0.html",
-        "https://www.lingua.gal/o-galego/proxectalo/areas-galegofalantes-fora-de-galicia"
+        "https://www.lingua.gal/o-galego/proxectalo/areas-galegofalantes-fora-de-galicia",
+        "https://cadenaser.com/emisora/2021/05/15/radio_coruna/1621082566_325579.html",
+        "https://www.diariodeleon.es/leon/230527/275001/manuel-fernandez-castroquilame-solucion-pueblos-riqueza-montes.html"
       ]
     }
   ],
@@ -5485,11 +5485,11 @@
   "latestIntegration": {
     "date": "2026-10-25",
     "sampleIds": [
-      "onda-xove-barral"
+      "aelg-eva-veiga-202"
     ],
-    "previousActive": 48,
-    "active": 49,
-    "dailySchedule": "Sem alteração de sequência: preenche o lugar de Marinhas previsto para 10/04/2027. Disponível já no modo de revisão; hoje e histórico preservados."
+    "previousActive": 49,
+    "active": 50,
+    "dailySchedule": "Sem alteração da sequência: Eume ocupa o lugar previsto para 29/11/2026. Disponível desde já na revisão; Íbias em 30/10 e o histórico permanecem preservados."
   },
   "latestIntegrationHistory": [
     {
@@ -5516,88 +5516,73 @@
       "previousActive": 44,
       "active": 48,
       "dailySchedule": "Sem mudança de ordem ou datas. Preenche os lugares futuros já reservados a TCA, CAR, COU e PAR; hoje e histórico preservados."
+    },
+    {
+      "date": "2026-10-25",
+      "sampleIds": [
+        "onda-xove-barral"
+      ],
+      "previousActive": 48,
+      "active": 49,
+      "dailySchedule": "Sem alteração de sequência: preenche o lugar de Marinhas previsto para 10/04/2027. Disponível já no modo de revisão; hoje e histórico preservados."
     }
   ],
   "previousProductionIntegration": {
     "url": "https://logaliza.vercel.app",
-    "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1",
+    "reviewUrl": "https://logaliza.vercel.app/?piloto=audio&revisao=1&amostra=onda-xove-barral",
     "state": "READY",
-    "tests": "71 testes passaram; TypeScript e build passaram. Os quatro recortes reproduziram, pararam no limite e repetiram no navegador local e em produção.",
-    "dailySchedule": "Sem mudança de ordem ou datas. Preenche os lugares futuros já reservados a TCA, CAR, COU e PAR; hoje e histórico preservados.",
-    "commit": "274c63865bb8336e9b9fc3b10f3606041cdc2a60",
-    "deploymentId": "dpl_7YPv1RcSV8guPKAaXtQ5SYWp2pTt",
+    "tests": "71 testes passaram, TypeScript e build passaram. Betanzos reproduziu, parou no limite e repetiu localmente e em produção.",
+    "dailySchedule": "Sem alteração de sequência: preenche o lugar de Marinhas previsto para 10/04/2027. Disponível já no modo de revisão; hoje e histórico preservados.",
+    "commit": "47f0fd0859f3df7c5279cf9b2e135ee8ad450ad6",
+    "deploymentId": "dpl_fRXgkfuef2vubW6oGQUZYX9kBEPx",
     "latestBrowserChecks": [
       {
-        "id": "aelg-sotelo",
-        "src": "https://aelg.gal/resources/centrodoc/members/interviews/1769077716133olegariosotelo_comenzouaescribir.mp4",
+        "id": "onda-xove-barral",
         "playing": true,
+        "start": 111.471957,
         "stoppedAtBoundary": true,
         "repeated": true,
-        "duration": 89.389389,
-        "collection48": true,
-        "license": false,
-        "error": null
-      },
-      {
-        "id": "aelg-miguel-anxo",
-        "src": "https://aelg.gal/resources/centrodoc/members/interviews/1662115013446Miguel_Anxo_Fernandez_1.mp4",
-        "playing": true,
-        "stoppedAtBoundary": true,
-        "repeated": true,
-        "duration": 256.24,
-        "collection48": true,
-        "license": false,
-        "error": null
-      },
-      {
-        "id": "aelg-novoneyra",
-        "src": "https://aelg.gal/resources/centrodoc/members/works/videos/OB_obra1411_F3_5.mp4",
-        "playing": true,
-        "stoppedAtBoundary": true,
-        "repeated": true,
-        "duration": 298.399637,
-        "collection48": true,
-        "license": false,
-        "error": null
-      },
-      {
-        "id": "frontespo-sela-004",
-        "src": "https://logaliza.vercel.app/audio/frontespo-sela-animais.mp3",
-        "playing": true,
-        "stoppedAtBoundary": true,
-        "repeated": true,
-        "duration": 19.37,
-        "collection48": true,
-        "license": true,
-        "error": null
+        "duration": 1477.173311,
+        "collection49": true,
+        "src": "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+        "error": null,
+        "attributionPresent": true
       }
     ],
-    "assetVerification": "O MP3 de Sela em produção é byte a byte igual ao excerto revisto; SHA-256 f9591aa176a12ef76b1a7a4a919b4cdb9d0635b944e9ad94ed5fc07f72d4e647."
+    "verifiedAt": "2026-10-25"
   },
   "qualityReview": {
     "date": "2026-10-25",
-    "method": "Medições de PCM, ASR temporizado e testes no navegador; não é escuta humana especializada.",
-    "findings": [
-      {
-        "id": "onda-xove-barral",
-        "note": "Fala contínua sobre a recuperação do mercado, sem perguntas, música editorial ou nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
-        "metrics": {
-          "start": 111.25,
-          "end": 140.15,
-          "duration": 28.9,
-          "sampleRate": 16000,
-          "rmsDbfs": -26.14,
-          "peakDbfs": -9.25,
-          "clippedSamples": 0,
-          "energyAbove4kHzPercent": 3.22,
-          "method": "PCM mono 16 kHz decoded from publisher static MP3; automated signal metrics and timed speech recognition, not human listening."
+    "selected": "aelg-eva-veiga-202",
+    "metrics": {
+      "id": "eva-veiga-202",
+      "clipStart": 34.6,
+      "clipEnd": 63.95,
+      "duration": 29.35,
+      "rmsDbfs": -24.67,
+      "peakDbfs": -0.8,
+      "clippedFraction": 0.0,
+      "source": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "244.920000",
+          "size": "26689380"
         }
       }
-    ],
-    "limitations": [
-      "Mantido o volume original do ficheiro externo.",
-      "ASR e ausência de saturação não certificam todos os aspetos perceptivos da voz."
-    ]
+    },
+    "method": "Descodificação PCM mono 16 kHz, medições de sinal, ASR temporizado Whisper large-v3-turbo e teste do leitor no navegador. Não houve escuta humana especializada."
   },
   "lastReviewedAt": "2026-10-25",
   "qualityReviewHistory": [
@@ -5711,6 +5696,31 @@
         "Medições sem saturação e ASR coerente não garantem ausência de todos os defeitos perceptivos.",
         "Não foi classificado nenhum dos cinco candidatos como irrecuperável apenas com base nas medições; Pena foi excluído por proveniência, e a pista de câmara de Sela foi preterida pela pista de gravador."
       ]
+    },
+    {
+      "date": "2026-10-25",
+      "method": "Medições de PCM, ASR temporizado e testes no navegador; não é escuta humana especializada.",
+      "findings": [
+        {
+          "id": "onda-xove-barral",
+          "note": "Fala contínua sobre a recuperação do mercado, sem perguntas, música editorial ou nomes de lugares no intervalo. Volume moderado (RMS −26,14 dBFS), pico −9,25 dBFS e zero amostras saturadas na descodificação analisada. Conservado o original; sem licença aberta identificada para alojar uma versão normalizada.",
+          "metrics": {
+            "start": 111.25,
+            "end": 140.15,
+            "duration": 28.9,
+            "sampleRate": 16000,
+            "rmsDbfs": -26.14,
+            "peakDbfs": -9.25,
+            "clippedSamples": 0,
+            "energyAbove4kHzPercent": 3.22,
+            "method": "PCM mono 16 kHz decoded from publisher static MP3; automated signal metrics and timed speech recognition, not human listening."
+          }
+        }
+      ],
+      "limitations": [
+        "Mantido o volume original do ficheiro externo.",
+        "ASR e ausência de saturação não certificam todos os aspetos perceptivos da voz."
+      ]
     }
   ],
   "advertisingResolution": {
@@ -5811,6 +5821,47 @@
         "https://www.lavozdegalicia.es/amp/noticia/coruna/betanzos/2022/10/09/span-langgl-estudando-facer-carril-bici-betanzosspan/0003_202210H9C8991.htm",
         "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html"
       ]
+    },
+    {
+      "code": "EUM",
+      "status": "Origem de Pacucha por confirmar; alternativa com publicidade e fala castelhana",
+      "note": "O MP3 direto de Pacucha Couto tem fala galega e permite estudar o intervalo 114,3–132,8 s. A origem/infância não foi comprovada: a atividade profissional em Val Xestoso não basta. A Radio Grelo foi revista até 7 minutos: o presidente da câmara e Juan Manuel falam em castelhano nos trechos analisados, e a descarga oficial também inclui anúncio Shopify. Nenhum integrado nesta ronda.",
+      "url": "https://www.spreaker.com/episode/entrevista-a-los-vecinos-de-monfero-con-special-guest-el-alcalde--41115008",
+      "files": [
+        {
+          "id": "radio-grelo-monfero",
+          "comarca": "EUM",
+          "audioUrl": "https://api.spreaker.com/v2/episodes/41115008/play.mp3",
+          "probe": {
+            "status": 206,
+            "contentType": "audio/mpeg",
+            "contentRange": "bytes 0-4095/25050934",
+            "bytesRead": 4096,
+            "mp3Signature": true
+          },
+          "decodedSeconds": 420
+        },
+        {
+          "id": "onda-cero-pacucha-couto",
+          "audioUrl": "https://dpvclip.ondacero.es/mp_audios4//2025/01/15/91FD0ED8-2477-498B-9BEC-458160D7E38F/91FD0ED8-2477-498B-9BEC-458160D7E38F.mp3",
+          "probe": {
+            "status": 200,
+            "decoded": true
+          },
+          "selectionStatus": "provenance-pending"
+        }
+      ],
+      "additionalSources": [
+        "https://api.spreaker.com/v2/episodes/41115008",
+        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html",
+        "https://www.ivoox.com/podcast-ponteengalego_sq_f11237180_1.html",
+        "https://asgabarras.wordpress.com/",
+        "https://opaii.blogspot.com/2014/01/viquingos-no-ponte-en-galego-n-28.html",
+        "https://www.g24.gal/-/este-ano-hai-unha-boa-producion-de-grelos-pero-preocupa-que-siga-chovendo-tanto",
+        "https://www.galiciaconfidencial.com/noticia/5785569-completo-grelo-angela-grelo-val-xestoso-tesouro-verde-baixo-ameaza-non-hai-mozos-recollelo-e-ten-apanado-man"
+      ],
+      "resolvedBy": "aelg-eva-veiga-202",
+      "resolution": "Eva Veiga integrada; Pacucha continua sem origem infantil comprovada."
     }
   ],
   "cabreiraResearch20261025": {
@@ -5825,6 +5876,212 @@
       "https://galegosnobaix.blogspot.com/2022/03/xoves-31-de-marzo-do-2022.html",
       "https://archive.org/details/edilberto-rodriguez",
       "https://xornalistas.gal/novas-eventos/novas/paco-sarria-novo-decano-do-colexio-de-xornalistas-1"
-    ]
+    ],
+    "followUp": {
+      "id": "radio-cornella-edilberto",
+      "reviewedThroughSeconds": 1120.0,
+      "method": "Revisão automática integral, juntando os 360 s já analisados ao restante ficheiro; três trechos adicionais da voz do convidado classificados separadamente. Não houve audição humana.",
+      "finding": "Não foi validado um recorte de fala galega de Edilberto. As respostas sobre pastoreio, o poema e a recordação dos avós nos trechos verificados estão em castelhano. A fala dos apresentadores não foi atribuída ao convidado.",
+      "voiceChecks": [
+        {
+          "start": 360,
+          "end": 405,
+          "detectedLanguage": "es",
+          "probability": 0.9667178392410278
+        },
+        {
+          "start": 795,
+          "end": 822,
+          "detectedLanguage": "es",
+          "probability": 0.9761550426483154
+        },
+        {
+          "start": 906,
+          "end": 950,
+          "detectedLanguage": "es",
+          "probability": 0.9975982308387756
+        }
+      ],
+      "provenance": "A memória dos avós em Silván e da vida em Pombriego no trecho 906–950 s reforça a ligação local; a língua do recorte continua a ser o obstáculo.",
+      "namedAlternativeExcluded": {
+        "name": "Nieves Fernández Vidueira",
+        "reason": "A pastora citada na conversa é de Fornelos de Cova/Quintela do Pando (Viana do Bolo), fora de CAB. Não serve para preencher Cabreira.",
+        "source": "https://consellodacultura.gal/album-de-galicia/detalle.php?persoa=28288"
+      }
+    }
+  },
+  "originReview20261025": [
+    {
+      "id": "onda-cero-pacucha-couto",
+      "speaker": "Pacucha Couto",
+      "decision": "not-integrated",
+      "originStatus": "childhood-unconfirmed",
+      "finding": "As fontes identificam a atividade na Cooperativa Val Xestoso e a produção de grelos em Monfero; não documentam onde nasceu ou cresceu. Não se deduziu a origem do emprego ou da residência.",
+      "sources": [
+        "https://www.galiciadigital.com/opinion/opinion.24404.php",
+        "https://www.ondacero.es/emisoras/galicia/coruna/noticias/productores-grelo-monfero-advierten-que-convertir-articulo-lujo_202501156787b6cfaf2175000151f881.html"
+      ],
+      "clipReview": {
+        "clipStart": 114.3,
+        "clipEnd": 132.8,
+        "rmsDbfs": -20.58,
+        "peakDbfs": -8.02,
+        "clippedFraction": 0,
+        "languageCaution": "A deteção automática isolada deste recorte é incerta (es 0,450). A classificação galega anterior do ficheiro completo não certifica a língua de cada intervenção; a origem por confirmar já impede a integração.",
+        "humanListening": false
+      }
+    },
+    {
+      "id": "onda-cero-paco-sarria",
+      "speaker": "Paco Sarria / Francisco Xosé González Sarria",
+      "decision": "not-integrated",
+      "originStatus": "birthplace-confirmed-childhood-unconfirmed",
+      "finding": "O Colexio de Xornalistas confirma o nascimento na Ponte de Domingo Flórez em 1962. A biografia da Onda Cero e os perfis do prémio Carracedo documentam a carreira em Ourense, mas não o lugar onde cresceu.",
+      "sources": [
+        "https://xornalistas.gal/web/uploads/novas_adxuntos/adxunto/c8f/5dd41cf301-biografias_ponentes.pdf",
+        "https://www.ondacero.es/autores/paco-sarria/",
+        "https://www.depourense.gal/es/nova/paco-sarria-recibe-el-xxxv-premio-xose-aurelio-carracedo-en-una-edicion-marcada-por-la-defensa"
+      ],
+      "clipReview": {
+        "previousOndaCero": "Os 90 s anteriores misturam vozes: o trecho galego do convidado não pode ser atribuído a Paco.",
+        "serRecordUrl": "https://cadenaser.com/emisora/2021/05/15/radio_coruna/1621082566_325579.html",
+        "serReviewedSeconds": 180,
+        "serFinding": "Entrevistado identificado na apresentação; respostas de Paco em castelhano nos intervalos analisados (aproximadamente 46,6–122,8 e 144–180 s, nesta captura). Anúncio SEAT de cerca de 22 s antes do programa; os tempos não são estáveis para integração.",
+        "rmsDbfs": -24.45,
+        "peakDbfs": -3.34,
+        "clippedFraction": 0,
+        "humanListening": false
+      }
+    },
+    {
+      "id": "aelg-eva-veiga-202",
+      "speaker": "Eva Veiga",
+      "decision": "integrated",
+      "provenance": {
+        "conclusion": "Infância em Ombre, Pontedeume, confirmada na autobiografia; aos dez anos foi estudar para Mugardos. Não se apresenta a voz adulta como uma amostra dialetal imune a contactos posteriores.",
+        "sources": [
+          "https://aelg.gal/centro-documentacion/autores-as/eva-veiga",
+          "https://bvg.udc.es/ficha_autor.jsp?id=EvaVeiga"
+        ],
+        "evidence": [
+          "A própria autora descreve as histórias da avó, a casa familiar e a escola unitária de Ombre, frequentada desde os quatro anos.",
+          "A autobiografia distingue a infância em Ombre da escolarização em Mugardos desde os dez anos e dos estudos posteriores na Corunha e em Compostela.",
+          "O local de gravação indicado pela AELG é a Casa do Concello da Corunha, em 2007; não foi confundido com a origem."
+        ]
+      },
+      "quality": {
+        "id": "eva-veiga-202",
+        "clipStart": 34.6,
+        "clipEnd": 63.95,
+        "duration": 29.35,
+        "rmsDbfs": -24.67,
+        "peakDbfs": -0.8,
+        "clippedFraction": 0.0,
+        "source": {
+          "programs": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "codec_type": "video"
+            },
+            {
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2
+            }
+          ],
+          "format": {
+            "duration": "244.920000",
+            "size": "26689380"
+          }
+        }
+      }
+    },
+    {
+      "id": "aelg-medos-romero-57",
+      "speaker": "Medos Romero",
+      "decision": "reserve-candidate",
+      "recordUrl": "https://aelg.gal/centro-documentacion/autores-as/medos-romero/videoteca/entrevista/57/1-por-que-comecei-a-escribir",
+      "audioUrl": "https://aelg.gal/resources/centrodoc/members/interviews/1533109389919MedosRomero_OrixeLiteratura.mp4",
+      "finding": "Alternativa para Eume: infância rural em Somede (As Pontes) documentada; a autora também refere ter crescido entre campo e cidade. A ficha AELG indica gravação em Ferrol, em 2007. Recorte sobre histórias dos pais e avós analisado automaticamente, sem topónimos. Não acrescentado como segunda voz ativa porque o catálogo mantém uma gravação por comarca.",
+      "sources": [
+        "https://diariodeferrol.elidealgallego.com/texto-diario/mostrar/3334490/medos-romero-libro-e-unha-viaxe-interior-da-persoa-as-suas-raices",
+        "https://consellodacultura.gal/mediateca/extras/CCG_fd_pub2211_ANosaTerra_0935_20000518.pdf",
+        "https://aelg.gal/centro-documentacion/autores-as/medos-romero"
+      ],
+      "quality": {
+        "id": "medos-romero-57",
+        "clipStart": 65.95,
+        "clipEnd": 88.45,
+        "duration": 22.5,
+        "rmsDbfs": -23.9,
+        "peakDbfs": -3.25,
+        "clippedFraction": 0.0,
+        "source": {
+          "programs": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "codec_type": "video"
+            },
+            {
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2
+            }
+          ],
+          "format": {
+            "duration": "136.323696",
+            "size": "14795648"
+          }
+        }
+      }
+    },
+    {
+      "id": "ramiro-fonte-rne",
+      "speaker": "Ramiro Fonte",
+      "decision": "archive-lead-no-playable-file",
+      "finding": "CCG documenta infância e adolescência entre Pontedeume e Ferrol. A notícia de 2021 anuncia áudio de 1983, mas na biografia atual não foi encontrado um leitor ou ficheiro. As fichas RNE localizadas são descrições de suportes físicos, não áudios reproduzíveis; AELG sem vídeos próprios. Leituras por outros autores não foram atribuídas a Ramiro.",
+      "sources": [
+        "https://consellodacultura.gal/noticia.php?id=8147",
+        "https://consellodacultura.gal/album-de-galicia/detalle.php?persoa=6118",
+        "https://consellodacultura.gal/fondos_documentais/materiais/material.php?mat=40571&col=9610",
+        "https://consellodacultura.gal/fondos_documentais/materiais/material.php?mat=46123&col=9610"
+      ]
+    }
+  ],
+  "cabreiraFullInterviewReview20261025": {
+    "id": "radio-cornella-edilberto",
+    "reviewedThroughSeconds": 1120.0,
+    "method": "Revisão automática integral, juntando os 360 s já analisados ao restante ficheiro; três trechos adicionais da voz do convidado classificados separadamente. Não houve audição humana.",
+    "finding": "Não foi validado um recorte de fala galega de Edilberto. As respostas sobre pastoreio, o poema e a recordação dos avós nos trechos verificados estão em castelhano. A fala dos apresentadores não foi atribuída ao convidado.",
+    "voiceChecks": [
+      {
+        "start": 360,
+        "end": 405,
+        "detectedLanguage": "es",
+        "probability": 0.9667178392410278
+      },
+      {
+        "start": 795,
+        "end": 822,
+        "detectedLanguage": "es",
+        "probability": 0.9761550426483154
+      },
+      {
+        "start": 906,
+        "end": 950,
+        "detectedLanguage": "es",
+        "probability": 0.9975982308387756
+      }
+    ],
+    "provenance": "A memória dos avós em Silván e da vida em Pombriego no trecho 906–950 s reforça a ligação local; a língua do recorte continua a ser o obstáculo.",
+    "namedAlternativeExcluded": {
+      "name": "Nieves Fernández Vidueira",
+      "reason": "A pastora citada na conversa é de Fornelos de Cova/Quintela do Pando (Viana do Bolo), fora de CAB. Não serve para preencher Cabreira.",
+      "source": "https://consellodacultura.gal/album-de-galicia/detalle.php?persoa=28288"
+    }
   }
 }
