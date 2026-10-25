@@ -1,6 +1,6 @@
 import type { AudioSample } from "./audioSamples";
 
-// Reviewed on 2026-10-24 against the institutional transcripts and timed speech
+// Reviewed on 2026-10-24 and 2026-10-25 against the institutional transcripts and timed speech
 // recognition. Clip boundaries exclude editorial introductions and local place names.
 // See research/audio-clip-validation-2026-10-24.json for verification evidence.
 // Originals stay with the publishers; licensed Fálase and FRONTESPO excerpts are hosted locally.
@@ -852,5 +852,26 @@ export const reviewedAudioReplacements: AudioSample[] = [
     },
     editingNote:
       "Excerto recortado e convertido a MP3 pola LoGaliza, com aumento de volume de 6 dB. Distribuído sob a mesma licença.",
+  },
+  {
+    id: "onda-xove-barral",
+    comarcaCode: "MAS",
+    audioUrl: "https://www.ivoox.com/_md_118987582_wp_1.mp3",
+    recordUrl:
+      "https://www.ivoox.com/maria-barral-onda-xove-betanzos-audios-mp3_rf_118987582_1.html",
+    source: "onda-xove",
+    sourceLabel: "Onda Xove Betanzos — Laboratorio de Radio",
+    sourceRecord: "Entrevista a María Barral · podcast 118987582",
+    municipality: "Betanzos",
+    locality: "Betanzos",
+    speaker: "María Barral Varela",
+    locationKind: "speaker-origin",
+    recordedAt: "6 de novembro de 2023",
+    dateKind: "published",
+    recorder: "Equipa de Onda Xove Betanzos / Laboratorio de Radio",
+    topic: "A recuperaçom do mercado e os produtos de proximidade",
+    clipStart: 111.25,
+    clipEnd: 140.15,
+    transcriptExcerpt: "",
   },
 ];

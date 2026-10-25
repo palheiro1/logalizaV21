@@ -9,7 +9,8 @@ export type AudioSampleSource =
   | "falase"
   | "egeria"
   | "aelg"
-  | "frontespo";
+  | "frontespo"
+  | "onda-xove";
 
 export interface AudioSample {
   id: string;

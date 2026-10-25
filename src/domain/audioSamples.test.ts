@@ -17,9 +17,9 @@ describe("audio catalogue", () => {
       .sort();
 
     expect(new Set(ids).size).toBe(ids.length);
-    expect(audioSamples).toHaveLength(48);
+    expect(audioSamples).toHaveLength(49);
     expect(new Set(coveredCodes).size).toBe(audioSamples.length);
-    expect(missingCodes).toEqual(["CAB", "EUM", "MAS"]);
+    expect(missingCodes).toEqual(["CAB", "EUM"]);
     expect(
       audioSamples.every(({ comarcaCode }) => validCodes.has(comarcaCode))
     ).toBe(true);
@@ -105,6 +105,11 @@ describe("audio catalogue", () => {
     expect(sela.audioUrl).toBe("/audio/frontespo-sela-animais.mp3");
     expect(sela.license?.label).toBe("CC BY-SA 4.0");
     expect(sela.editingNote).toContain("6 dB");
-    expect(getActiveAudioSampleForComarca("MAS")).toBeUndefined();
+    const barral = getActiveAudioSampleForComarca("MAS")!;
+    expect(barral.speaker).toBe("María Barral Varela");
+    // The RSS enclosure injects advertising and shifts the reviewed interval.
+    expect(barral.audioUrl).toBe("https://www.ivoox.com/_md_118987582_wp_1.mp3");
+    expect(barral.locationKind).toBe("speaker-origin");
+    expect(barral.dateKind).toBe("published");
   });
 });
