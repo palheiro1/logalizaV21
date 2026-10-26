@@ -28,6 +28,7 @@ import { forcedCountries, randomNumber } from "./hooks/forcedLead";
 import seedrandom from 'seedrandom';
 import { AudioPilotGame, isAudioPilotMode } from "./components/AudioPilotGame";
 import { BrandWordmark } from "./components/BrandWordmark";
+import { AppInstallBanner } from "./components/AppInstallBanner";
 
 // Link de suporte para diferentes países
 const supportLink: Record<string, string> = {
@@ -177,6 +178,7 @@ export default function App() {
                                     </div>
                                 </div>
                             </header>
+                            <AppInstallBanner />
                             {/* Componente do jogo */}
                             {audioPilotMode ? (
                                 <AudioPilotGame settingsData={settingsData} />

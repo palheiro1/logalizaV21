@@ -602,6 +602,23 @@ export const translations = {
       install: {
         title: "LoGaliza",
         descritpionTitle: "Instalar App:",
+        offerTitle: "Instala o LoGaliza",
+        offerDescription:
+          "Abre o jogo diretamente do ecrã inicial do teu telemóvel.",
+        howToInstall: "Como instalar",
+        openingPrompt: "A abrir…",
+        notNow: "Agora nom",
+        iosStep1: "Abre o menu Partilhar do navegador.",
+        iosStep2: "Escolhe “Adicionar ao ecrã principal”.",
+        iosStep3: "Confirma em “Adicionar”.",
+        iosHelp:
+          "Se nom encontrares a opçom, abre esta página no Safari.",
+        androidStep1: "Abre o menu do navegador (⋮).",
+        androidStep2:
+          "Escolhe “Instalar aplicaçom” ou “Adicionar ao ecrã inicial”.",
+        androidStep3: "Confirma a instalaçom.",
+        androidHelp:
+          "Se a opçom nom aparecer, tenta abrir esta página no Chrome.",
         description:
           "Adicione Logaliza a sua página inicial para jogar mais facilmente!",
         instructionTitle: "Instruçons:",
