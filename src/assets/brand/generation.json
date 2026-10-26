@@ -1,0 +1,6 @@
+{
+  "date": "2026-10-26",
+  "method": "Built-in image_gen",
+  "asset": "logaliza-symbol.png",
+  "prompt": "Use case: logo-brand. Prepare the approved Logaliza standalone symbol for application icons, using this exact image as edit target. Remove ALL the wordmark text to the right. Keep ONLY the emblem at the far left: the dark slate G-shaped map/location pin with the sky-blue diagonal band through its circular counter. There is NO STAR; do not add any star, red detail, text or other mark. Faithfully preserve the emblem's exact silhouette, G opening and crossbar, diagonal-band geometry and color, flat simple proportions. It must be immediately identifiable as the same approved mark. Center this one isolated symbol on a SQUARE image with about 12% transparent margin around each side, respecting its slightly taller-than-wide shape. Clean edges, generous open counter, uniform solid dark slate #0F172A and blue #38BDF8 fills. No outlines, texture, glow, shadow, bevel or gradient. Genuine transparent background and counter, no background rectangle and no drawn checkerboard. Only the standalone starless symbol, not a wordmark or lockup."
+}

@@ -1,9 +1,6 @@
 import React from "react";
+import { BrandWordmark } from "./BrandWordmark";
 
 export function Worldle() {
-  return (
-    <span className="font-bold">
-      LO<span className="text-lightblue-600">GALI</span>ZA
-    </span>
-  );
+  return <BrandWordmark inline />;
 }

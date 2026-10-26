@@ -27,6 +27,7 @@ import { galicianComarcas } from "./domain/comarcas.position";
 import { forcedCountries, randomNumber } from "./hooks/forcedLead";
 import seedrandom from 'seedrandom';
 import { AudioPilotGame, isAudioPilotMode } from "./components/AudioPilotGame";
+import { BrandWordmark } from "./components/BrandWordmark";
 
 // Link de suporte para diferentes países
 const supportLink: Record<string, string> = {
@@ -129,9 +130,9 @@ export default function App() {
                         <div className="w-full max-w-lg flex flex-col">
                             {/* Professional header with improved design */}
                             <header className="border-b-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm">
-                                <div className="px-4 py-3 flex items-center justify-between">
+                                <div className="px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
                                     {/* Left side: Auth button */}
-                                    <div className="flex items-center">
+                                    <div className="flex shrink-0 items-center">
                                         <div>
                                             <AuthButton
                                                 onLoginClick={() => setLoginOpen(true)}
@@ -140,13 +141,13 @@ export default function App() {
                                         </div>
                                     </div>
                                     
-                                    {/* Center: Logo */}
-                                    <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-wide text-center flex-1">
-                                        LO<span style={{color:'#ef4444'}}>G</span>ALI<span style={{color:'#ef4444'}}>Z</span>A
+                                    {/* Name only: the standalone symbol is used for app and browser icons. */}
+                                    <h1 className="min-w-0 flex-1 text-center text-[clamp(1.25rem,5.4vw,2.25rem)] leading-none">
+                                        <BrandWordmark />
                                     </h1>
                                     
                                     {/* Right side: Action buttons */}
-                                    <div className="flex items-center space-x-1">
+                                    <div className="flex shrink-0 items-center space-x-1">
                                         <button 
                                             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-200 group" 
                                             type="button" 
