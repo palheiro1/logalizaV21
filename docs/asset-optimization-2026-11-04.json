@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-04",
+  "sourceCommit": "e8db0f03d85b5cf82358f07d22ff39ec5d37e81f",
+  "publicFiles": 768,
+  "publicBytesBefore": 211959888,
+  "publicBytesAfter": 167120962,
+  "savedBytesPerDeployment": 44838926,
+  "optimizedImages": 134,
+  "images": {
+    "savedBytes": 44219441,
+    "formatAndUrlsPreserved": true,
+    "maximumOptimizedPhotoEdgePixels": 1920,
+    "jpegQuality": [88, 94],
+    "minimumPsnrDbAgainstResizedOriginal": 34.3,
+    "visualComparison": "Six largest optimized photos reviewed side by side"
+  },
+  "pdf": {
+    "path": "public/maps/mapa-das-comarcas.pdf",
+    "bytesBefore": 31356021,
+    "bytesAfter": 30736536,
+    "method": "Ghostscript pdfwrite, with image downsampling disabled",
+    "vectorMapPreserved": true,
+    "format": "A1 landscape, one page",
+    "renderDimensionsBeforeAndAfter": [2390, 1690],
+    "meanAbsoluteChannelDifferenceAt72Dpi": 0.009185132001353437,
+    "visualComparison": "Complete map reviewed side by side"
+  },
+  "validation": {
+    "allPublicPathsPreserved": true,
+    "unitTestsPassed": 99,
+    "productionBuildPassed": true
+  },
+  "retentionNote": "These changes reduce new deployment output. Existing retained deployments are not modified."
+}
