@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { injectSpeedInsights } from "@vercel/speed-insights";
+import { configureAnalytics } from "./lib/analyticsProviders";
 import "./index.css";
 import "./i18n";
 import App from "./App";
@@ -14,8 +14,7 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-// Use the framework-independent SDK because this app uses React 17.
-injectSpeedInsights();
+configureAnalytics();
 
 // Remove registrations left by older versions of the application.
 serviceWorkerRegistration.unregister();

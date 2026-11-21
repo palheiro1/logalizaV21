@@ -16,6 +16,7 @@ import {
   sanitizeCountryName,
 } from "../domain/countries";
 import { Guess } from "../domain/guess";
+import { recordGameGuess } from "../lib/gameAnalytics";
 import { audioSamples, getAudioSampleById } from "../domain/audioSamples";
 import { MAX_TRY_COUNT } from "../domain/scoring";
 import { countries } from "../environment";
@@ -159,6 +160,7 @@ export function AudioPilotGame({ settingsData }: AudioPilotGameProps) {
 
       setGuesses(nextGuesses);
       savePilotGuesses(sample.id, nextGuesses);
+      void recordGameGuess("audio_pilot", sample.id, nextGuesses.length, newGuess.distance === 0);
       setCurrentGuess("");
 
       if (newGuess.distance === 0) {

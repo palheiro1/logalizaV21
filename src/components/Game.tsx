@@ -18,6 +18,7 @@ import { SettingsData } from "../hooks/useSettings";
 import MapPhase from "./MapPhase";
 import { useAuth } from "../contexts/AuthContext";
 import { calculateDailyScore, MAX_TRY_COUNT } from "../domain/scoring";
+import { recordGameGuess } from "../lib/gameAnalytics";
 import { MonthlyLeaderboardEntry, statsService } from "../services/statsService";
 import { MonthlyChampionshipSummary } from "./MonthlyChampionshipSummary";
 import { PreviousMonthChampionshipScreen } from "./PreviousMonthChampionshipScreen";
@@ -495,10 +496,10 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-      if (country == null) {
+      e.preventDefault();
+      if (country == null || dailyScore.completed) {
         return;
       }
-      e.preventDefault();
 
       const guessedCountry = countries.find(
         (country) =>
@@ -524,13 +525,14 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
       };
 
       addGuess(newGuess);
+      void recordGameGuess("daily", dayString, guesses.length + 1, newGuess.distance === 0);
       setCurrentGuess("");
 
       if (newGuess.distance === 0) {
         toast.success(t("welldone"), { delay: 2000 });
       }
     },
-    [addGuess, country, currentGuess, i18n.resolvedLanguage, t]
+    [addGuess, country, currentGuess, dailyScore.completed, dayString, guesses.length, i18n.resolvedLanguage, t]
   );
 
   useEffect(() => {
