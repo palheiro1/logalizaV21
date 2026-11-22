@@ -9,7 +9,6 @@ export function AnalyticsPreferences() {
   useEffect(() => {
     function sync(event: StorageEvent) {
       if (event.key !== consentKey && event.key !== null) return;
-      configureAnalytics();
       setChoice(readConsent());
     }
     window.addEventListener("storage", sync);
@@ -25,7 +24,7 @@ export function AnalyticsPreferences() {
   }
 
   return (
-    <details ref={disclosure} open={choice === null} className="mx-3 my-2 rounded border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">
+    <details ref={disclosure} open={choice === null} className="my-4 rounded border border-gray-200 px-3 py-2 text-sm dark:border-gray-700">
       <summary ref={summary} className="cursor-pointer font-semibold">Privacidade e estatísticas</summary>
       <p className="mt-2">
         Se aceitares, o Vercel conta as partidas começadas e terminadas, as tentativas e a rede de origem.

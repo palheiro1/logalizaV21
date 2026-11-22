@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { configureAnalytics } from "./lib/analyticsProviders";
+import { consentKey } from "./lib/gameAnalytics";
 import "./index.css";
 import "./i18n";
 import App from "./App";
@@ -15,6 +16,9 @@ ReactDOM.render(
 );
 
 configureAnalytics();
+window.addEventListener("storage", (event) => {
+  if (event.key === consentKey || event.key === null) configureAnalytics();
+});
 
 // Remove registrations left by older versions of the application.
 serviceWorkerRegistration.unregister();

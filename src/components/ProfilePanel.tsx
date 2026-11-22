@@ -10,6 +10,7 @@ import {
   normalizeAvatarEmoji,
 } from "../domain/avatar";
 import { statsService, UserProfile } from "../services/statsService";
+import { AnalyticsPreferences } from "./AnalyticsPreferences";
 import { Panel } from "./panels/Panel";
 
 interface ProfilePanelProps {
@@ -220,6 +221,7 @@ export const ProfilePanel: React.FC<ProfilePanelProps> = ({ isOpen, close }) => 
           </>
         )}
       </form>
+      <AnalyticsPreferences />
     </Panel>
   );
 };

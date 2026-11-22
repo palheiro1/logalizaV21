@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { supabase } from '../../lib/supabase'
+import { AnalyticsPreferences } from '../AnalyticsPreferences'
 import { Panel } from '../panels/Panel'
 import { useTranslation } from 'react-i18next'
 import { getAuthRedirectUrl } from '../../config/app'
@@ -165,6 +166,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, close }) => {
             {message}
           </div>
         )}
+        <AnalyticsPreferences />
       </div>
     </Panel>
   )

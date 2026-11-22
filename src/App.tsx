@@ -3,7 +3,6 @@ import { Twemoji } from "react-emoji-render";
 import { useTranslation } from "react-i18next";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AnalyticsPreferences } from "./components/AnalyticsPreferences";
 import { Game } from "./components/Game";
 import { Infos } from "./components/panels/Infos";
 import { InfosCo } from "./components/panels/InfosCo";
@@ -178,7 +177,6 @@ export default function App() {
                                     </div>
                                 </div>
                             </header>
-                            <AnalyticsPreferences />
                             <AppInstallBanner />
                             {/* Componente do jogo */}
                             {audioPilotMode ? (
