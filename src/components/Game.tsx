@@ -25,6 +25,7 @@ import { PreviousMonthChampionshipScreen } from "./PreviousMonthChampionshipScre
 import { DateTime } from "luxon";
 import { AudioPilotPlayer } from "./AudioPilotPlayer";
 import { AudioSampleReveal } from "./AudioSampleReveal";
+import { PostGameGuide } from "./PostGameGuide";
 import { MunicipalitiesPhase } from "./MunicipalitiesPhase";
 import { gameStorageKey, readGameStorage } from "../domain/gameStorage";
 import { getStatsData } from "../domain/stats";
@@ -37,6 +38,8 @@ interface GameProps {
 }
 
 type BonusAttemptResult = "correct" | "wrong";
+
+const HIDE_POST_GAME_GUIDE_KEY = "logaliza:hide-post-game-guide";
 
 function getStoredBonusAttemptResult(key: string): BonusAttemptResult | null {
   const stored = localStorage.getItem(key);
@@ -127,6 +130,7 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
   const mapImage = countryImageFolder ? `${countryImageFolder}/mapa.png` : null;
 
   const [currentGuess, setCurrentGuess] = useState("");
+  const [showPostGameGuide, setShowPostGameGuide] = useState(false);
   const [hideImageMode, setHideImageMode] = useMode("hideImageMode", dayString, settingsData.noImageMode, userId);
   const [rotationMode, setRotationMode] = useMode("rotationMode", dayString, settingsData.rotationMode, userId);
 
@@ -324,10 +328,6 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
     }
   }, [dayString, remoteDailyResult]);
 
-  const gameEnded =
-    guesses.length === MAX_TRY_COUNT ||
-    guesses[guesses.length - 1]?.distance === 0;
-
   const dailyScore = useMemo(
     () =>
       calculateDailyScore(
@@ -338,6 +338,7 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
       ),
     [guesses, guessedShield, guessedMap, guessedMunicipalities]
   );
+  const gameEnded = dailyScore.completed;
   const shieldBonusAttempted =
     shieldAttemptResult != null || (hasParticipatedInNewPhase && guessedShield);
 
@@ -524,15 +525,28 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
         ),
       };
 
+      const attempt = guesses.length + 1;
+      const won = newGuess.distance === 0;
       addGuess(newGuess);
-      void recordGameGuess("daily", dayString, guesses.length + 1, newGuess.distance === 0);
+      void recordGameGuess("daily", dayString, attempt, won);
       setCurrentGuess("");
 
-      if (newGuess.distance === 0) {
+      if (won) {
         toast.success(t("welldone"), { delay: 2000 });
       }
+
+      if (won || attempt === MAX_TRY_COUNT) {
+        const lastShownKey = storageKey("lastPostGameGuideDay");
+        if (
+          localStorage.getItem(HIDE_POST_GAME_GUIDE_KEY) !== "true" &&
+          localStorage.getItem(lastShownKey) !== dayString
+        ) {
+          localStorage.setItem(lastShownKey, dayString);
+          setShowPostGameGuide(true);
+        }
+      }
     },
-    [addGuess, country, currentGuess, dailyScore.completed, dayString, guesses.length, i18n.resolvedLanguage, t]
+    [addGuess, country, currentGuess, dailyScore.completed, dayString, guesses.length, i18n.resolvedLanguage, storageKey, t]
   );
 
   useEffect(() => {
@@ -596,6 +610,26 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
       toast.success(t("municipalitiesBonus.correct"));
     }
   };
+
+  const resultGuide = gameEnded && country && (
+    <PostGameGuide
+      countryName={countryName}
+      photoUrl={srcImage}
+      clueUrl={
+        audioSample
+          ? audioSample.recordUrl
+          : listagemLigazons[normalizedCountryName]?.[randomImageNumber]
+      }
+      isAudioDay={isAudioDay}
+      isOpen={showPostGameGuide}
+      onDismiss={(hideForFutureGames) => {
+        if (hideForFutureGames) {
+          localStorage.setItem(HIDE_POST_GAME_GUIDE_KEY, "true");
+        }
+        setShowPostGameGuide(false);
+      }}
+    />
+  );
 
   return (
     <div className="flex-grow flex flex-col mx-2">
@@ -668,13 +702,15 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
             countryInputRef={countryInputRef}
             settingsData={settingsData}
           />
-          {gameEnded && country && audioSample && (
+          {gameEnded && country && audioSample ? (
             <AudioSampleReveal
               sample={audioSample}
               countryName={countryName}
               won={dailyScore.won}
-            />
-          )}
+            >
+              {resultGuide}
+            </AudioSampleReveal>
+          ) : resultGuide}
           <div className="my-2">
             {gameEnded && country ? (
               <>
@@ -711,29 +747,6 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
                   dailyScore={dailyScore}
                   audioMode={isAudioDay}
                 />
-                <div className="flex justify-center mt-4">
-                  <a
-                    className="underline text-center mx-8"
-                    href="/maps/mapa-das-comarcas.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Twemoji text={t("🗺️ Mapa das Comarcas") || ""} options={{ className: "inline-block" }} />
-                  </a>
-                  {/* Add a check if the link exists before rendering */}
-                  {!isAudioDay &&
-                   listagemLigazons[normalizedCountryName] &&
-                   listagemLigazons[normalizedCountryName][randomImageNumber] && (
-                    <a
-                      className="underline text-center mx-8"
-                      href={listagemLigazons[normalizedCountryName][randomImageNumber]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Twemoji text={t("🤔O que é esta imagem?") || ""} options={{ className: "inline-block" }} />
-                    </a>
-                  )}
-                </div>
               </>
             ) : (
               <form onSubmit={handleSubmit}>
