@@ -1,16 +1,18 @@
 import React from "react";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { expect, vi } from "vitest";
 import { Game } from "./Game";
 import { useAuth } from "../contexts/AuthContext";
-import { getDayString } from "../hooks/useTodays";
+import { getDayString, getGlobalContentForDay } from "../hooks/useTodays";
+import { getCountryName, sanitizeCountryName } from "../domain/countries";
+import listagemLigazons from "../domain/listagemLigazons";
+import { GAME_LANGUAGE } from "../i18n";
 import { gameStorageKey } from "../domain/gameStorage";
 import { loadAllGuesses, saveGuesses } from "../domain/guess";
 import { statsService } from "../services/statsService";
 import { SettingsData } from "../hooks/useSettings";
 
 vi.mock("../contexts/AuthContext", () => ({ useAuth: vi.fn() }));
-vi.mock("react-i18next", () => ({ useTranslation: () => ({ t: (key: string) => key, i18n: { resolvedLanguage: "co" } }) }));
 vi.mock("canvas-confetti", () => ({ default: vi.fn() }));
 vi.mock("../hooks/useNewsNotifications", () => ({ useNewsNotifications: vi.fn() }));
 vi.mock("../services/championshipRecovery", () => ({ recoverMissedChampionshipResults: vi.fn().mockResolvedValue(0) }));
@@ -41,6 +43,95 @@ beforeEach(() => {
 });
 
 afterEach(() => vi.restoreAllMocks());
+
+function renderDailyGame() {
+  const root = document.getElementById("root") ??
+    document.body.appendChild(document.createElement("div"));
+  root.id = "root";
+  return render(<Game settingsData={settings} updateSettings={vi.fn()} />, { container: root });
+}
+
+function submitGuess(name: string) {
+  fireEvent.change(screen.getByPlaceholderText("Comarca..."), {
+    target: { value: name },
+  });
+  fireEvent.click(screen.getByRole("button", { name: /Adivinhar/ }));
+}
+
+test("shows the photo and map on a win, keeps both beside the result and opens the guide again for the next game", async () => {
+  const clock = vi.spyOn(Date, "now").mockReturnValue(Date.parse("2026-10-25T12:00:00Z"));
+  setAccount(null);
+  const today = getGlobalContentForDay(getDayString());
+  const comarca = getCountryName(GAME_LANGUAGE, today.country);
+  const photoUrl = listagemLigazons[sanitizeCountryName(comarca)][today.imageNumber];
+  const view = renderDailyGame();
+  const dailyPhoto = screen.getByRole("img", { name: "country to guess" }).getAttribute("src");
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+
+  submitGuess(comarca);
+  const dialog = within(await screen.findByRole("dialog", {
+    name: `A comarca de hoje é ${comarca}`,
+  }));
+  expect(dialog.getByRole("link", { name: /Saber mais sobre a imagem/ }))
+    .toHaveAttribute("href", photoUrl);
+  expect(dialog.getAllByAltText("").map(image => image.getAttribute("src"))).toContain(dailyPhoto);
+  const mapLink = dialog.getByRole("link", { name: /Ver o mapa das comarcas/ });
+  expect(mapLink).toHaveAttribute("href", "/maps/mapa-das-comarcas.html");
+  expect(within(mapLink).getByAltText("")).toHaveAttribute("src", expect.stringContaining(".webp"));
+  fireEvent.click(dialog.getByRole("button", { name: "Fechar" }));
+
+  const links = screen.getByRole("navigation", { name: "Explorar a comarca de hoje" });
+  expect(within(links).getByRole("link", { name: "Saber mais sobre a imagem" }))
+    .toHaveFocus();
+  expect(within(links).getByRole("link", { name: "Ver o mapa das comarcas" }))
+    .toHaveAttribute("href", "/maps/mapa-das-comarcas.html");
+  const championship = screen.getByRole("heading", { name: "Campeonato mensal" });
+  expect(links.compareDocumentPosition(championship) & Node.DOCUMENT_POSITION_FOLLOWING)
+    .toBeTruthy();
+
+  view.unmount();
+  const revisit = renderDailyGame();
+  expect(await screen.findByRole("navigation")).toBeVisible();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  revisit.unmount();
+
+  clock.mockReturnValue(Date.parse("2026-10-26T12:00:00Z"));
+  renderDailyGame();
+  submitGuess(getCountryName(GAME_LANGUAGE, getGlobalContentForDay(getDayString()).country));
+  expect(await screen.findByRole("dialog")).toBeVisible();
+});
+
+test("opens on the fourth miss with the recording source and remembers the browser opt-out on a later game", async () => {
+  const clock = vi.spyOn(Date, "now").mockReturnValue(Date.parse("2026-10-24T12:00:00Z"));
+  setAccount(null);
+  const view = renderDailyGame();
+  for (const name of ["Chantada", "Vigo", "Lugo"]) {
+    submitGuess(name);
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+  }
+  submitGuess("Ourense");
+
+  const dialog = within(await screen.findByRole("dialog", {
+    name: "A comarca de hoje é Ponte Vedra",
+  }));
+  const recordingUrl = "https://apoi.museodopobo.gal/2953/";
+  expect(dialog.getByRole("link", { name: /Saber mais sobre a gravação/ }))
+    .toHaveAttribute("href", recordingUrl);
+  fireEvent.click(dialog.getByRole("button", { name: "Não voltar a mostrar" }));
+  expect(screen.getByRole("link", { name: "Saber mais sobre a gravação" }))
+    .toHaveAttribute("href", recordingUrl);
+  view.unmount();
+
+  clock.mockReturnValue(Date.parse("2026-10-25T12:00:00Z"));
+  setAccount("original");
+  renderDailyGame();
+  submitGuess(getCountryName(GAME_LANGUAGE, getGlobalContentForDay(getDayString()).country));
+  expect(await screen.findByRole("link", { name: "Saber mais sobre a imagem" })).toBeVisible();
+  expect(screen.getByRole("link", { name: "Ver o mapa das comarcas" })).toBeVisible();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+});
 
 test("keeps today's audio challenge playable with the same comarca's image when its audio source is unavailable", async () => {
   vi.spyOn(Date, "now").mockReturnValue(new Date("2026-10-24T10:00:00+02:00").getTime());

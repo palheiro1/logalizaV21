@@ -1,0 +1,44 @@
+.post-game-cover {
+  min-height: clamp(14.5rem, 39vh, 17.5rem);
+  background-color: #294c50;
+}
+
+.post-game-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(0deg, rgba(6, 24, 30, 0.93), rgba(6, 24, 30, 0.65) 32%, transparent 78%),
+    linear-gradient(100deg, rgba(6, 24, 30, 0.25), transparent 80%);
+}
+
+.post-game-place {
+  font-family: "PT Serif", Georgia, "Times New Roman", serif;
+  font-size: clamp(2.35rem, 7vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+  text-shadow: 0 1px 8px rgba(5, 20, 24, 0.45);
+}
+
+.post-game-map-crop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 33%, rgba(40, 61, 52, 0.15) 34%, rgba(255, 255, 255, 0.14) 35%, transparent 64%, rgba(26, 53, 42, 0.12) 65%, transparent 67%);
+}
+
+.post-game-sound-mark {
+  width: 1.1rem;
+  height: 1rem;
+  background:
+    linear-gradient(currentColor, currentColor) left center / 2px 35%,
+    linear-gradient(currentColor, currentColor) 25% center / 2px 70%,
+    linear-gradient(currentColor, currentColor) center / 2px 100%,
+    linear-gradient(currentColor, currentColor) 75% center / 2px 55%,
+    linear-gradient(currentColor, currentColor) right center / 2px 30%;
+  background-repeat: no-repeat;
+}

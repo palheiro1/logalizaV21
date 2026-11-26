@@ -6,6 +6,7 @@ interface AudioSampleRevealProps {
   countryName: string;
   won: boolean;
   review?: boolean;
+  children?: React.ReactNode;
 }
 
 export function AudioSampleReveal({
@@ -13,6 +14,7 @@ export function AudioSampleReveal({
   countryName,
   won,
   review = false,
+  children,
 }: AudioSampleRevealProps) {
   return (
     <section className="mt-3 overflow-hidden rounded-xl border-2 border-gray-200 dark:border-gray-700">
@@ -65,14 +67,16 @@ export function AudioSampleReveal({
           {sample.recorder}. Uma voz individual nom representa toda a fala da
           comarca.
         </p>
-        <a
-          className="inline-block font-bold text-red-700 underline dark:text-red-300"
-          href={sample.recordUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Ver a ficha da fonte ↗
-        </a>
+        {children ?? (
+          <a
+            className="inline-block font-bold text-red-700 underline dark:text-red-300"
+            href={sample.recordUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver a ficha da fonte ↗
+          </a>
+        )}
       </div>
     </section>
   );
