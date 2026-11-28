@@ -1,9 +1,11 @@
 import React from "react";
+import confetti from "canvas-confetti";
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { expect, vi } from "vitest";
 import { Game } from "./Game";
 import { useAuth } from "../contexts/AuthContext";
 import { getDayString, getGlobalContentForDay } from "../hooks/useTodays";
+import { RESULT_READING_TIME_MS } from "../hooks/usePostGameGuide";
 import { getCountryName, sanitizeCountryName } from "../domain/countries";
 import listagemLigazons from "../domain/listagemLigazons";
 import { GAME_LANGUAGE } from "../i18n";
@@ -42,7 +44,19 @@ beforeEach(() => {
   vi.mocked(statsService.getPreviousMonthlyLeaderboard).mockResolvedValue([]);
 });
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.useRealTimers();
+  vi.restoreAllMocks();
+});
+
+function useGameClock(date: string) {
+  vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+  return vi.spyOn(Date, "now").mockReturnValue(Date.parse(date));
+}
+
+async function advanceTime(ms: number) {
+  await act(async () => { await vi.advanceTimersByTimeAsync(ms); });
+}
 
 function renderDailyGame() {
   const root = document.getElementById("root") ??
@@ -58,8 +72,12 @@ function submitGuess(name: string) {
   fireEvent.click(screen.getByRole("button", { name: /Adivinhar/ }));
 }
 
-test("shows the photo and map on a win, keeps both beside the result and opens the guide again for the next game", async () => {
-  const clock = vi.spyOn(Date, "now").mockReturnValue(Date.parse("2026-10-25T12:00:00Z"));
+test("shows the winning result and links immediately, then opens the guide after the reading time and the confetti", async () => {
+  const clock = useGameClock("2026-10-25T12:00:00Z");
+  let finishConfetti!: () => void;
+  vi.mocked(confetti).mockReturnValueOnce(new Promise<undefined>(resolve => {
+    finishConfetti = () => resolve(undefined);
+  }));
   setAccount(null);
   const today = getGlobalContentForDay(getDayString());
   const comarca = getCountryName(GAME_LANGUAGE, today.country);
@@ -70,9 +88,16 @@ test("shows the photo and map on a win, keeps both beside the result and opens t
   expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
 
   submitGuess(comarca);
-  const dialog = within(await screen.findByRole("dialog", {
-    name: `A comarca de hoje é ${comarca}`,
-  }));
+  const result = `Acertaste à 1.ª tentativa! ${comarca}`;
+  expect(screen.getByRole("heading", { name: result })).toHaveFocus();
+  expect(screen.getByRole("link", { name: "Saber mais sobre a imagem" })).toBeVisible();
+  expect(screen.getByRole("link", { name: "Ver o mapa das comarcas" })).toBeVisible();
+  expect(confetti).toHaveBeenCalledWith(expect.objectContaining({ disableForReducedMotion: true }));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await advanceTime(RESULT_READING_TIME_MS);
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await act(async () => { finishConfetti(); });
+  const dialog = within(screen.getByRole("dialog", { name: result }));
   expect(dialog.getByRole("link", { name: /Saber mais sobre a imagem/ }))
     .toHaveAttribute("href", photoUrl);
   expect(dialog.getAllByAltText("").map(image => image.getAttribute("src"))).toContain(dailyPhoto);
@@ -92,18 +117,24 @@ test("shows the photo and map on a win, keeps both beside the result and opens t
 
   view.unmount();
   const revisit = renderDailyGame();
-  expect(await screen.findByRole("navigation")).toBeVisible();
+  await advanceTime(RESULT_READING_TIME_MS);
+  expect(screen.getByRole("navigation")).toBeVisible();
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(confetti).toHaveBeenCalledTimes(1);
   revisit.unmount();
 
   clock.mockReturnValue(Date.parse("2026-10-26T12:00:00Z"));
   renderDailyGame();
   submitGuess(getCountryName(GAME_LANGUAGE, getGlobalContentForDay(getDayString()).country));
-  expect(await screen.findByRole("dialog")).toBeVisible();
+  await advanceTime(RESULT_READING_TIME_MS - 1);
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await advanceTime(1);
+  expect(screen.getByRole("dialog")).toBeVisible();
+  expect(confetti).toHaveBeenCalledTimes(2);
 });
 
-test("opens on the fourth miss with the recording source and remembers the browser opt-out on a later game", async () => {
-  const clock = vi.spyOn(Date, "now").mockReturnValue(Date.parse("2026-10-24T12:00:00Z"));
+test("reveals the answer on the fourth miss, waits before showing the recording and remembers the browser opt-out", async () => {
+  const clock = useGameClock("2026-10-24T12:00:00Z");
   setAccount(null);
   const view = renderDailyGame();
   for (const name of ["Chantada", "Vigo", "Lugo"]) {
@@ -113,9 +144,14 @@ test("opens on the fourth miss with the recording source and remembers the brows
   }
   submitGuess("Ourense");
 
-  const dialog = within(await screen.findByRole("dialog", {
-    name: "A comarca de hoje é Ponte Vedra",
-  }));
+  const result = "Esgotaste as tentativas. A comarca era Ponte Vedra";
+  expect(screen.getByRole("heading", { name: result })).toHaveFocus();
+  expect(confetti).not.toHaveBeenCalled();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await advanceTime(RESULT_READING_TIME_MS - 1);
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await advanceTime(1);
+  const dialog = within(screen.getByRole("dialog", { name: result }));
   const recordingUrl = "https://apoi.museodopobo.gal/2953/";
   expect(dialog.getByRole("link", { name: /Saber mais sobre a gravação/ }))
     .toHaveAttribute("href", recordingUrl);
@@ -128,9 +164,41 @@ test("opens on the fourth miss with the recording source and remembers the brows
   setAccount("original");
   renderDailyGame();
   submitGuess(getCountryName(GAME_LANGUAGE, getGlobalContentForDay(getDayString()).country));
-  expect(await screen.findByRole("link", { name: "Saber mais sobre a imagem" })).toBeVisible();
+  await advanceTime(RESULT_READING_TIME_MS);
+  expect(screen.getByRole("link", { name: "Saber mais sobre a imagem" })).toBeVisible();
   expect(screen.getByRole("link", { name: "Ver o mapa das comarcas" })).toBeVisible();
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+});
+
+test("lets the player enter a bonus during the pause and return to the result without an interruption", async () => {
+  useGameClock("2026-10-25T12:00:00Z");
+  setAccount(null);
+  renderDailyGame();
+  submitGuess("Vigo");
+  submitGuess("Terra de Montes");
+  const result = "Acertaste à 2.ª tentativa! Terra de Montes";
+  expect(screen.getByRole("heading", { name: result })).toHaveFocus();
+  fireEvent.click(screen.getByRole("button", { name: "Jogar bónus dos concelhos" }));
+  await advanceTime(RESULT_READING_TIME_MS);
+  expect(screen.getByRole("heading", { name: "Adivinha os concelhos" })).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Voltar" }));
+  expect(screen.getByRole("heading", { name: result })).toBeVisible();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(confetti).toHaveBeenCalledTimes(1);
+});
+
+test("cancels a pending guide when leaving the game and keeps it from replaying on return", async () => {
+  useGameClock("2026-10-25T12:00:00Z");
+  setAccount(null);
+  const game = renderDailyGame();
+  submitGuess("Terra de Montes");
+  game.unmount();
+  renderDailyGame();
+  await advanceTime(RESULT_READING_TIME_MS);
+  expect(screen.getByRole("heading", { name: /Acertaste/ })).toBeVisible();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(localStorage.getItem(gameStorageKey("lastPostGameGuideDay"))).toBeNull();
+  expect(confetti).toHaveBeenCalledTimes(1);
 });
 
 test("keeps today's audio challenge playable with the same comarca's image when its audio source is unavailable", async () => {

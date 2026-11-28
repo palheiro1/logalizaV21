@@ -10,9 +10,9 @@ import { Guesses } from "./Guesses";
 import { Share } from "./Share";
 import NewPhase from "./NewPhase";
 import listagemLigazons from "../domain/listagemLigazons";
-import confetti from "canvas-confetti";
+import { usePostGameGuide } from "../hooks/usePostGameGuide";
 import { Twemoji } from "react-emoji-render";
-import { toast, Id, ToastContent } from "react-toastify";
+import { toast } from "react-toastify";
 import * as geolib from "geolib";
 import { SettingsData } from "../hooks/useSettings";
 import MapPhase from "./MapPhase";
@@ -38,8 +38,6 @@ interface GameProps {
 }
 
 type BonusAttemptResult = "correct" | "wrong";
-
-const HIDE_POST_GAME_GUIDE_KEY = "logaliza:hide-post-game-guide";
 
 function getStoredBonusAttemptResult(key: string): BonusAttemptResult | null {
   const stored = localStorage.getItem(key);
@@ -130,7 +128,8 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
   const mapImage = countryImageFolder ? `${countryImageFolder}/mapa.png` : null;
 
   const [currentGuess, setCurrentGuess] = useState("");
-  const [showPostGameGuide, setShowPostGameGuide] = useState(false);
+  const { headingRef, finishRound, isOpen: guideOpen, dismiss: dismissGuide } =
+    usePostGameGuide(dayString, userId);
   const [hideImageMode, setHideImageMode] = useMode("hideImageMode", dayString, settingsData.noImageMode, userId);
   const [rotationMode, setRotationMode] = useMode("rotationMode", dayString, settingsData.rotationMode, userId);
 
@@ -478,16 +477,6 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
   }, [userId]);
 
   useEffect(() => {
-    if (gameEnded && guesses[guesses.length - 1]?.distance === 0) {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-    }
-  }, [gameEnded, guesses]);
-
-  useEffect(() => {
     localStorage.setItem(storageKey(`hasParticipatedInNewPhase-${dayString}`), JSON.stringify(hasParticipatedInNewPhase));
   }, [hasParticipatedInNewPhase, dayString]);
 
@@ -531,47 +520,12 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
       void recordGameGuess("daily", dayString, attempt, won);
       setCurrentGuess("");
 
-      if (won) {
-        toast.success(t("welldone"), { delay: 2000 });
-      }
-
       if (won || attempt === MAX_TRY_COUNT) {
-        const lastShownKey = storageKey("lastPostGameGuideDay");
-        if (
-          localStorage.getItem(HIDE_POST_GAME_GUIDE_KEY) !== "true" &&
-          localStorage.getItem(lastShownKey) !== dayString
-        ) {
-          localStorage.setItem(lastShownKey, dayString);
-          setShowPostGameGuide(true);
-        }
+        finishRound(won ? "win" : "loss");
       }
     },
-    [addGuess, country, currentGuess, dailyScore.completed, dayString, guesses.length, i18n.resolvedLanguage, storageKey, t]
+    [addGuess, country, currentGuess, dailyScore.completed, dayString, finishRound, guesses.length, i18n.resolvedLanguage, t]
   );
-
-  useEffect(() => {
-    let toastId: Id;
-    const { country, guesses } = todays;
-    if (
-      country &&
-      guesses.length === MAX_TRY_COUNT &&
-      guesses[guesses.length - 1].distance > 0
-    ) {
-      toastId = toast.info(
-        getCountryName(i18n.resolvedLanguage, country).toUpperCase() as ToastContent,
-        {
-          autoClose: false,
-          delay: 2000,
-        }
-      );
-    }
-
-    return () => {
-      if (toastId != null) {
-        toast.dismiss(toastId);
-      }
-    };
-  }, [todays, i18n.resolvedLanguage]);
 
   const handleMapPhaseTransition = () => {
     setShowNewPhase(false);
@@ -611,9 +565,30 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
     }
   };
 
-  const resultGuide = gameEnded && country && (
+  const resultLabel = dailyScore.won
+    ? t("postGame.won", { attempt: dailyScore.triesCount })
+    : t("postGame.lost");
+  const resultHeading = (
+    <h2
+      ref={headingRef}
+      tabIndex={-1}
+      className={`flex items-center gap-3 rounded-lg border-l-4 px-4 py-3 focus:outline-none ${
+        dailyScore.won
+          ? "border-emerald-700 bg-emerald-50 text-emerald-950 dark:border-emerald-400 dark:bg-emerald-950 dark:text-emerald-50"
+          : "border-amber-700 bg-amber-50 text-amber-950 dark:border-amber-400 dark:bg-amber-950 dark:text-amber-50"
+      }`}
+    >
+      <span aria-hidden="true" className="text-2xl font-bold">{dailyScore.won ? "✓" : "×"}</span>
+      <span>
+        <span className="block text-sm font-semibold">{resultLabel}</span>{" "}
+        <span className="block text-xl font-bold">{countryName}</span>
+      </span>
+    </h2>
+  );
+  const resultGuide = (
     <PostGameGuide
       countryName={countryName}
+      resultLabel={resultLabel}
       photoUrl={srcImage}
       clueUrl={
         audioSample
@@ -621,13 +596,8 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
           : listagemLigazons[normalizedCountryName]?.[randomImageNumber]
       }
       isAudioDay={isAudioDay}
-      isOpen={showPostGameGuide}
-      onDismiss={(hideForFutureGames) => {
-        if (hideForFutureGames) {
-          localStorage.setItem(HIDE_POST_GAME_GUIDE_KEY, "true");
-        }
-        setShowPostGameGuide(false);
-      }}
+      isOpen={guideOpen}
+      onDismiss={dismissGuide}
     />
   );
 
@@ -702,18 +672,24 @@ function AccountGame({ settingsData, updateSettings, onLoginClick }: GameProps) 
             countryInputRef={countryInputRef}
             settingsData={settingsData}
           />
-          {gameEnded && country && audioSample ? (
-            <AudioSampleReveal
-              sample={audioSample}
-              countryName={countryName}
-              won={dailyScore.won}
-            >
-              {resultGuide}
-            </AudioSampleReveal>
-          ) : resultGuide}
           <div className="my-2">
             {gameEnded && country ? (
               <>
+                {audioSample ? (
+                  <AudioSampleReveal
+                    sample={audioSample}
+                    countryName={countryName}
+                    won={dailyScore.won}
+                    heading={resultHeading}
+                  >
+                    {resultGuide}
+                  </AudioSampleReveal>
+                ) : (
+                  <>
+                    {resultHeading}
+                    {resultGuide}
+                  </>
+                )}
                 <MonthlyChampionshipSummary
                   score={dailyScore}
                   leaderboard={monthlyLeaderboard}

@@ -478,7 +478,8 @@ export const translations = {
       showOnGoogleMaps: "👀 no Google Maps",
       showOnWikipedia: "📚 no Wikipedia",
       postGame: {
-        titleLead: "A comarca de hoje é",
+        won: "Acertaste à {{attempt}}.ª tentativa!",
+        lost: "Esgotaste as tentativas. A comarca era",
         resources: "Explorar a comarca de hoje",
         image: "Saber mais sobre a imagem",
         recording: "Saber mais sobre a gravação",

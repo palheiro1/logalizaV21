@@ -1,3 +1,14 @@
+@media (prefers-reduced-motion: no-preference) {
+  .post-game-overlay {
+    animation: post-game-appear 240ms ease-out;
+  }
+
+  @keyframes post-game-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
 .post-game-cover {
   min-height: clamp(14.5rem, 39vh, 17.5rem);
   background-color: #294c50;

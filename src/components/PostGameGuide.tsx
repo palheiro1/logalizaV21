@@ -8,6 +8,7 @@ const MAP_URL = "/maps/mapa-das-comarcas.html";
 
 interface PostGameGuideProps {
   countryName: string;
+  resultLabel: string;
   photoUrl: string | null;
   clueUrl?: string;
   isAudioDay: boolean;
@@ -17,6 +18,7 @@ interface PostGameGuideProps {
 
 export function PostGameGuide({
   countryName,
+  resultLabel,
   photoUrl,
   clueUrl,
   isAudioDay,
@@ -25,14 +27,12 @@ export function PostGameGuide({
 }: PostGameGuideProps) {
   const { t } = useTranslation();
   const resultLinks = useRef<HTMLElement>(null);
-  const titleLead = t("postGame.titleLead");
   const clueLabel = t(isAudioDay ? "postGame.recording" : "postGame.image");
   const mapLabel = t("postGame.map");
 
   return (
     <>
       <nav ref={resultLinks} aria-label={t("postGame.resources")} className="my-3">
-        {!isAudioDay && <h2 className="mb-2 text-lg font-bold">{titleLead} {countryName}</h2>}
         <div className="grid gap-2 sm:grid-cols-2">
           {[{ href: clueUrl, label: clueLabel }, { href: MAP_URL, label: mapLabel }].map(
             ({ href, label }) => href && (
@@ -57,7 +57,7 @@ export function PostGameGuide({
         onRequestClose={() => onDismiss(false)}
         onAfterClose={() => resultLinks.current?.querySelector("a")?.focus()}
         htmlOpenClassName="overflow-hidden"
-        overlayClassName="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-950/70 p-3 backdrop-blur-sm sm:p-5"
+        overlayClassName="post-game-overlay fixed inset-0 z-[10000] flex items-center justify-center bg-slate-950/70 p-3 backdrop-blur-sm sm:p-5"
         className="max-h-full w-full max-w-[34rem] overflow-y-auto overscroll-contain rounded-2xl bg-[#faf8f2] text-[#193739] shadow-2xl ring-1 ring-white/20 dark:bg-[#192c30] dark:text-stone-50"
       >
         <header className="post-game-cover relative isolate flex flex-col items-start justify-end overflow-hidden px-5 py-5 text-white sm:px-7 sm:py-6">
@@ -72,7 +72,7 @@ export function PostGameGuide({
           <h2 id="post-game-title">
             <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em]">
               <span aria-hidden="true" className="h-0.5 w-6 bg-[#ff9b78]" />
-              {titleLead}
+              {resultLabel}
             </span>{" "}
             <span className="post-game-place mt-1 block">{countryName}</span>
           </h2>

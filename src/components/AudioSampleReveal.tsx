@@ -6,6 +6,7 @@ interface AudioSampleRevealProps {
   countryName: string;
   won: boolean;
   review?: boolean;
+  heading?: React.ReactNode;
   children?: React.ReactNode;
 }
 
@@ -14,22 +15,25 @@ export function AudioSampleReveal({
   countryName,
   won,
   review = false,
+  heading,
   children,
 }: AudioSampleRevealProps) {
   return (
     <section className="mt-3 overflow-hidden rounded-xl border-2 border-gray-200 dark:border-gray-700">
-      <div
-        className={`p-4 text-center text-white ${
-          review ? "bg-blue-600" : won ? "bg-green-600" : "bg-red-600"
-        }`}
-      >
-        <p className="text-sm font-bold uppercase tracking-widest">
-          {review ? "Amostra de" : won ? "Acertache!" : "A voz era de"}
-        </p>
-        <h3 className="mt-1 text-2xl font-extrabold uppercase">
-          {countryName}
-        </h3>
-      </div>
+      {heading ?? (
+        <div
+          className={`p-4 text-center text-white ${
+            review ? "bg-blue-600" : won ? "bg-green-600" : "bg-red-600"
+          }`}
+        >
+          <p className="text-sm font-bold uppercase tracking-widest">
+            {review ? "Amostra de" : won ? "Acertache!" : "A voz era de"}
+          </p>
+          <h3 className="mt-1 text-2xl font-extrabold uppercase">
+            {countryName}
+          </h3>
+        </div>
+      )}
 
       <div className="space-y-3 bg-white p-4 text-sm dark:bg-slate-800">
         <p>
